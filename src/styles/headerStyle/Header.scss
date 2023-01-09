@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
+$Rubik: "Rubik",sans-serif;
+
+body{
+ background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%);
+;
+}
+ul,li{
+  list-style: none;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+a,a:hover{
+  text-decoration: none;
+}
+#header{
+  padding: 0 41px;
+  margin-top: 20px;
+}
+.container{
+  display: flex;
+  justify-content: space-between;
+}
+.menu{
+  display: flex;
+}
+.menu__item{
+  display: flex;
+  list-style: none;
+  text-align: center;
+  padding-top: 15px;
+  padding-right: 30px;
+}
+.menu__title{
+  font-family: 'Rubik',sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 102.9%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+}
+.menu__btn{
+  height: 38px;
+  width: 140px;
+  border: 1px solid #FFFFFF;
+  margin-right: 64px;
+  margin-top: 5px;
+  background-color: transparent;
+}
+.btn_link{
+  font-family: 'Rubik',sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 102.9%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+.nav-toggle{
+  display: none;
+}
+@media (max-width: 700px){
+  body{
+    background: black;
+  }
+  .menu{
+    position: absolute;
+    top: 140px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    transition: all .45s;
+  }
+  .menu.open{
+    transform: translateX(0);
+  }
+  .menu__item{
+    flex-direction: column;
+  }
+  .menu__btn{
+    margin-left: 270px;
+  }
+  .nav-toggle{
+    display: flex;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .bar{
+    position: relative;
+    width: 32px;
+    height: 2px;
+    background: #FFFFFF;
+  }
+  .bar::before, .bar::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    transition: all .45s ease-in-out;
+
+  }
+  .bar::before{
+    width: 25px;
+    transform: translateY(-8px);
+    right: 0;
+  }
+  .bar::after{
+    width: 32px;
+    transform: translateY(8px);
+  }
+  .open .bar{
+    transform: translateX(-40px);
+    background: transparent;
+  }
+  .open .bar::before{
+    width: 32px;
+    transform: rotate(45deg) translate(26px, -26px);
+  }
+  .open .bar::after{
+    width: 32px;
+    transform: rotate(-45deg) translate(26px, 26px);
+  }
+}
