@@ -1,0 +1,26 @@
+.hero{
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%), url("../static/img/туман.png") no-repeat 75%/contain,
+  url("../static/img/уй сурот.png")  no-repeat right/28% 100%,
+  url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+  &__container{
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  &__bg{
+    height: 100vh;
+    background-repeat: no-repeat;
+  }
+}
+
+.image1{
+}
+
+//.image2{
+//  background-image: url("../static/img/туман.png");
+//}
+//
+//.image3{
+//  background-image: url("../static/img/уй сурот.png");
+//}

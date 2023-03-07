@@ -1,10 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
-$Rubik: "Rubik",sans-serif;
 
-body{
- background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%);
-;
-}
 ul,li{
   list-style: none;
   margin: 0 1rem;
@@ -13,10 +7,14 @@ ul,li{
 a,a:hover{
   text-decoration: none;
 }
+
 #header{
+  width: 100%;
+  position: fixed;
   padding: 0 41px;
   margin-top: 20px;
 }
+
 .container{
   display: flex;
   justify-content: space-between;

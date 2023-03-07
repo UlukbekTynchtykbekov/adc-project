@@ -1,14 +1,15 @@
 import React from 'react';
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Projects from "../pages/Projects";
 import Services from "../pages/Services";
 import Consultation from "../pages/Consultation";
 import About from "../pages/About";
 import Contacts from "../pages/Contacts";
+import Home from "../pages/Home";
 
 const Routers = () => {
     return <Routes>
-        <Route path="/" element={<Navigate to="home"/>}/>
+        <Route path="/" element={<Home />}/>}/>
         <Route path="projects" element={<Projects/>}/>
         <Route path="services" element={<Services/>}/>
         <Route path="consultation" element={<Consultation/>}/>
