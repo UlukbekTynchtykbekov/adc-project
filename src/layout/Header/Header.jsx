@@ -6,7 +6,7 @@ import {Outlet, Link} from "react-router-dom";
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <header id="header">
+        <header className="header">
             <div className="container">
                 <div className="logo">
                     <img className="logo__img" src={Logo} alt=""/>

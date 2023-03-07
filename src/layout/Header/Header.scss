@@ -8,7 +8,7 @@ a,a:hover{
   text-decoration: none;
 }
 
-#header{
+.header{
   width: 100%;
   position: fixed;
   padding: 0 41px;
@@ -16,6 +16,8 @@ a,a:hover{
 }
 
 .container{
+  max-width: 1140px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
 }
@@ -59,9 +61,6 @@ a,a:hover{
   display: none;
 }
 @media (max-width: 700px){
-  body{
-    background: black;
-  }
   .menu{
     position: absolute;
     top: 140px;
