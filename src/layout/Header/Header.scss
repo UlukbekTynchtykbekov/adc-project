@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
-$Rubik: "Rubik",sans-serif;
 
 .header{
+  width: 100%;
+  position: fixed;
   padding: 0 41px;
   margin-top: 20px;
   background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%);
@@ -10,6 +10,7 @@ $Rubik: "Rubik",sans-serif;
   display: flex;
   justify-content: space-between;
 }
+
 .menu{
   display: flex;
 }
@@ -51,9 +52,6 @@ $Rubik: "Rubik",sans-serif;
   display: none;
 }
 @media (max-width: 700px){
-  body{
-    background: black;
-  }
   .menu{
     position: absolute;
     top: 140px;

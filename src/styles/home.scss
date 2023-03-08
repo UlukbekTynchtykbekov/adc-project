@@ -1,0 +1,137 @@
+.hero{
+  width: 100%;
+  min-height: 100vh;
+  background: var(--hero-bg-linear1),
+  url("../static/img/туман.png") no-repeat 75%/contain,
+  url("../static/img/уй сурот.png")  no-repeat right/28% 100%,
+  url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  &__container{
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  &__items{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 130px;
+    gap: 22rem
+  }
+  &__item{
+    position: relative;
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--hover-line-color);
+      transition: 0.3s;
+    }
+    &:hover:after{
+      width: 100%;
+    }
+  }
+  &__category{
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 102.9%;
+    text-align: center;
+
+    color: var(--title-color);
+  }
+}
+
+@media (max-width: 1200px){
+  .hero{
+    background: var(--hero-bg-linear1),
+    url("../static/img/туман.png") no-repeat 68%/contain,
+    url("../static/img/уй сурот.png")  no-repeat right/35% 100%,
+    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+    &__items{
+      gap: 18rem;
+    }
+  }
+}
+
+@media (max-width: 1024px){
+  .hero{
+    background: var(--hero-bg-linear1),
+    url("../static/img/туман.png") no-repeat 67%/contain,
+    url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
+    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+    &__items{
+      gap: 15rem;
+    }
+  }
+}
+
+@media (max-width: 990px){
+  .hero{
+    background: var(--hero-bg-linear1),
+    url("../static/img/туман.png") no-repeat 66%/contain,
+    url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
+    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+    &__items{
+      gap: 13rem;
+    }
+  }
+}
+
+@media (max-width: 824px){
+  .hero{
+    background: var(--hero-bg-linear1),
+    url("../static/img/туман.png") no-repeat 66%/contain,
+    url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
+    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+    &__items{
+      gap: 10rem;
+    }
+  }
+}
+
+@media (max-width: 770px){
+  .hero{
+    background: var(--hero-bg-linear1),
+    url("../static/img/туман.png") no-repeat 70%/contain,
+    url("../static/img/уй сурот.png")  no-repeat right/35% 100%,
+    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+    &__items{
+      gap: 8rem;
+    }
+  }
+}
+
+@media (max-width: 700px){
+  .hero{
+    height: 1200px;
+    background: var(--hero-bg-linear1),
+  url("../static/img/image 77.png")  no-repeat bottom/100% 35%,
+  url("../static/img/image 75.png")  no-repeat  center/100% 35%,
+  url("../static/img/image 76.png")  no-repeat top/100% 35%;
+    &__items{
+      flex-direction: column;
+      margin-bottom: 60px;
+      gap: 23rem;
+    }
+  }
+}
+
+@media (max-width: 700px){
+  .hero {
+    height: 1000px;
+    background: var(--hero-bg-linear1),
+    url("../static/img/image 77.png") no-repeat bottom/100% 35%,
+    url("../static/img/image 75.png") no-repeat center/100% 35%,
+    url("../static/img/image 76.png") no-repeat top/100% 35%;
+    &__items{
+      margin-bottom: 60px;
+      gap: 19rem;
+    }
+  }
+}

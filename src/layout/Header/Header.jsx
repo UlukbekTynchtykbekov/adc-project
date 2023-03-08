@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
-import {Outlet,Link} from "react-router-dom";
+import {Outlet, Link} from "react-router-dom";
 
 const Header = () => {
-    const [isOpen,setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     return (
       <header className="header">
           <div className="container">
