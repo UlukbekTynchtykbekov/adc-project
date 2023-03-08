@@ -10,7 +10,7 @@ const Home = () => {
                 <div className="hero__container">
                     <div className="hero__items">
                         <div className="hero__item">
-                            <Link to="/architect" className="hero__link">
+                            <Link to="/architecture" className="hero__link">
                                 <h3 className="hero__category">A&nbsp;Р&nbsp;Х&nbsp;И&nbsp;Т&nbsp;Е&nbsp;К&nbsp;Т&nbsp;У&nbsp;Р&nbsp;А</h3>
                             </Link>
                         </div>

@@ -1,7 +1,8 @@
 .hero{
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%), url("../static/img/туман.png") no-repeat 75%/contain,
+  background: var(--hero-bg-linear1),
+  url("../static/img/туман.png") no-repeat 75%/contain,
   url("../static/img/уй сурот.png")  no-repeat right/28% 100%,
   url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
   display: flex;
@@ -27,7 +28,7 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: #D9D9D9;
+      background: var(--hover-line-color);
       transition: 0.3s;
     }
     &:hover:after{
@@ -42,13 +43,13 @@
     line-height: 102.9%;
     text-align: center;
 
-    color: #FFFFFF;
+    color: var(--title-color);
   }
 }
 
 @media (max-width: 1200px){
   .hero{
-    background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%),
+    background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 68%/contain,
     url("../static/img/уй сурот.png")  no-repeat right/35% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
@@ -60,7 +61,7 @@
 
 @media (max-width: 1024px){
   .hero{
-    background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%),
+    background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 67%/contain,
     url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
@@ -72,7 +73,7 @@
 
 @media (max-width: 990px){
   .hero{
-    background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%),
+    background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 66%/contain,
     url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
@@ -84,7 +85,7 @@
 
 @media (max-width: 824px){
   .hero{
-    background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%),
+    background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 66%/contain,
     url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
@@ -96,7 +97,7 @@
 
 @media (max-width: 770px){
   .hero{
-    background: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%),
+    background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 70%/contain,
     url("../static/img/уй сурот.png")  no-repeat right/35% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
@@ -109,7 +110,7 @@
 @media (max-width: 700px){
   .hero{
     height: 1200px;
-    background: linear-gradient(142.75deg, rgba(7, 30, 40, 0.58) 20.54%, rgba(16, 39, 49, 0.49) 34.67%, rgba(26, 48, 57, 0.48) 48.15%, rgba(2, 29, 40, 0.63) 74.9%),
+    background: var(--hero-bg-linear1),
   url("../static/img/image 77.png")  no-repeat bottom/100% 35%,
   url("../static/img/image 75.png")  no-repeat  center/100% 35%,
   url("../static/img/image 76.png")  no-repeat top/100% 35%;
@@ -121,11 +122,10 @@
   }
 }
 
-
 @media (max-width: 700px){
   .hero {
     height: 1000px;
-    background: linear-gradient(142.75deg, rgba(7, 30, 40, 0.58) 20.54%, rgba(16, 39, 49, 0.49) 34.67%, rgba(26, 48, 57, 0.48) 48.15%, rgba(2, 29, 40, 0.63) 74.9%),
+    background: var(--hero-bg-linear1),
     url("../static/img/image 77.png") no-repeat bottom/100% 35%,
     url("../static/img/image 75.png") no-repeat center/100% 35%,
     url("../static/img/image 76.png") no-repeat top/100% 35%;
