@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <Helmet title="Home">
             <section className="hero">
-                <div className="hero__container">
+                <div className="container">
                     <div className="hero__items">
                         <div className="hero__item">
                             <Link to="/architecture" className="hero__link">
