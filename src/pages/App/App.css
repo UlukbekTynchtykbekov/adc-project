@@ -1,0 +1,7 @@
+ul,li{
+    list-style: none;
+    cursor: pointer;
+}
+a,a:hover{
+    text-decoration: none;
+}
