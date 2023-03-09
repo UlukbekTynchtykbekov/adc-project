@@ -1,17 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const ParallaxStyle = {
+        top: `${-scrollPosition * 0.5}px`,
+    };
+
+    useEffect(() => {
+        function handleScroll() {
+            setScrollPosition(window.scrollY);
+        }
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-      <header className="header">
+      <header className="header" style={ParallaxStyle}>
           <div className="container">
              <div className="header-in">
                  <div className="logo">
                      <img className="logo__img" src={Logo} alt=""/>
-
                  </div>
                  <nav className={`menu ${isOpen && "open"}`}>
                      <ul className="menu__item">

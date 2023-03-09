@@ -10,7 +10,7 @@ import Architecture from "../pages/Architecture";
 
 const Routers = () => {
     return <Routes>
-        <Route path="/" element={<Home />}/>
+        <Route path="/" element={<Home/>}/>
         <Route path="architecture" element={<Architecture/>}/>
         <Route path="projects" element={<Projects/>}/>
         <Route path="services" element={<Services/>}/>

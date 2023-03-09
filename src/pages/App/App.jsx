@@ -1,4 +1,3 @@
-
 import './App.scss';
 import Layout from "../../layout/Layout";
 

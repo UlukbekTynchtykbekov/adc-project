@@ -1,19 +1,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
-$Rubik: "Rubik",sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
     --hero-bg-linear1: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%);
+    --hero-bg-linear2: linear-gradient(to bottom, rgba(9, 2, 2, 0) 0%, rgba(16, 2, 2, 0) 50%, rgba(0, 0, 0, 0) 80%, #000 100%);
+    --card-bg-linear: linear-gradient(to bottom, rgba(26, 48, 57, 0.39) 0%, rgba(26, 48, 57, 0.39) 50%, rgba(26, 48, 57, 0.39) 80%, rgba(26, 48, 57, 0.39) 100%);
+    --hero-bg-linear3: linear-gradient(8.38deg, rgba(7, 30, 40, 0.72) 6.22%, rgba(2, 29, 40, 0.54) 89.32%);
     --hover-line-color: #D9D9D9;
     --title-color: #FFFFFF;
-
+    --body-bg: #000;
 }
 
 .container{
-    max-width: 1140px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 body{
     font-family: 'Mulish', sans-serif;
+    background: var(--body-bg);
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.col-9{
+    width: 75%;
+}
+
+.col-6{
+    width: 50%;
+}
+
+.col-3{
+    width: 25%;
+}
+
+.col-12{
+    width: 100%;
+}
+
+.col-4{
+    width: 33.33333%;
+}
+
+.col-2{
+    width: 16.6666%;
+}
+
+.col-8{
+    width: 66.66%;
+}
+
+.button{
+    position: relative;
+    padding: 10px 30px;
+    background: transparent;
+    color: var(--title-color);
+    border-radius: 10px;
+    border: 1px solid;
+    cursor: pointer;
 }

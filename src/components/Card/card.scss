@@ -1,0 +1,158 @@
+.card{
+  position: relative;
+  width: 100%;
+  margin: 70px auto;
+  &__inner{
+    position: relative;
+    width: 371px;
+    height: 427px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px auto;
+    cursor: pointer;
+    &:after{
+      content:"";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: var(--hero-bg-linear1);
+      transition: .0s;
+      visibility: hidden;
+    }
+    &:hover .card__info{
+      bottom: 90px;
+      &:after{
+        visibility: hidden;
+        background: var(--hero-bg-linear1);
+      }
+    }
+
+    &:hover .card__btn{
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &:hover .card__image{
+      transform: scale(1.1);
+    }
+
+    &:hover:after{
+      visibility: visible;
+    }
+  }
+  &__image{
+    position: absolute; /* Position the image element absolutely within the card element */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+  }
+  &__column{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__info{
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: var(--title-color);
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    transition: .5s;
+    &:after{
+      content:"";
+      position: absolute;
+      width: 100%;
+      height: 200px;
+      top: -10px;
+      left: 0;
+      background: var(--card-bg-linear);
+      transition: .0s ease-out;
+    }
+  }
+  &__title{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size:35px;
+    line-height: 118.9%;
+    color: var(--title-color);
+    z-index: 3;
+  }
+  &__subtitle{
+    margin-top: 10px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 118.9%;
+    color: var(--title-color);
+    z-index: 3;
+  }
+  &__btn{
+    margin-top: 30px;
+    background: transparent;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 118.9%;
+    text-transform: capitalize;
+    visibility: hidden;
+    opacity: 0;
+    transition: .5s;
+    z-index: 3;
+    &:after{
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: all .35s;
+      border-radius: 10px;
+    }
+    &:hover:after{
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1200px){
+  .card{
+    &__column {
+      width: 50%;
+    }
+    &__inner{
+      width: 95%;
+      margin: 10px auto
+    }
+  }
+}
+
+@media (max-width: 770px){
+  .card{
+    &__column {
+      width: 100%;
+    }
+    &__inner{
+      width: 95%;
+      margin: 10px auto
+    }
+    &__image{
+      height: 600px;
+    }
+  }
+}
