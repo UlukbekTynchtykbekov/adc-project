@@ -43,7 +43,7 @@
     font-weight: 300;
     font-size: 38px;
     line-height: 132.4%;
-    color: #FFFFFF;
+    color: var(--title-color);
     letter-spacing: 8px;
 
   }
@@ -54,7 +54,7 @@
     font-weight: 400;
     font-size: 17px;
     line-height: 118.9%;
-    color: #FFFFFF;
+    color: var(--title-color);
     letter-spacing: 1px;
   }
   &__arrow{

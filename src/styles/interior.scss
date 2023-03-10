@@ -1,0 +1,22 @@
+.short-desc{
+  width: 100%;
+  margin: 50px 0;
+  &__wrapper{
+  }
+  &__title{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 275;
+    font-size: 40px;
+    line-height: 79.9%;
+    color:  var(--title-color);
+  }
+  &__subtitle{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 250;
+    font-size: 24px;
+    line-height: 149.9%;
+    color: var(--title-color);
+  }
+}

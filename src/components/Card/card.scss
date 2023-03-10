@@ -17,7 +17,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: var(--hero-bg-linear1);
+      background: var(--card-bg-linear);
       transition: .0s;
       visibility: hidden;
     }
@@ -85,7 +85,7 @@
     font-family: 'Gothic A1', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size:35px;
+    font-size:30px;
     line-height: 118.9%;
     color: var(--title-color);
     z-index: 3;
@@ -95,7 +95,7 @@
     font-family: 'Gothic A1', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 17px;
     line-height: 118.9%;
     color: var(--title-color);
     z-index: 3;
