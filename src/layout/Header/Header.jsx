@@ -2,27 +2,14 @@ import React, {useEffect, useState} from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
+import useParallax from "../../CustomHooks/parallaxHook";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [scrollPosition, setScrollPosition] = useState(0);
-
-    const ParallaxStyle = {
-        top: `${-scrollPosition * 0.5}px`,
-    };
-
-    useEffect(() => {
-        function handleScroll() {
-            setScrollPosition(window.scrollY);
-        }
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    const {bgParallaxStyle} = useParallax()
 
     return (
-      <header className="header" style={ParallaxStyle}>
+      <header className="header" style={bgParallaxStyle}>
           <div className="container">
              <div className="header-in">
                  <div className="logo">
