@@ -8,7 +8,7 @@ const Header = ({isOpen, setIsOpen}) => {
     const {bgParallaxStyle} = useParallax()
 
     return (
-        <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle }>
+        <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle}>
             <div className="container">
                 <div className="navigation">
                     <div className="logo">
