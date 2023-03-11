@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Header from "../Header";
 import Footer from "../Footer";
 import Routers from "../../routers/Routers";
 
 const Layout = () => {
+    const [isOpen, setIsOpen] = useState(false)
+
     return (
         <>
-          <Header/>
-            <main>
+          <Header isOpen={isOpen} setIsOpen={ setIsOpen}/>
+            <main className={`main ${isOpen ? 'no-scroll' : ''}`}>
             <Routers />
             </main>
           <Footer/>

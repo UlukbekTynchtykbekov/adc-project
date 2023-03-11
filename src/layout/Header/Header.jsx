@@ -1,21 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
 import useParallax from "../../CustomHooks/parallaxHook";
 
-const Header = () => {
-    const [isOpen, setIsOpen] = useState(false)
+const Header = ({isOpen, setIsOpen}) => {
     const {bgParallaxStyle} = useParallax()
 
     return (
-        <header className="header" style={bgParallaxStyle}>
+        <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle }>
             <div className="container">
                 <div className="navigation">
                     <div className="logo">
                         <img className="logo__img" src={Logo} alt=""/>
                     </div>
-                    <nav className={`menu ${isOpen && "open"}`}>
+                    <nav onClick={() => setIsOpen(false)} className={`menu ${isOpen && "open"}`}>
                         <ul className="menu__item">
                             <li className="menu__link">
                                 <Link className="menu__title" to="/projects">ПРОЕКТЫ</Link>
@@ -34,8 +33,7 @@ const Header = () => {
                             </li>
                         </ul>
                     </nav>
-                    <div className={`nav-toggle ${isOpen && "open"}`} onClick={() => setIsOpen(!isOpen)
-                    }>
+                    <div className={`nav-toggle ${isOpen && "open"}`} onClick={() => setIsOpen(!isOpen)}>
                         <div className="bar">
 
                         </div>

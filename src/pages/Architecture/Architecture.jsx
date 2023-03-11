@@ -3,8 +3,8 @@ import Common from "../../components/Common";
 import Helmet from "../../layout/Helmet";
 import Card from "../../components/Card";
 import bgImage from "../../static/img/architecture-bg.png"
-import "../../styles/architecture.scss";
 import useParallax from "../../CustomHooks/parallaxHook";
+import "../../styles/architecture.scss";
 
 const Architecture = () => {
     const {handleScroll, scrollRef, isVisible, bgParallaxStyle} = useParallax()
