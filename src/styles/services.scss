@@ -1,0 +1,86 @@
+.services{
+  width: 100%;
+  min-height: 100vh;
+  background: var(--title-color);
+  margin-top: 80px;
+  padding-bottom: 40px;
+  &__title{
+    padding-top: 50px;
+    margin-left: 300px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 138.4%;
+    letter-spacing: 4px;
+    color: rgba(120, 120, 120, 0.31);
+  }
+  &__suggestion{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: 300px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 149.9%;
+    color: rgba(0, 0, 0, 0.71);
+  }
+}
+
+.bottom{
+  margin: 0 auto;
+  &__mainTitle{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-left: 300px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 102.9%;
+    color: rgba(0, 0, 0, 0.53);
+
+  }
+  &__row{
+    margin-left: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  &__column{
+    width: 27%;
+  }
+  &__card{
+
+  }
+
+  &__title{
+    margin-top: 20px;
+    font-family: 'Ubuntu',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 79.9%;
+    text-align: center;
+    color: #000000;
+  }
+  &__number{
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 120.9%;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.04)
+  }
+  &__subtitle{
+    margin-top: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 166.9%;
+    color: #000000;
+  }
+}

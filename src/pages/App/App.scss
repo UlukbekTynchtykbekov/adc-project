@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
 
 :root {
     --hero-bg-linear1: linear-gradient(104.36deg, #071E28 0%, rgba(16, 39, 49, 0.5) 25.09%, rgba(26, 48, 57, 0.39) 48.44%, rgba(2, 29, 40, 0.61) 94.79%);
@@ -13,6 +16,8 @@
     --category-color: #A8A4A4;
     --body-bg: #000;
     --title-nonactive-bg: rgba(0, 0, 0, 0.29);
+    --construction-title-color: rgba(0, 0, 0, 0.71);
+    --construction-wrapper-bg: rgba(239, 239, 239, 0.57);
 }
 
 .container{
