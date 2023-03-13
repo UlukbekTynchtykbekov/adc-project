@@ -11,6 +11,17 @@
     width: 100%;
     height: 60px;
   }
+  &__architecture{
+    background: var(--title-color);
+   padding-top: 30px;
+  }
+}
+
+.sort-item{
+  color: var(--body-bg) !important;
+  &:after{
+    background: var(--body-bg) !important;
+  }
 }
 
 .category{
@@ -19,7 +30,7 @@
   justify-content: space-around;
   align-items: center;
   &__list{
-
+    cursor: pointer;
   }
   &__item{
     position: relative;
@@ -41,6 +52,17 @@
       height: 2px;
       background: var(--body-bg);
       transition: 0.3s;
+    }
+    &.active{
+      &:after{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--body-bg);
+      }
     }
     &:hover:after{
       width: 100%;
