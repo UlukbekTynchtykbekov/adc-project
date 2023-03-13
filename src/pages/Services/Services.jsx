@@ -44,26 +44,32 @@ const Services = () => {
                             <div className="bottom__column">
                                 <div className="bottom__card">
                                     <h1 className="bottom__number">1</h1>
-                                    <h4 className="bottom__title">Дизайн коммерческих
-                                        пространств</h4>
-                                    <p className="bottom__subtitle">Разработка дизайна мест
-                                        общественного пользования жилых комлексов и бизнес -центров</p>
+                                    <div className="bottom__info">
+                                        <h4 className="bottom__title">Дизайн коммерческих
+                                            пространств</h4>
+                                        <p className="bottom__subtitle">Разработка дизайна мест
+                                            общественного пользования жилых комлексов и бизнес -центров</p>
+                                    </div>
                                 </div>
                             </div>
                             <div className="bottom__column">
                                 <div className="bottom__card">
                                     <h1 className="bottom__number">2</h1>
-                                    <h4 className="bottom__title">Архитектурные   проекты</h4>
-                                    <p className="bottom__subtitle">Создаем индивидуальные архитектурные
-                                        проекты чертежи начиная от частных домов заканчивая промышленных объектов</p>
+                                    <div className="bottom__info">
+                                        <h4 className="bottom__title">Архитектурные   проекты</h4>
+                                        <p className="bottom__subtitle">Создаем индивидуальные архитектурные
+                                            проекты чертежи начиная от частных домов заканчивая промышленных объектов</p>
+                                    </div>
                                 </div>
                             </div>
                             <div className="bottom__column">
                                 <div className="bottom__card">
                                     <h1 className="bottom__number">3</h1>
-                                    <h4 className="bottom__title">Отделочные работы</h4>
-                                    <p className="bottom__subtitle">Руками профессиональных мастеров мы воплотим в жизнь все то, что спроектировали</p>
-                                </div>
+                                    <div className="bottom__info">
+                                        <h4 className="bottom__title">Отделочные работы</h4>
+                                        <p className="bottom__subtitle">Руками профессиональных мастеров мы воплотим в жизнь все то, что спроектировали</p>
+                                    </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
