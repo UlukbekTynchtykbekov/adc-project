@@ -1,6 +1,6 @@
 import React from 'react';
-import icon from "../../static/img/scrolldown 1.svg"
 import "./common.scss"
+import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
 
 const Common = ({house, bgImage, bgParallaxStyle, isVisible, handleScroll}) => {
     return (
@@ -13,9 +13,10 @@ const Common = ({house, bgImage, bgParallaxStyle, isVisible, handleScroll}) => {
                         <p className="common__subtitle">{house.subtitle}</p>
                     </div>
                 </div>
-                <div onClick={handleScroll} className={isVisible ? "common__arrow" : "hide-on-scroll"}>
-                    <img className="arrow-icon" src={icon} alt="arrow-down-s-line.svg"/>
-                </div>
+                {
+                    handleScroll ? <ArrowIcon isVisible={isVisible} handleScroll={handleScroll}/>
+                        : null
+                }
             </div>
         </setion>
     );

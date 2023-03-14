@@ -1,0 +1,59 @@
+.design{
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--projects--bg-linear),
+  url("../static/img/projectbg2.png")  no-repeat right/50% 100%,
+  url("../static/img/projectbg1.png") no-repeat left/50% 100%;
+  &__row{
+    position: absolute;
+    left: 0;
+    bottom: 230px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  &__column{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__title{
+    position: relative;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 118.9%;
+    color: var(--title-color);
+    cursor: pointer;
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--hover-line-color);
+      transition: 0.3s;
+    }
+    &:hover:after{
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 900px){
+  .design{
+    background: var(--projects--bg-linear),
+    url("../static/img/projectbg2.png")  no-repeat bottom/100% 50%,
+    url("../static/img/projectbg1.png") no-repeat top/100% 50%;
+    &__row{
+      top: 500px;
+      flex-direction: column;
+      gap: 24rem;
+    }
+  }
+}

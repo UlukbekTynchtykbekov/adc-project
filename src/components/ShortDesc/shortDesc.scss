@@ -1,0 +1,31 @@
+.wrapper{
+  width: 100%;
+  &__title{
+    width: 40%;
+    margin: 20px 70px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 45px;
+    color:  var(--title-color);
+  }
+  &__subtitle{
+    width: 90%;
+    margin-left: 70px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 33px;
+    color: var(--title-color);
+  }
+}
+
+@media (max-width: 640px) {
+  .wrapper{
+    &__subtitle{
+      width: 80%;
+    }
+  }
+}
