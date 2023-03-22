@@ -1,5 +1,6 @@
 import React from 'react';
-import useParallax from "../../CustomHooks/parallaxHook";
+import {useProjectsData} from "../../CustomHooks/useProjectsData";
+import useParallax from "../../CustomHooks/useParallaxHook";
 import Helmet from "../../layout/Helmet";
 import Common from "../../components/Common";
 import bgImage from "../../static/img/exteriorbg.png";
@@ -8,6 +9,12 @@ import Card from "../../components/Card";
 
 const Exterior = () => {
     const {isVisible, bgParallaxStyle} = useParallax()
+    const {isLoading, data, isError} = useProjectsData()
+
+    const architectureProjects = data?.data.filter(project => {
+            return project.category.name === "design"
+    });
+
     const house = {
         title: "ВЫ МОЖЕТЕ НАЙТИ ВЕСЬ НА ПРОЕКТ",
         subtitle: "ЭКСТЕРЬЕР",
@@ -21,7 +28,7 @@ const Exterior = () => {
             <section className="short-desc" style={bgParallaxStyle}>
                 <div className="container">
                     <ShortDesc house={house}/>
-                    <Card />
+                    <Card projects={architectureProjects} isLoading={isLoading} isError={isError} imageType="exterior"/>
                 </div>
             </section>
         </Helmet>
