@@ -11,6 +11,8 @@ import Interior from "../pages/Interior";
 import Exterior from "../pages/Exterior";
 import Design from "../pages/Design";
 import Construction from "../pages/Construction";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const Routers = () => {
     return <Routes>
@@ -25,6 +27,8 @@ const Routers = () => {
         <Route path="contacts" element={<Contacts/>}/>
         <Route path="projects/interior" element={<Interior/>}/>
         <Route path="projects/exterior" element={<Exterior/>}/>
+        <Route path="login" element={<Login/>}/>
+        <Route path="register" element={<Register/>}/>
     </Routes>
 
 };

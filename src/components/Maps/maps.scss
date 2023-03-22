@@ -1,0 +1,38 @@
+.maps{
+  height: 468px;
+  width: 482px;
+  border-radius: 0;
+}
+@media (max-width: 1024px){
+  .maps{
+  }
+}
+@media (max-width: 990px){
+  .maps{
+    display: flex;
+    margin: 0 auto;
+    width: 85%;
+  }
+}
+@media (max-width: 520px){
+    .maps{
+      display: flex;
+      margin: 0 auto;
+      height: 50%;
+    }
+}
+@media (max-width: 480px){
+  .maps{
+    display: flex;
+    margin: 0 auto;
+    height: 30%;
+  }
+}
+@media (max-width: 365px){
+  .maps{
+
+    display: flex;
+    width: 100%;
+    height: 60%;
+  }
+}

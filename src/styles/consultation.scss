@@ -1,0 +1,26 @@
+.consultation{
+  width: 100%;
+  min-height: 100vh;
+  background: var(--title-color);
+  margin-top: 80px;
+  padding-bottom: 40px;
+  &__description{
+    margin-left: 226px;
+   padding-top: 50px;
+    font-family: 'Gothic A1',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30.4196px;
+    line-height: 102.9%;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+@media (max-width: 700px){
+.consultation{
+  &__description{
+    margin-left: 0;
+    text-align: center;
+    font-size: 25px;
+  }
+}
+}

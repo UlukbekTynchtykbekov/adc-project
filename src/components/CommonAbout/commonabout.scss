@@ -1,0 +1,130 @@
+.commons{
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 3;
+    margin-bottom: 15rem;
+  }
+
+  &__title {
+    max-width: 55.5%;
+    font-family: 'Gothic A1', sans-serif;
+    font-weight: 300;
+    font-size: 37px;
+    line-height: 192.4%;
+    color: var(--title-color);
+    letter-spacing: 4px;
+    margin-bottom: 8rem;
+  }
+
+  &__subtitle {
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 118.9%;
+    color: var(--title-color);
+    letter-spacing: 1px;
+  }
+  &__arrow {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    animation: arrow 2s ease-in infinite;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.arrow-icon{
+  width: 70px;
+}
+
+.hide-on-scroll {
+  display: none;
+}
+
+@keyframes arrow {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1240px){
+  .commons{
+    &__title{
+      margin-left: 80px;
+    }
+    &__subtitle{
+      margin-left: 80px;
+    }
+  }
+}
+@media (max-width: 1140px){
+  .commons{
+    &__title{
+      font-size: 34px;
+    }
+    &__subtitle{
+      margin-left: 80px;
+    }
+  }
+}
+
+@media (max-width: 990px){
+  .commons{
+    &__title{
+      width: 500px;
+      font-size: 29px;
+      letter-spacing: 2.3px;
+    }
+    &__subtitle{
+      font-size: 15px;
+    }
+  }
+}
+
+@media (max-width: 700px){
+  .commons{
+    &__title{
+      margin-left: 40px;
+      width: 19rem;
+      font-size: 25px;
+    }
+    &__subtitle{
+      margin-left: 40px;
+    }
+  }
+}
+
+@media (max-width: 480px){
+  .commons{
+    &__title{
+      width: 400px;
+      font-size: 24px;
+    }
+    &__subtitle{
+      font-size: 13px;
+    }
+  }
+}
+@media (max-width: 420px){
+  .commons{
+    &__title{
+      width: 300px;
+      font-size: 19px;
+    }
+    &__subtitle{
+      font-size: 12px;
+    }
+  }
+}
