@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
-import useParallax from "../../CustomHooks/parallaxHook";
+import useParallax from "../../CustomHooks/useParallaxHook";
 
 const Header = ({isOpen, setIsOpen}) => {
     const {bgParallaxStyle} = useParallax()

@@ -26,6 +26,7 @@ const Routers = () => {
         <Route path="projects/interior" element={<Interior/>}/>
         <Route path="projects/exterior" element={<Exterior/>}/>
     </Routes>
+
 };
 
 export default Routers;
