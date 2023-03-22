@@ -1,0 +1,12 @@
+.contacts{
+  width: 100%;
+  min-height: 100vh;
+  background: var(--title-color);
+  margin-top: 80px;
+  padding-bottom: 40px;
+}
+@media (max-width: 1200px){
+  .contacts{
+
+  }
+}

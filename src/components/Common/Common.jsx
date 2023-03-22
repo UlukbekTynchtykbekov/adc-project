@@ -4,7 +4,7 @@ import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
 
 const Common = ({house, bgImage, bgParallaxStyle, isVisible, handleScroll}) => {
     return (
-        <setion className="common">
+        <section className="common">
             <img className="common__background" src={bgImage} alt="architecture-bg"/>
             <div className="container">
                 <div style={bgParallaxStyle} className="common__wrapper">
@@ -18,7 +18,7 @@ const Common = ({house, bgImage, bgParallaxStyle, isVisible, handleScroll}) => {
                         : null
                 }
             </div>
-        </setion>
+        </section>
     );
 };
 

@@ -33,20 +33,6 @@
     text-align: center;
     color: rgba(255, 255, 255, 0.8);
   }
-
-  &__button {
-    background-color: transparent;
-    border-radius: 0;
-  }
-
-  &__btn {
-    font-family: 'Rubik', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 102.9%;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.8);
-  }
 }
 
 .nav-toggle {
@@ -97,6 +83,28 @@
 .open .bar::after {
   width: 100%;
   transform: rotate(-45deg) translate(26px, 26px);
+}
+.panel{
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  &__user-wrapper{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #FFFFFF;
+    overflow: hidden;
+  }
+  &__user{
+    width: 17px;
+    padding-top: 5px;
+  }
 }
 @media (max-width: 860px) {
   .menu {

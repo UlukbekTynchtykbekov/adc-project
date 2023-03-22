@@ -1,0 +1,182 @@
+.form{
+  align-items: center;
+  width: 748px;
+  display: block;
+  margin: 0 auto;
+  &__under-text{
+    font-family: 'Gothic A1',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 102.9%;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 2rem;
+  }
+  &__link{
+    font-family: 'Gothic A1',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 102.9%;
+    color: #000000;
+    text-decoration: underline;
+    margin-left: 10px;
+  }
+}
+.input__row{
+  display: flex;
+  justify-content: space-between;
+}
+.field{
+  position: relative;
+  height: 52px;
+  width: 100%;
+  color: #A8A4A4;
+  overflow: hidden;
+  padding: 10px 0;
+  &__first{
+    width: 300px;
+  }
+}
+.field input{
+  font-family: 'Mulish',sans-serif;
+  font-size: 20px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  line-height: 102.9%;
+  outline: 0;
+  background-color: inherit;
+  border: none;
+  box-sizing: border-box;
+}
+.field .label-wrapper{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  background-color: inherit;
+  left: 0;
+  pointer-events: none;
+  border-bottom: 1px solid black;
+}
+.field .label-wrapper::after{
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-bottom: 3px solid #000000;
+  left: 0;
+  bottom: -1px;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+}
+.field .label-text{
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  transition: all 0.2s ease;
+}
+.field input:focus + .label-wrapper .label-text,
+.field input:valid + .label-wrapper .label-text{
+  font-size: 12px;
+  color: #000000;
+  transform: translateY(-150%);
+}
+.field input:focus + .label-wrapper::after,
+.field input:valid + .label-wrapper::after{
+  transform: translateX(0%);
+}
+.label-disable{
+  font-family: 'Mulish',sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 102.9%;
+  color: #A8A4A4;
+}
+//Начало стилизации checkbox
+.checkbox{
+   display: flex;
+  justify-content: space-between;
+  padding: 40px 0;
+  &__check {
+    text-align: center;
+    display: flex;
+    padding-top: 20px;
+  }
+  &__check input{
+    width: 22.88px;
+    height: 22.88px;
+    border: 1px solid #575859;
+  }
+}
+.label-check{
+  margin-left: 10px;
+}
+.label-texts{
+  font-family: 'Mulish',sans-serif;
+  font-weight: 400;
+  font-size: 12.6241px;
+  line-height: 102.9%;
+  text-align: center;
+  color: #A8A4A4;
+  margin-top:-5px;
+}
+//Конец стилизации checkbox
+.checkbox__btn{
+  margin-top: 50px;
+  box-sizing: border-box;
+  width: 263px;
+  height: 58px;
+  border: 0.789007px solid #000000;
+  font-family: 'Mulish',sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 102.9%;
+  text-align: center;
+  color: #000000;
+  background-color: transparent;
+}
+.checkbox__btn:hover {
+  box-shadow: inset 0 0 0 2em var(--hover);
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+@media (max-width: 770px){
+   .form{
+     width: 650px;
+   }
+}
+
+@media (max-width: 700px){
+  .form{
+    width: 550px;
+  }
+  .input__row{
+    display: block;
+    justify-content: space-between;
+  }
+  .field {
+    padding-top: 10px;
+    &__first {
+      width: 100%;
+    }
+  }
+  .checkbox{
+    padding: 30px 0;
+  }
+  }
+
+@media (max-width: 480px){
+   .form{
+     width: 400px;
+   }
+  .checkbox{
+      display: inline;
+    &__check input{
+      width: 15.88px;
+      height: 15.88px;
+    }
+  }
+}
