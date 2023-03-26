@@ -1,0 +1,142 @@
+
+.rate {
+  &__img {
+    width: 15px;
+  }
+
+  &__title {
+    margin-left: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}
+
+.room {
+  margin-left: 20px;
+
+  &__img {
+    width: 15px;
+  }
+
+  &__title {
+    margin-left: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}
+
+.categories {
+  margin-left: 20px;
+
+  &__img {
+    width: 15px;
+  }
+
+  &__title {
+    margin-left: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}
+
+.save {
+  display: flex;
+  align-items: center;
+  color: var(--body-bg);
+  border: none;
+  cursor: pointer;
+
+  &__title {
+    margin-left: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  color: var(--body-bg);
+  border: none;
+  cursor: pointer;
+
+  &__title {
+    margin-left: 5px;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 2rem;
+}
+
+.grid--main-img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.grid--image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.grid--image-2{
+  position: relative;
+  top: 8px;
+}
+
+.image-wrapper{
+  overflow: hidden;
+}
+
+.content{
+  position: relative;
+  margin-top: 20px;
+  &__button{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px -4px 29px -3px rgba(0,0,0,0.59);
+    -webkit-box-shadow: 1px -4px 29px -3px rgba(0,0,0,0.59);
+    -moz-box-shadow: 1px -4px 29px -3px rgba(0,0,0,0.59);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  &__button-title{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}

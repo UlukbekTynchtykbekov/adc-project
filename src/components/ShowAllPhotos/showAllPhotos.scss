@@ -1,0 +1,51 @@
+.showPhotos{
+  position: absolute;
+  min-height: 100vh;
+  background: var(--body-bg);
+  inset: 0;
+  padding: 40px 20px;
+  z-index: 999;
+  &__wrapper{
+    background:  var(--body-bg);
+    display: grid;
+    gap: 1rem;
+  }
+  &__title{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 25px;
+    color: var(--title-color);
+  }
+  &__img{
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.close{
+  &__btn{
+    position: fixed;
+    top: 30px;
+    right: 40px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
+    -webkit-box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
+    -moz-box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  &__title{
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    color: var(--body-bg);
+  }
+}

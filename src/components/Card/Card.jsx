@@ -2,7 +2,7 @@ import React from 'react';
 import "./card.scss"
 import CardItems from "../CardItems";
 
-const Card = ({ projects, isError, isLoading, imageType}) => {
+const Card = ({ data, projects, isError, isLoading, imageType}) => {
 
     if (isLoading) {
         return <div style={{color: "white"}}>Loading...</div>;
@@ -12,7 +12,11 @@ const Card = ({ projects, isError, isLoading, imageType}) => {
         return <div style={{color: "white"}}>Error</div>;
     }
 
-    if (projects.length === 0){
+    if (!data){
+        return <div style={{color: "white"}}>No project</div>;
+    }
+
+    if (!projects){
         return <div style={{color: "white"}}>No project</div>;
     }
 

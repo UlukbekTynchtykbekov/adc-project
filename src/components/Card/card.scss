@@ -59,7 +59,7 @@
   }
   &__info{
     position: absolute;
-    height: 100px;
+    height: auto;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -83,10 +83,11 @@
     }
   }
   &__title{
+    text-align: center;
     font-family: 'Gothic A1', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size:30px;
+    font-size:27px;
     line-height: 118.9%;
     color: var(--title-color);
     z-index: 3;
