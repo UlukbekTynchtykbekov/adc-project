@@ -15,11 +15,11 @@ const ProjectDetailBottom = ({el}) => {
         architect,
     } = el
 
+    console.log(architect.images)
+
     const project = data?.data?.filter(el => {
         return el.project._id === _id
     })
-
-    console.log(project)
 
     return (
         <div className="detail__bottom">
@@ -27,7 +27,7 @@ const ProjectDetailBottom = ({el}) => {
                 {
                     project?.length === 0 ? "" :
                     project?.map(el => (
-                        <div>
+                        <div className="description__desc">
                             <h2 className="description__title">
                                 Описание
                             </h2>
@@ -39,7 +39,6 @@ const ProjectDetailBottom = ({el}) => {
                         </div>
                     ))
                 }
-                <hr/>
                 <div className="description__info">
                     <div className="designed">
                         <img className="designed__img" src={Ruler} alt=""/>
@@ -57,14 +56,14 @@ const ProjectDetailBottom = ({el}) => {
                     </div>
                 </div>
                 {
-                    design ? <div className="detail__design design">
-                        <img className="design__img" src={`https://adc-mern-stack.herokuapp.com/${design[0]?.path}`} alt=""/>
+                    design ? <div className="detail__designs designs">
+                        <img className="designs__img" src={`https://adc-mern-stack.herokuapp.com/${design[0]?.path}`} alt=""/>
                     </div> : null
                 }
             </div>
             <div className="architect">
                 <div className="architect__photo">
-                    <img className="architect__img" src={`https://adc-mern-stack.herokuapp.com/${architect.images[0]?.path}`} alt=""/>
+                    <img className="architect__img" src={`https://adc-mern-stack.herokuapp.com/${architect.images[0]?.path}`} alt="ddd"/>
                 </div>
             </div>
         </div>
