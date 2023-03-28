@@ -6,16 +6,13 @@ import "./project-detail-bottom.scss"
 
 const ProjectDetailBottom = ({el}) => {
 
-   const {data} = useProjectInfo()
-
+    const {data} = useProjectInfo()
     const {
-       _id,
+        _id,
         square,
         design,
         architect,
     } = el
-
-    console.log(architect.images)
 
     const project = data?.data?.filter(el => {
         return el.project._id === _id
@@ -26,18 +23,18 @@ const ProjectDetailBottom = ({el}) => {
             <div className="description">
                 {
                     project?.length === 0 ? "" :
-                    project?.map(el => (
-                        <div className="description__desc">
-                            <h2 className="description__title">
-                                Описание
-                            </h2>
-                            <p className="description__subtitle">
-                                {
-                                    el.description
-                                }
-                            </p>
-                        </div>
-                    ))
+                        project?.map(el => (
+                            <div key={el._id} className="description__desc">
+                                <h2 className="description__title">
+                                    Описание
+                                </h2>
+                                <p className="description__subtitle">
+                                    {
+                                        el.description
+                                    }
+                                </p>
+                            </div>
+                        ))
                 }
                 <div className="description__info">
                     <div className="designed">
@@ -55,16 +52,18 @@ const ProjectDetailBottom = ({el}) => {
                         </div>
                     </div>
                 </div>
-                {
-                    design ? <div className="detail__designs designs">
-                        <img className="designs__img" src={`https://adc-mern-stack.herokuapp.com/${design[0]?.path}`} alt=""/>
-                    </div> : null
-                }
             </div>
             <div className="architect">
-                <div className="architect__photo">
-                    <img className="architect__img" src={`https://adc-mern-stack.herokuapp.com/${architect.images[0]?.path}`} alt="ddd"/>
+                    <h2 className="architect__main">About designer</h2>
+                <div className="architect__shape">
+                    <img className="architect__image"
+                         src={`https://adc-mern-stack.herokuapp.com/${architect?.images[0]?.path}`} alt=""/>
                 </div>
+                <h3 className="architect__name">{architect.firstname} {architect.lastname}</h3>
+                <h3 className="architect__title">Designer</h3>
+                <button className="button architect__button">
+                    Подробнее
+                </button>
             </div>
         </div>
     );

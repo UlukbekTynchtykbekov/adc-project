@@ -3,9 +3,7 @@ import Helmet from "../../layout/Helmet";
 import CloseX from '../../static/img/close-line.svg'
 import "./showAllPhotos.scss"
 
-const ShowAllPhotos = ({el, setShowAllPhotos}) => {
-
-    console.log(el)
+const ShowAllPhotos = ({el, setShowAllPhotos, designHouse}) => {
 
     return (
         <Helmet title="Show-All-Photos">
@@ -21,7 +19,13 @@ const ShowAllPhotos = ({el, setShowAllPhotos}) => {
                         </button>
                     </div>
                     {
+                        designHouse === "exterior" ?
                         el?.exterior?.length > 0 && el?.exterior.map(photo => (
+                            <div className="showPhotos__photo">
+                                <img className="showPhotos__img" src={`https://adc-mern-stack.herokuapp.com/${photo.path}`}
+                                     alt=""/>
+                            </div>
+                        )) : el?.interior?.length > 0 && el?.interior.map(photo => (
                             <div className="showPhotos__photo">
                                 <img className="showPhotos__img" src={`https://adc-mern-stack.herokuapp.com/${photo.path}`}
                                      alt=""/>

@@ -9,9 +9,10 @@ import ProjectDetailCard from "../../components/ProjectDetailCard";
 const ProjectDetail = () => {
     const {projectId} = useParams();
     const [showAllPhotos, setShowAllPhotos] = useState(false);
+    const [designHouse, setDesignHouse] = useState("exterior")
+
 
     const {data, isLoading, isError} = useProjectData(projectId);
-    console.log(data)
 
     if (isLoading) {
         return <div style={{color: "white"}}>Loading...</div>;
@@ -27,7 +28,7 @@ const ProjectDetail = () => {
 
     if (showAllPhotos === true) {
         return (
-            <ShowAllPhotos el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
+            <ShowAllPhotos designHouse={designHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
         )
     }
 
@@ -36,7 +37,7 @@ const ProjectDetail = () => {
             <section className="detail">
                 <div className="container">
                     {
-                        <ProjectDetailCard el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
+                        <ProjectDetailCard designHouse={designHouse} setDesignHouse={setDesignHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
                     }
                 </div>
             </section>

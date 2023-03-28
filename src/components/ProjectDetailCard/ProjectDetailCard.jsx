@@ -4,24 +4,30 @@ import Home from "../../static/img/home-2-line.svg";
 import Pen from "../../static/img/edit-line.svg";
 import Share from "../../static/img/share-line.svg";
 import Grid from "../../static/img/grid-fill.svg";
-import Ruler from "../../static/img/pencil-ruler-2-fill.svg";
-import House from "../../static/img/home-2-line.svg";
 import "./project-detail-card.scss"
 import ProjectDetailBottom from "../ProjectDetailBottom";
+import ShareComponent from "../ShareComponent";
 
-const ProjectDetailCard = ({el, setShowAllPhotos}) => {
+const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse}) => {
 
     const {
         name,
         rating,
         room,
         exterior,
+        interior,
         category,
     } = el
 
     return (
         <div className="detail__info">
-            <h1 className="detail__name">{name}</h1>
+            <div className="detail__sort">
+                <h1 className="detail__name">{name}</h1>
+                <select className="sort" defaultValue={designHouse} onChange={(e) => setDesignHouse(e.target.value)}>
+                    <option className="sort__option" value="exterior">экстерьер</option>
+                    <option className="sort__option" value="interior">интерьер</option>
+                </select>
+            </div>
             <div className="detail__header">
                 <div className="detail__short-info">
                     <div className="rate">
@@ -45,10 +51,13 @@ const ProjectDetailCard = ({el, setShowAllPhotos}) => {
                 </div>
                 <div className="buttons">
                     <div className="share">
-                        <img className="share__img" src={Share} alt=""/>
-                        <span className="share__title">
+                        <div className="share__share-btn">
+                            <img className="share__img" src={Share} alt=""/>
+                            <span className="share__title">
                                     поделиться
                                 </span>
+                        </div>
+                        <ShareComponent />
                     </div>
                     <div className="save">
                         <svg className="save__img"
@@ -68,26 +77,37 @@ const ProjectDetailCard = ({el, setShowAllPhotos}) => {
                 <div className="detail__images">
                     <div className="detail__column1">
                         {
-                            exterior?.[0] && (
+                            designHouse === "exterior" ? exterior?.[0] && (
                                 <div>
                                     <img className="grid--main-img"
                                          src={`https://adc-mern-stack.herokuapp.com/${exterior[0].path}`} alt=""/>
+                                </div>
+                            ) : interior?.[0] && (
+                                <div>
+                                    <img className="grid--main-img"
+                                         src={`https://adc-mern-stack.herokuapp.com/${interior[0].path}`} alt=""/>
                                 </div>
                             )
                         }
                     </div>
                     <div className="detail__column2">
                         {
-                            exterior?.[1] && (
+                            designHouse === "exterior" ? exterior?.[1] && (
                                 <img className="grid--image"
                                      src={`https://adc-mern-stack.herokuapp.com/${exterior[1].path}`} alt=""/>
+                            ) : interior?.[1] && (
+                                <img className="grid--image"
+                                     src={`https://adc-mern-stack.herokuapp.com/${interior[1].path}`} alt=""/>
                             )
                         }
                         <div className="image-wrapper">
                             {
-                                exterior?.[2] && (
+                                designHouse === "exterior" ? exterior?.[2] && (
                                     <img className="grid--image grid--image-2"
                                          src={`https://adc-mern-stack.herokuapp.com/${exterior[2].path}`} alt=""/>
+                                ) : interior?.[2] && (
+                                    <img className="grid--image grid--image-2"
+                                         src={`https://adc-mern-stack.herokuapp.com/${interior[2].path}`} alt=""/>
                                 )
                             }
                         </div>
