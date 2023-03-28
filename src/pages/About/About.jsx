@@ -2,7 +2,7 @@ import React from 'react';
 import "../../styles/about.scss"
 import Card from "../../components/Card";
 import Helmet from "../../layout/Helmet";
-import useParallax from "../../CustomHooks/parallaxHook";
+import useParallax from "../../CustomHooks/useParallaxHook";
 import CommonAbout from "../../components/CommonAbout";
 import Partners from "../../components/Partners";
 import Partner from "../../static/img/partners.png"
