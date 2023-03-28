@@ -51,7 +51,7 @@ const Architecture = () => {
                                                                   onClick={() => setRoom("6")}>6-ком</p></li>
                         </ul>
                     </div>
-                    <Card projects={architectureProjects} isLoading={isLoading} isError={isError} imageType="exterior"/>
+                    <Card data={data} projects={architectureProjects} isLoading={isLoading} isError={isError} imageType="exterior"/>
                 </div>
             </div>
         </Helmet>
