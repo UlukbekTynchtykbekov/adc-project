@@ -22,7 +22,7 @@ const About = () => {
             <section className="short-desc" style={bgParallaxStyle}>
                 <div className="container">
                     <Partners Partner={Partner} house={house}/>
-                    <Card />
+                    {/*<Card />*/}
                 </div>
             </section>
         </Helmet>

@@ -20,11 +20,14 @@
     --construction-wrapper-bg: rgba(239, 239, 239, 0.57);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .container{
     max-width: 1200px;
     margin: 0 auto;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 10px;
 }
 
 body{

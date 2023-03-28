@@ -1,5 +1,6 @@
 import React from 'react';
 import CartImage from "../CartImage";
+import {Link} from "react-router-dom";
 
 const CardItems = ({project, imageType}) => {
 
@@ -13,7 +14,9 @@ const CardItems = ({project, imageType}) => {
                     <div className="card__info">
                         <h3 className="card__title">{project.name}</h3>
                         <p className="card__subtitle">{project.shortDesc}</p>
-                        <button className="button card__btn">подробнее</button>
+                        <Link to={`/projects/${project._id}`}>
+                            <button className="button card__btn">подробнее</button>
+                        </Link>
                     </div>
                 </div>
             </div>

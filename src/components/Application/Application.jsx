@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
 import "./application.scss"
+import {useSendMessage} from "../../CustomHooks/useTelegrammBot";
 
 
 const Application = () => {
-    const [firstName, setFirstName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [requestType, setRequestType] = useState('');
-    const [request, setRequest] = useState('');
+
+    const [name, setName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [email, setEmail] = useState("");
+    const [categories, setCategories] = useState({});
+    const [request, setRequest] = useState("");
+
+    const { mutate: senMessage, isSuccess } = useSendMessage()
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setCategories(prevState => ({
+            ...prevState, [name]: checked
+        }))
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Отправляем данные о заявке на сервер или обрабатываем локально
-        // Сбрасываем значения полей формы
-        setFirstName('');
-        setPhone('');
-        setEmail('');
-        setRequestType('');
-        setRequest('');
+        const data = "Name: " + name +  "\nPhone number: " + phoneNumber +  "\nEmail: " + email +  "\nCategories: " + JSON.stringify(categories) +  "\nRequest: " + request;
+        senMessage(data);
     };
 
+    if (isSuccess){
+        alert("Sended message successfully")
+    }
     return (
         <form onSubmit={handleSubmit} className="form">
             <div className="field">
@@ -28,8 +36,8 @@ const Application = () => {
                     id="firstName"
                     autoComplete="off"
                     required
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
                 <label htmlFor="firstName" className="label-wrapper">
                     <span className="label-text">ваша имя и фамилия</span>
@@ -43,8 +51,8 @@ const Application = () => {
                           id="phone"
                           autoComplete="off"
                           required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
                       />
                       <label htmlFor="email" className="label-wrapper">
                           <span className="label-text">ваш телефон</span>
@@ -73,8 +81,9 @@ const Application = () => {
                        <input
                            type="checkbox"
                            id="requestType"
-                           value={requestType}
-                           onChange={(e) => setRequestType(e.target.value)}
+                           name="architecture"
+                           value={categories.architecture}
+                           onChange={handleCheckboxChange}
                        />
                        <label htmlFor="requestType" className="label-check">
                            <span className="label-texts">Архитектура</span>
@@ -83,9 +92,9 @@ const Application = () => {
                    <div className="checkbox__check">
                        <input
                            type="checkbox"
-                           id="requestType2"
-                           value={requestType}
-                           onChange={(e) => setRequestType(e.target.value)}
+                           name="equipment"
+                           value={categories.equipment}
+                           onChange={handleCheckboxChange}
                        />
                        <label htmlFor="requestType2" className="label-check">
                            <span className="label-texts">Комплектация проекта</span>
@@ -97,8 +106,9 @@ const Application = () => {
                         <input
                             type="checkbox"
                             id="requestType3"
-                            value={requestType}
-                            onChange={(e) => setRequestType(e.target.value)}
+                            name="realization"
+                            value={categories.realization}
+                            onChange={handleCheckboxChange}
                         />
                         <label htmlFor="requestType3" className="label-check">
                             <span className="label-texts">Реализация проектов</span>
@@ -108,8 +118,9 @@ const Application = () => {
                         <input
                             type="checkbox"
                             id="requestType4"
-                            value={requestType}
-                            onChange={(e) => setRequestType(e.target.value)}
+                            name="decoration"
+                            value={categories.decoration}
+                            onChange={handleCheckboxChange}
                         />
                         <label htmlFor="requestType4" className="label-check">
                             <span className="label-texts">декорирование</span>
@@ -123,8 +134,9 @@ const Application = () => {
                             height="24"
                             type="checkbox"
                             id="requestType5"
-                            value={requestType}
-                            onChange={(e) => setRequestType(e.target.value)}
+                            name="interior"
+                            value={categories.interior}
+                            onChange={handleCheckboxChange}
                         />
                         <label htmlFor="requestType5" className="label-check">
                             <span className="label-texts">дизайн интерьра</span>
@@ -134,8 +146,9 @@ const Application = () => {
                         <input
                             type="checkbox"
                             id="requestType6"
-                            value={requestType}
-                            onChange={(e) => setRequestType(e.target.value)}
+                            name="exterior"
+                            value={categories.exterior}
+                            onChange={handleCheckboxChange}
                         />
                         <label htmlFor="requestType6" className="label-check">
                             <span className="label-texts">дизайн экстерера</span>
