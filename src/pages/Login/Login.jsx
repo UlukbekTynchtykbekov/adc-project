@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import "../../styles/login.scss"
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {useAddLoginData} from "../../CustomHooks/useAuth";
 
@@ -13,16 +13,30 @@ const schema = yup.object({
 }).required();
 
 const Login = () => {
-    const { register, handleSubmit, formState:{ errors } } = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema)
     });
-    const {mutate:addLogin, data, isLoading, isError, error} = useAddLoginData();
+    const {mutate: addLogin, data, isLoading, isError, error} = useAddLoginData();
 
-    const onSubmit = (data) => {
-            addLogin(data)
-        };
+    const onSubmit = (user) => {
+        addLogin(user)
+    };
 
-    console.log(data?.data)
+    if (isLoading) {
+        return <div style={{color: "white"}}>Loading....</div>
+    }
+
+    if (isError) {
+        return <div style={{color: "white"}}>
+            {error?.response.data}
+        </div>
+    }
+
+    if (data?.data){
+        window.localStorage.setItem("token", data?.data)
+        alert("Вы успешно авторизовались!")
+        return <Navigate to="/"/>
+    }
 
     return (
         <Helmet title="Login">
@@ -32,11 +46,6 @@ const Login = () => {
                         <div className="login__main">
                             <h3 className="login__description">Логин</h3>
                         </div>
-                        {
-                            isError? <div>
-                                <p>{error?.response.data}</p>
-                            </div> : ""
-                        }
                         <div className="field login__field">
                             <input
                                 type="email"
@@ -63,7 +72,8 @@ const Login = () => {
                         <p>{errors.password?.message}</p>
                         <button className="checkbox__btn" type="submit">Отправить</button>
                         <div className="form__under-text">
-                            У вас еще нет аккаунта?<Link className="form__link" to='/register'>Зарегистрироваться сейчас</Link>
+                            У вас еще нет аккаунта?<Link className="form__link" to='/register'>Зарегистрироваться
+                            сейчас</Link>
                         </div>
                     </form>
                 </div>
