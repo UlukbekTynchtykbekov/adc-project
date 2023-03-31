@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from "../../static/img/logo.png"
 import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
-import useParallax from "../../CustomHooks/parallaxHook";
+import useParallax from "../../CustomHooks/useParallaxHook";
 import Search from "../../static/img/search-line (1).svg"
 import Like from "../../static/img/heart-line.svg"
 import User from "../../static/img/user-fill.svg"

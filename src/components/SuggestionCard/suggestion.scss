@@ -1,0 +1,164 @@
+.bottom {
+  margin: 0 auto;
+
+  &__mainTitle {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-left: 200px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 102.9%;
+    color: rgba(0, 0, 0, 0.53);
+
+  }
+
+  &__row {
+    margin-left: 200px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  &__column {
+    width: 27%;
+  }
+
+  &__card {
+
+  }
+
+  &__title {
+    margin-top: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 79.9%;
+    text-align: center;
+    color: #000000;
+  }
+
+  &__number {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 128px;
+    line-height: 120.9%;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.04)
+  }
+
+  &__subtitle {
+    margin-top: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 166.9%;
+    color: #000000;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .bottom {
+    &__row {
+      width: 74%;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+
+  .bottom {
+    &__mainTitle {
+      margin-left: 100px;
+    }
+
+    &__row {
+      margin-left: 100px;
+    }
+
+    &__title {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    &__subtitle {
+      font-size: 10px;
+    }
+  }
+}
+
+
+@media (max-width: 680px) {
+
+  .bottom {
+    &__mainTitle {
+      margin-left: 100px;
+    }
+
+    &__row {
+      display: block;
+      width: 100%;
+      margin-left: -100px;
+    }
+
+    &__column {
+      width: 100%;
+    }
+
+    &__card {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__title {
+      font-size: 17px;
+    }
+
+    &__subtitle {
+      font-size: 12px;
+    }
+
+    &__info {
+      width: 30%;
+    }
+
+    &__number {
+      width: 70%;
+    }
+  }
+}
+
+
+@media (max-width: 570px) {
+  .bottom {
+    &__row {
+      margin-left: -50px;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .bottom {
+    &__row {
+      margin-left: -25px;
+    }
+
+    &__mainTitle {
+      margin-left: 82px;
+    }
+
+    &__title {
+      font-size: 12px;
+    }
+
+    &__subtitle {
+      font-size: 10px;
+    }
+  }
+}
