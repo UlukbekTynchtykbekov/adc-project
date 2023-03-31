@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Helmet from "../../layout/Helmet";
 import "../../styles/login.scss"
 import {Link, Navigate} from "react-router-dom";
@@ -27,7 +27,7 @@ const Login = () => {
     }
 
     if (isError) {
-        return <div style={{color: "white"}}>
+        return <div>
             {error?.response.data}
         </div>
     }
