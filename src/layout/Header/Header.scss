@@ -91,6 +91,17 @@
     align-items: center;
     gap: 1rem;
   }
+
+  &__user-roller{
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+    color: var(--title-color);
+    background: rgba(171, 205, 239, 0.3);
+    border-radius: 10px;
+    padding: 3px 5px;
+    text-transform: capitalize;
+  }
   &__user-wrapper{
     width: 20px;
     height: 20px;
@@ -106,6 +117,15 @@
     padding-top: 5px;
   }
 }
+
+.user{
+  &__name{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 860px) {
   .menu {
     position: fixed;

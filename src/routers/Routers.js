@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import Projects from "../pages/Projects";
 import Services from "../pages/Services";
@@ -14,8 +14,11 @@ import Construction from "../pages/Construction";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProjectDetail from "../pages/ProjectDetail";
+import {useLoginMe} from "../CustomHooks/useAuth";
 
 const Routers = () => {
+    const {data} =  useLoginMe();
+
     return <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="architecture" element={<Architecture/>}/>
@@ -28,7 +31,7 @@ const Routers = () => {
         <Route path="contacts" element={<Contacts/>}/>
         <Route path="projects/interior" element={<Interior/>}/>
         <Route path="projects/exterior" element={<Exterior/>}/>
-        <Route path="projects/:projectId" element={<ProjectDetail/>}/>
+        <Route path="projects/:projectId" element={<ProjectDetail userId={data?.data?._id}/>}/>
         <Route path="login" element={<Login/>}/>
         <Route path="register" element={<Register/>}/>
     </Routes>

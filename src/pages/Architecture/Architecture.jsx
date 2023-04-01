@@ -11,7 +11,7 @@ const Architecture = () => {
     const [room, setRoom] = useState("ВСЕ");
     const {handleScroll, scrollRef, isVisible, bgParallaxStyle} = useParallax();
 
-    const {isLoading, data, isError} = useProjectsData()
+    const {isLoading, data, isError} = useProjectsData();
 
     const architectureProjects = data?.data.filter(project => {
         if (room === "ВСЕ") {
@@ -20,6 +20,7 @@ const Architecture = () => {
             return project.category.name === "architecture" && project.room.quantity === +room
         }
     });
+
 
     const house = {
         title: "ДВУХ ЭТАЖНЫЙ ДОМ СОВРЕМЕННОГО СТИЛЯ",

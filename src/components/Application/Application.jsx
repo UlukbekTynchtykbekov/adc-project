@@ -156,8 +156,8 @@ const Application = () => {
                     </div>
                 </div>
             </div>
-            <div className="field">
-                <p className="label-disable">(необизательно)</p>
+            <p className="label-disable">(необизательно)</p>
+            <div className="field field-request">
                 <input
                     type="text"
                     id="request"

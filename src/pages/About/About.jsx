@@ -1,28 +1,52 @@
 import React from 'react';
 import "../../styles/about.scss"
-import Card from "../../components/Card";
 import Helmet from "../../layout/Helmet";
 import useParallax from "../../CustomHooks/useParallaxHook";
-import CommonAbout from "../../components/CommonAbout";
-import Partners from "../../components/Partners";
 import Partner from "../../static/img/partners.png"
+import Card1 from "../../static/img/construction1.png"
+import Card2 from "../../static/img/construction2.png"
+import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
+import handleScroll from "aos/src/js/helpers/handleScroll";
+
 
 const About = () => {
     const {isVisible, bgParallaxStyle} = useParallax()
     const house = {
-        title: "Р Е А Л И З А Т О Р Ы \n  В А Ш И Х \n"   +
-            "Ж Е Л А Н И Й  ОТ  Н А Ч А Л О  \n" +
-            " \b Д О  К О Н Ц А \b",
-        subtitle: "A R C H I T E C T U R E +  D E S I G N +  C O N S T R U C T I O N  ",
+        title: "РЕАЛИЗАТОРЫ  ВАШИХ \n"   +
+            "ЖЕЛАНИЙ  ОТ  НАЧАЛО  \n" +
+            "ДО КОНЦА",
+        subtitle: "ARCHITECTURE + DESIGN + CONSTRUCTION",
         shortDesc: "Можно сколько угодно рассказывать про дизайн, но лучше посмотреть на что мы способны. Каждая работа выполняется индивидуально, поэтому посмотрев наши работы. Вы можете созвониться с нами, для того чтобы обсудить свой уникальный заказ\n"
     }
     return (
-        <Helmet title="Exterior">
-            <CommonAbout house={house}  isVisible={isVisible} bgParallaxStyle={bgParallaxStyle}/>
-            <section className="short-desc" style={bgParallaxStyle}>
+        <Helmet title="About">
+            <section className="about">
                 <div className="container">
-                    <Partners Partner={Partner} house={house}/>
-                    {/*<Card />*/}
+                    <div style={bgParallaxStyle} className="common__wrapper about__wrapper">
+                        <div className="common__inner">
+                            <h2 className="common__title about__title">{house.title}</h2>
+                            <p className="common__subtitle about__subtitle">{house.subtitle}</p>
+                        </div>
+                    </div>
+                    {
+                        handleScroll ? <ArrowIcon isVisible={isVisible} handleScroll={handleScroll}/>
+                            : null
+                    }
+                </div>
+            </section>
+            <section className="short-desc about-desc" style={bgParallaxStyle}>
+                <div className="container">
+                    <div className="partner-wrapper">
+                        <img className="partner-wrapper__image" src={Partner} alt=""/>
+                        <p className="partner-wrapper__subtitle">
+                            {house.shortDesc}
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <section className="sliders" style={bgParallaxStyle}>
+                <div className="container">
+
                 </div>
             </section>
         </Helmet>
