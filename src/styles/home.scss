@@ -8,10 +8,6 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
-  &__container{
-    max-width: 1140px;
-    margin: 0 auto;
-  }
   &__items{
     position: relative;
     display: flex;

@@ -1,3 +1,58 @@
-.short-desc{
-  background: #FFFFFF;
+.about{
+  width: 100%;
+  min-height: 100vh;
+  background: var(--hero-bg-linear1),
+  url("../static/img/туман.png") no-repeat 75%/contain,
+  url("../static/img/уй сурот.png")  no-repeat right/28% 100%,
+  url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
+  display: block;
+  justify-content: space-between;
+  align-items: start;
+  &__wrapper{
+    width: 100%;
+    padding-top: 35px;
+  }
+  &__title{
+    width: 48% !important;
+    line-height: 165% !important;
+  }
+  &__subtitle{
+    padding-top: 90px;
+  }
 }
+.about-desc{
+  background: #FFFFFF;
+  margin: 0 !important;
+}
+.partner-wrapper{
+  margin-top: 70px;
+  width: 100%;
+  &__image{
+    width: 100%;
+
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 45px;
+    color:  var(--title-color);
+  }
+  &__subtitle{
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 2em;
+    font-family: 'Gothic A1', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 160.4%;
+    color: rgba(0, 0, 0, 0.62);
+  }
+}
+.sliders{
+  position: relative;
+  width: 100%;
+  z-index: -3;
+}
+

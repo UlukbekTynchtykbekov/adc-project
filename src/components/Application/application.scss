@@ -30,7 +30,7 @@
 .field{
   position: relative;
   margin: 20px 0;
-  height: 36px;
+  height: 49px;
   width: 100%;
   color: #A8A4A4;
   overflow: hidden;
@@ -66,7 +66,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  border-bottom: 3px solid #000000;
+  border-bottom: 2px solid #000000;
   left: 0;
   bottom: -1px;
   transform: translateX(-100%);
@@ -124,6 +124,10 @@
   margin-top:-5px;
 }
 //Конец стилизации checkbox
+.field-request{
+  width: 50%;
+  margin-top: -5px;
+}
 .checkbox__btn{
   margin-top: 50px;
   box-sizing: border-box;
