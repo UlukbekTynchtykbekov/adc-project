@@ -57,9 +57,12 @@
   border: none;
   background: none;
   cursor: pointer;
+  &:active &__img{
+    transform: scale(1.1);
+  }
+
   &__img{
-    &:active{
-    }
+    transition: .2s;
   }
 
   &__title {
