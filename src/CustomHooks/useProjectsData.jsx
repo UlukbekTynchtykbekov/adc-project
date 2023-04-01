@@ -1,12 +1,9 @@
 import {useQuery} from "react-query";
-import axios from "axios";
+import {request} from "../utils/axios-utils";
 
 const fetchArchitecture = () => {
-    return axios.get("https://adc-mern-stack.herokuapp.com/api/projects");
+    return request({url: `/api/projects`, method: 'get'});
 }
 export const useProjectsData = () => {
-    return useQuery("projects", fetchArchitecture,
-        {
-            refetchOnWindowFocus: false
-        });
+    return useQuery("projects", fetchArchitecture);
 }

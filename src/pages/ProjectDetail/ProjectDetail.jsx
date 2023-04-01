@@ -6,7 +6,7 @@ import "../../styles/project-detail.scss"
 import ShowAllPhotos from "../../components/ShowAllPhotos";
 import ProjectDetailCard from "../../components/ProjectDetailCard";
 
-const ProjectDetail = () => {
+const ProjectDetail = ({userId}) => {
     const {projectId} = useParams();
     const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [designHouse, setDesignHouse] = useState("exterior")
@@ -37,7 +37,7 @@ const ProjectDetail = () => {
             <section className="detail">
                 <div className="container">
                     {
-                        <ProjectDetailCard designHouse={designHouse} setDesignHouse={setDesignHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
+                        <ProjectDetailCard userId={userId} designHouse={designHouse} setDesignHouse={setDesignHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
                     }
                 </div>
             </section>
