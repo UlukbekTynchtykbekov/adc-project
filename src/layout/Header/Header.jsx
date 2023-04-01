@@ -1,15 +1,17 @@
 import React from 'react';
 import Logo from "../../static/img/logo.png"
-import "./Header.scss"
 import {Outlet, Link} from "react-router-dom";
 import useParallax from "../../CustomHooks/useParallaxHook";
+import {useLoginMe} from "../../CustomHooks/useAuth";
 import Search from "../../static/img/search-line (1).svg"
 import Like from "../../static/img/heart-line.svg"
 import User from "../../static/img/user-fill.svg"
 import Dashboard from "../../static/img/layout-grid-fill.svg"
+import "./Header.scss"
 
 const Header = ({isOpen, setIsOpen}) => {
     const {bgParallaxStyle} = useParallax()
+    const {data} =  useLoginMe();
 
     return (
         <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle}>
@@ -47,16 +49,29 @@ const Header = ({isOpen, setIsOpen}) => {
                                     <img className="panel__like" src={Like} alt=""/>
                                 </Link>
                             </li>
+                            {
+                                data?.data && (
+                                    <li className="panel__item">
+                                        <Link className="panel__navigation" to="">
+                                            <img className="panel__dashboard" src={Dashboard} alt=""/>
+                                        </Link>
+                                    </li>
+                                )
+                            }
                             <li className="panel__item">
-                                <Link className="panel__navigation" to="">
-                                    <img className="panel__dashboard" src={Dashboard} alt=""/>
-                                </Link>
-                            </li>
-                            <li className="panel__item">
-                                <Link className="panel__navigation" to="/login">
-                                    <div className="panel__user-wrapper">
-                                        <img className="panel__user" src={User} alt=""/>
-                                    </div>
+                                <Link className="panel__navigation" to={data?.data ? "/account" : "/login"}>
+                                   <div className={data?.data ? "panel__user-roller" : ""}>
+                                       <div className="panel__user-wrapper">
+                                           <img className="panel__user" src={User} alt=""/>
+                                       </div>
+                                       {
+                                           data?.data && (
+                                               <div className="user">
+                                                   <p className="user__name">{data?.data?.firstName}</p>
+                                               </div>
+                                           )
+                                       }
+                                   </div>
                                 </Link>
                             </li>
                         </ul>

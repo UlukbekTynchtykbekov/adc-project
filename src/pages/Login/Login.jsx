@@ -1,11 +1,11 @@
 import React from 'react';
 import Helmet from "../../layout/Helmet";
-import "../../styles/login.scss"
+import {useAddLoginData} from "../../CustomHooks/useAuth";
 import {Link, Navigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import {useAddLoginData} from "../../CustomHooks/useAuth";
+import "../../styles/login.scss"
 
 const schema = yup.object({
     email: yup.string().required().email(),
@@ -16,6 +16,7 @@ const Login = () => {
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema)
     });
+
     const {mutate: addLogin, data, isLoading, isError, error} = useAddLoginData();
 
     const onSubmit = (user) => {

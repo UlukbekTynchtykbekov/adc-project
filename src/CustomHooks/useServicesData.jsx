@@ -1,12 +1,9 @@
 import {useQuery} from "react-query";
-import axios from "axios";
+import {request} from "../utils/axios-utils";
 
 const fetchServices = () => {
-    return axios.get("https://adc-mern-stack.herokuapp.com/api/services");
+    return request({url: `/api/services`, method: 'get'});
 }
 export const useServicesData = () => {
-    return useQuery("services", fetchServices,
-        {
-            refetchOnWindowFocus: false
-        });
+    return useQuery("services", fetchServices);
 }
