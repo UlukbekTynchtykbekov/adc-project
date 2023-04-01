@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useAddUsersData} from "../../CustomHooks/useUsersData";
 import {useForm} from "react-hook-form";
@@ -20,7 +20,7 @@ const Register = () => {
         resolver: yupResolver(schema)
     });
 
-    const {mutate:addUser, isLoading, isError, error} = useAddUsersData();
+    const {mutate:addUser, data, isLoading, isError, error} = useAddUsersData();
 
     const onSubmit = (data) => {
         if (data.password !== data.confirmPassword){
@@ -31,7 +31,19 @@ const Register = () => {
             addUser(data)
         }
     };
+    if (isLoading) {
+        return <div style={{color: "white"}}>Loading....</div>
+    }
 
+    if (isError) {
+        return <div style={{color: "white"}}>
+            {error?.response.data}
+        </div>
+    }
+    if (data){
+        alert("Вы успешно регистрировались!")
+        return <Navigate to="/login"/>
+    }
     return (
         <Helmet title="Register">
             <section className="login">

@@ -1,12 +1,9 @@
-import axios from "axios";
 import {useQuery} from "react-query";
+import {request} from "../utils/axios-utils";
 
 const fetchProjectInfo = () => {
-    return axios.get(`https://adc-mern-stack.herokuapp.com/api/project-info`);
+    return request({url: `/api/project-info`,  method: 'get'});
 }
 export const useProjectInfo = () => {
-    return useQuery( "project-info", fetchProjectInfo,
-        {
-            refetchOnWindowFocus: false
-        });
+    return useQuery( "project-info", fetchProjectInfo);
 }

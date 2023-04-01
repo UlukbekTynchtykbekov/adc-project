@@ -1,8 +1,8 @@
 import {useMutation} from "react-query";
-import axios from "axios";
+import {request} from '../utils/axios-utils';
 
 const fetchAddUser = (user) => {
-    return axios.post("https://adc-mern-stack.herokuapp.com/api/users",user);
+    return request({url: '/api/users', method: 'post', data: user})
 }
 export const useAddUsersData = () => {
     return useMutation(fetchAddUser);
