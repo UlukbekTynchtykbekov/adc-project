@@ -1,0 +1,38 @@
+.search{
+  height: 35px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 30px;
+
+  &__button{
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  &__icon{
+    color: black;
+  }
+  &:hover &__input{
+    width: 150px;
+  }
+
+  &__input{
+    width: 0;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    transition: 0.8s;
+    background: transparent;
+  }
+}
+
+@media (max-width: 825px) {
+  .search{
+    &__input{
+      width: 150px;
+    }
+  }
+}

@@ -116,6 +116,27 @@
     width: 17px;
     padding-top: 5px;
   }
+  
+  &__like-item{
+    position: relative;
+  }
+  
+  &__quantity{
+    position: absolute;
+    background: var(--title-color);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 8px;
+    top: -5px;
+    left: 18px;
+    font-family: Poppins, sans-serif;
+    color: var(--body-bg);
+    font-size: 12px;
+  }
 }
 
 .user{

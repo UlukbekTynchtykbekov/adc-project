@@ -10,6 +10,7 @@ import Architecture from "../pages/Architecture";
 import Interior from "../pages/Interior";
 import Exterior from "../pages/Exterior";
 import Design from "../pages/Design";
+import Favorite from "../pages/Favorite";
 import Construction from "../pages/Construction";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -33,6 +34,7 @@ const Routers = () => {
         <Route path="projects/exterior" element={<Exterior/>}/>
         <Route path="projects/:projectId" element={<ProjectDetail userId={data?.data?._id}/>}/>
         <Route path="login" element={<Login/>}/>
+        <Route path="/favorite" element={<Favorite/>}/>
         <Route path="register" element={<Register/>}/>
     </Routes>
 

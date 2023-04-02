@@ -1,6 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {request} from '../utils/axios-utils';
 
+const fetchFavoriteProjects = () => {
+    return request({url: `/api/project-favorite`, method: 'get'});
+}
+export const useFavoriteProjects = () => {
+    return useQuery( "favorite-projects", fetchFavoriteProjects);
+}
+
 const fetchFavoriteProject = ({queryKey}) => {
     const projectId = queryKey[1]
     return request({url: `/api/project-favorite/${projectId}`, method: 'get'});
@@ -8,6 +15,7 @@ const fetchFavoriteProject = ({queryKey}) => {
 export const useFavoriteProject = (projectId) => {
     return useQuery( ["favorite-project", projectId], fetchFavoriteProject);
 }
+
 const fetchAddFavoriteProject = (favoriteProject) => {
     return request({url: '/api/project-favorite', method: 'post', data: favoriteProject})
 }
@@ -15,6 +23,7 @@ export const useAddFavoriteProject = () => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddFavoriteProject, {
         onSuccess: () => {
+            queryClient.invalidateQueries("favorite-projects");
             queryClient.invalidateQueries("favorite-project");
         },
     });
@@ -28,6 +37,7 @@ export const useDeleteFavoriteProject = (id) => {
     return useMutation(fetchDeleteFavoriteProject, {
         onSuccess: (data, variables) => {
             const { id } = variables;
+            queryClient.invalidateQueries('favorite-projects');
             queryClient.invalidateQueries('favorite-project');
         },
     });
