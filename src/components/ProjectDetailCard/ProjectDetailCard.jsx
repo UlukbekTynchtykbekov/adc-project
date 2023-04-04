@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Star from "../../static/img/star-fill.svg";
 import Home from "../../static/img/home-2-line.svg";
 import Pen from "../../static/img/edit-line.svg";
@@ -7,6 +7,7 @@ import Grid from "../../static/img/grid-fill.svg";
 import ProjectDetailBottom from "../ProjectDetailBottom";
 import ShareComponent from "../ShareComponent";
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
+import Dropdown from "../Dropdown/Dropdown";
 import {
     useAddFavoriteProject,
     useDeleteFavoriteProject,
@@ -14,7 +15,10 @@ import {
 } from "../../CustomHooks/useProjectFavorite";
 import "./project-detail-card.scss"
 
-const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, userId}) => {
+const ProjectDetailCard = ({el, setShowAllPhotos, userId, setSelected, selected}) => {
+
+    const [activeButton, setActiveButton] = useState(false);
+    const options = ["экстерьер", "интерьер"]
 
     const {data: favoriteAddedProject} = useFavoriteProject(el._id)
     const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject()
@@ -41,10 +45,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
         <div className="detail__info">
             <div className="detail__sort">
                 <h1 className="detail__name">{name}</h1>
-                <select className="sort" defaultValue={designHouse} onChange={(e) => setDesignHouse(e.target.value)}>
-                    <option className="sort__option" value="exterior">экстерьер</option>
-                    <option className="sort__option" value="interior">интерьер</option>
-                </select>
+                <Dropdown setSelected={setSelected} options={options} selected={selected}/>
             </div>
             <div className="detail__header">
                 <div className="detail__short-info">
@@ -69,13 +70,10 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
                 </div>
                 <div className="buttons">
                     <div className="share">
-                        <div className="share__share-btn">
+                        <div className="share__share-btn" onClick={() => setActiveButton(!activeButton)}>
                             <img className="share__img" src={Share} alt=""/>
-                            <span className="share__title">
-                                    поделиться
-                                </span>
                         </div>
-                        <ShareComponent/>
+                        <ShareComponent activeButton={activeButton} setActiveButton={setActiveButton}/>
                     </div>
                     {
                         userId && favoriteData && (
@@ -96,9 +94,6 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
                                                   fill="black"/>
                                         </svg>
                                 }
-                                <span className="save__title">
-                                    нравиться
-                                </span>
                             </button>
                         )
                     }
@@ -108,7 +103,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
                 <div className="detail__images">
                     <div className="detail__column1">
                         {
-                            designHouse === "exterior" ? exterior?.[0] && (
+                            selected === "экстерьер" ? exterior?.[0] && (
                                 <div>
                                     <img className="grid--main-img"
                                          src={`https://adc-mern-stack.herokuapp.com/${exterior[0].path}`} alt=""/>
@@ -123,7 +118,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
                     </div>
                     <div className="detail__column2">
                         {
-                            designHouse === "exterior" ? exterior?.[1] && (
+                            selected === "экстерьер" ? exterior?.[1] && (
                                 <img className="grid--image"
                                      src={`https://adc-mern-stack.herokuapp.com/${exterior[1].path}`} alt=""/>
                             ) : interior?.[1] && (
@@ -133,7 +128,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, designHouse, setDesignHouse, u
                         }
                         <div className="image-wrapper">
                             {
-                                designHouse === "exterior" ? exterior?.[2] && (
+                                selected === "экстерьер" ? exterior?.[2] && (
                                     <img className="grid--image grid--image-2"
                                          src={`https://adc-mern-stack.herokuapp.com/${exterior[2].path}`} alt=""/>
                                 ) : interior?.[2] && (

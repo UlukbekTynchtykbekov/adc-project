@@ -1,6 +1,6 @@
 import React from 'react';
-import "./common.scss"
 import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
+import "./common.scss"
 
 const Common = ({house, bgImage, bgParallaxStyle, isVisible, handleScroll}) => {
     return (

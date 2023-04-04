@@ -9,8 +9,8 @@ import ProjectDetailCard from "../../components/ProjectDetailCard";
 const ProjectDetail = ({userId}) => {
     const {projectId} = useParams();
     const [showAllPhotos, setShowAllPhotos] = useState(false);
-    const [designHouse, setDesignHouse] = useState("exterior")
-
+    const [selected, setSelected] = useState("экстерьер");
+    console.log(selected)
 
     const {data, isLoading, isError} = useProjectData(projectId);
 
@@ -28,7 +28,7 @@ const ProjectDetail = ({userId}) => {
 
     if (showAllPhotos === true) {
         return (
-            <ShowAllPhotos designHouse={designHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
+            <ShowAllPhotos selected={selected} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
         )
     }
 
@@ -37,7 +37,7 @@ const ProjectDetail = ({userId}) => {
             <section className="detail">
                 <div className="container">
                     {
-                        <ProjectDetailCard userId={userId} designHouse={designHouse} setDesignHouse={setDesignHouse} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
+                        <ProjectDetailCard userId={userId} selected={selected} setSelected={setSelected} el={data?.data} setShowAllPhotos={setShowAllPhotos}/>
                     }
                 </div>
             </section>
