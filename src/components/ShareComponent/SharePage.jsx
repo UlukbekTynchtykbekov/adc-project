@@ -2,7 +2,7 @@ import React from 'react';
 import {FacebookShareButton, TwitterShareButton, LinkedinShareButton, TelegramShareButton} from "react-share";
 import "./share.scss"
 
-const ShareComponent = ({activeButton, setActiveButton}) => {
+const SharePage = ({activeButton, setActiveButton}) => {
 
     const url = window.location.href;
 
@@ -11,7 +11,6 @@ const ShareComponent = ({activeButton, setActiveButton}) => {
             <ul className={activeButton ? "social__list active" : "social__list"}>
                 <li className="social__item" onClick={() => setActiveButton(false)}>
                     <FacebookShareButton url={url}>
-                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                         <div className="social__icons">
                             <span className="social__icon facebook">
                             <svg className="social__img facebook__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50">
@@ -28,7 +27,6 @@ const ShareComponent = ({activeButton, setActiveButton}) => {
                 </li>
                 <li className="social__item" onClick={() => setActiveButton(false)}>
                     <LinkedinShareButton url={url}>
-                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                         <div className="social__icons">
                             <span className="social__icon linkedin">
                             <svg className="social__img linkedin__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50">
@@ -44,7 +42,6 @@ const ShareComponent = ({activeButton, setActiveButton}) => {
                 </li>
                 <li className="social__item" onClick={() => setActiveButton(false)}>
                     <TwitterShareButton url={url}>
-                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                         <div className="social__icons">
                         <span className="social__icon twitter">
                             <svg className="social__img twitter__img"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50"><path className="social__path twitter-path"
@@ -59,7 +56,6 @@ const ShareComponent = ({activeButton, setActiveButton}) => {
                 </li>
                 <li className="social__item" onClick={() => setActiveButton(false)}>
                     <TelegramShareButton url={url}>
-                        {shareCount => <span className="myShareCountWrapper">{shareCount}</span>}
                         <div className="social__icons">
                         <span className="social__icon telegram">
                             <svg className="social__img telegram__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
@@ -79,4 +75,4 @@ const ShareComponent = ({activeButton, setActiveButton}) => {
     );
 };
 
-export default ShareComponent;
+export default SharePage;

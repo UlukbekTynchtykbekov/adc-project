@@ -1,5 +1,4 @@
 import React from 'react';
-import CartImage from "../CartImage";
 import {Link} from "react-router-dom";
 
 const CardItems = ({project, imageType}) => {
@@ -9,7 +8,8 @@ const CardItems = ({project, imageType}) => {
             <div key={project.id} className="col-4 card__column">
                 <div className="card__inner">
                     {
-                        imageType === "exterior" ? <CartImage image={project.exterior}/> : <CartImage image={project.interior}/>
+                        imageType === "exterior" ? <img className="card__image" src={project.exterior[0].url} alt=""/>
+                            : <img className="card__image" src={project.interior[0].url} alt=""/>
                     }
                     <div className="card__info">
                         <h3 className="card__title">{project.name}</h3>

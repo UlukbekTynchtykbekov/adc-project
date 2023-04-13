@@ -1,22 +1,8 @@
-.rate {
-  &__img {
-    width: 15px;
-  }
-
-  &__title {
-    margin-left: 5px;
-    font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 15px;
-    color: var(--body-bg);
-  }
-}
 
 .room {
-  margin-left: 20px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &__img {
     width: 15px;
   }

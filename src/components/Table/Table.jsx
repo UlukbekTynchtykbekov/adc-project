@@ -6,7 +6,6 @@ import Dropdown from "../Dropdown/Dropdown";
 import Search from "../Search/Search";
 
 const Table = () => {
-
     const options = ["дизайн", "архитектура"]
     const [searchItem, setSearchItem] = useState("")
     const [selected, setSelected] = useState("")

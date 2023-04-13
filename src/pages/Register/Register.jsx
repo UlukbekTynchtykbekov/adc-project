@@ -5,6 +5,8 @@ import {useAddUsersData} from "../../CustomHooks/useUsersData";
 import {useForm} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import {useDispatch, useSelector} from "react-redux";
+import {authActions} from "../../features/authenticatedSlice";
 
 const schema = yup.object({
     firstName: yup.string().required().min(2),
@@ -15,12 +17,19 @@ const schema = yup.object({
 }).required();
 
 const Register = () => {
-    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const dispatch = useDispatch();
+
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
-    const {mutate:addUser, data, isLoading, isError, error} = useAddUsersData();
+    const successAuthMe = (data) => {
+        dispatch(authActions.selectIsAuth(data?.data))
+    }
+
+    const {mutate:addUser, data, isLoading, isError, error} = useAddUsersData(successAuthMe);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
 
     const onSubmit = (data) => {
         if (data.password !== data.confirmPassword){
@@ -31,6 +40,7 @@ const Register = () => {
             addUser(data)
         }
     };
+
     if (isLoading) {
         return <div style={{color: "white"}}>Loading....</div>
     }
@@ -40,10 +50,16 @@ const Register = () => {
             {error?.response.data}
         </div>
     }
+
     if (data){
         alert("Вы успешно регистрировались!")
         return <Navigate to="/login"/>
     }
+
+    if (isAuthenticated){
+        return <Navigate to="/"/>
+    }
+
     return (
         <Helmet title="Register">
             <section className="login">
@@ -120,7 +136,7 @@ const Register = () => {
                             <p>{confirmPasswordError}</p>
                         <button className="checkbox__btn" type="submit">Отправить</button>
                         <div className="form__under-text">
-                            У вас есть аккаунта?<Link className="form__link" to='/register'>Войдите</Link>
+                            У вас есть аккаунта?<Link className="form__link" to='/login'>Войдите</Link>
                         </div>
                     </form>
                 </div>

@@ -1,11 +1,12 @@
 import React from 'react';
 import Helmet from "../../layout/Helmet";
-import {useAddLoginData} from "../../CustomHooks/useAuth";
+import {useAddLoginData, useLoginMe} from "../../CustomHooks/useAuth";
 import {Link, Navigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import "../../styles/login.scss"
+import {useSelector} from "react-redux";
 
 const schema = yup.object({
     email: yup.string().required().email(),
@@ -17,6 +18,7 @@ const Login = () => {
         resolver: yupResolver(schema)
     });
 
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const {mutate: addLogin, data, isLoading, isError, error} = useAddLoginData();
 
     const onSubmit = (user) => {
@@ -35,7 +37,9 @@ const Login = () => {
 
     if (data?.data){
         window.localStorage.setItem("token", data?.data)
-        alert("Вы успешно авторизовались!")
+    }
+
+    if (isAuthenticated){
         return <Navigate to="/"/>
     }
 

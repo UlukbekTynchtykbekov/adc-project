@@ -1,10 +1,37 @@
 import React from 'react';
 import Delete from "../../static/img/delete.svg";
 import {useDeleteFavoriteProject} from "../../CustomHooks/useProjectFavorite";
+import {toast} from "react-toastify";
 
 const TableCard = ({el, idx}) => {
 
-    const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject()
+    const removeOnSuccess = () => {
+        toast.success('Data deleted successfully', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const removeOnError = () => {
+        toast.error('Error deleting data', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject(removeOnSuccess,removeOnError)
 
     const deleteFavoriteProject = (id) => {
         removeFavoriteProject(id)
@@ -14,7 +41,7 @@ const TableCard = ({el, idx}) => {
         <tr className="table__list">
             <td className="table__item">{idx + 1}</td>
             <td className="table__item">
-                <img className="table__img" src= {`https://adc-mern-stack.herokuapp.com/${el?.project?.exterior[0].path}`} alt="tableImage"/>
+                <img className="table__img" src= {el?.project?.exterior[0].url} alt="tableImage"/>
                 {
                     el?.project?.name
                 }

@@ -101,6 +101,7 @@
     border-radius: 10px;
     padding: 3px 5px;
     text-transform: capitalize;
+    cursor: pointer;
   }
   &__user-wrapper{
     width: 20px;
@@ -140,6 +141,8 @@
 }
 
 .user{
+  cursor: pointer;
+  position: relative !important;
   &__name{
     font-style: normal;
     font-weight: 500;
