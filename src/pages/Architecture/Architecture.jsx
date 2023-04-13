@@ -5,26 +5,16 @@ import Card from "../../components/Card";
 import bgImage from "../../static/img/architecture-bg.png"
 import useParallax from "../../CustomHooks/useParallaxHook";
 import "../../styles/architecture.scss";
-import {useProjectsData} from "../../CustomHooks/useProjectsData";
 
 const Architecture = () => {
     const [room, setRoom] = useState("ВСЕ");
     const {handleScroll, scrollRef, isVisible, bgParallaxStyle} = useParallax();
 
-    const {isLoading, data, isError} = useProjectsData();
-
-    const architectureProjects = data?.data.filter(project => {
-        if (room === "ВСЕ") {
-            return project.category.name === "architecture"
-        } else {
-            return project.category.name === "architecture" && project.room.quantity === +room
-        }
-    });
-
-
     const house = {
         title: "ДВУХ ЭТАЖНЫЙ ДОМ СОВРЕМЕННОГО СТИЛЯ",
-        subtitle: "300 МЕТР КВ"
+        subtitle: "300 МЕТР КВ",
+        category:"architecture",
+        imageType: "exterior",
     }
 
     return (
@@ -52,7 +42,7 @@ const Architecture = () => {
                                                                   onClick={() => setRoom("6")}>6-ком</p></li>
                         </ul>
                     </div>
-                    <Card data={data} projects={architectureProjects} isLoading={isLoading} isError={isError} imageType="exterior"/>
+                    <Card room={room} category={house.category} imageType={house.imageType}/>
                 </div>
             </div>
         </Helmet>

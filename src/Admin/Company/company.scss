@@ -1,0 +1,16 @@
+.company{
+  position: relative;
+  background: var(--hero-bg-linear1),
+  url("../../static/img/architecture-bg.png") no-repeat center/cover;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 1000;
+}
+
+.hero-section{
+  position: relative;
+  height: 100vh;
+  left: 260px;
+  width: calc(100% - 260px);
+  transition: all 0.5s ease;
+}

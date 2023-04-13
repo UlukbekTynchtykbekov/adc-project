@@ -1,10 +1,11 @@
 import {useQuery} from "react-query";
 import {request} from "../utils/axios-utils";
 
-const fetchFavorite = ({queryKey}) => {
-    const userId = queryKey[1]
+const fetchFavorite = (userId) => {
     return request({url: `/api/favorite/${userId}`, method: 'get'});
 }
 export const useFavoriteData = (userId) => {
-    return useQuery( ["favorite", userId], fetchFavorite);
+    return useQuery( ["favorite", userId], () => fetchFavorite(userId), {
+        enabled: !!userId
+    });
 }

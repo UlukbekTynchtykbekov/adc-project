@@ -1,0 +1,10 @@
+.favorite{
+  background: var(--hero-bg-linear1),
+  url("../static/img/architecture-bg.png") no-repeat center/cover;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+}
