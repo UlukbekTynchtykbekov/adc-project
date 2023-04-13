@@ -23,7 +23,6 @@ const Layout = () => {
             <main className={`main ${isOpen ? 'no-scroll' : ''}`}>
             <Routers />
             </main>
-          <Footer/>
         </>
     );
 };
