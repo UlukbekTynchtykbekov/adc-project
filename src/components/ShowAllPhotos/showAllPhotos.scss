@@ -1,51 +1,180 @@
 .showPhotos{
-  position: absolute;
+  position: relative;
+  padding-top: 40px;
   min-height: 100vh;
   background: var(--body-bg);
   inset: 0;
-  padding: 40px 20px;
   z-index: 999;
-  &__wrapper{
-    background:  var(--body-bg);
-    display: grid;
-    gap: 1rem;
+  &::after{
+    content:"";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background: var(--hero-bg-linear3);
   }
   &__title{
-    font-family: 'Gothic A1', sans-serif;
+    position: relative;
+    font-family: 'Rubik', sans-serif;
     font-style: normal;
     font-weight: 500;
+    text-transform: uppercase;
     font-size: 25px;
     line-height: 25px;
     color: var(--title-color);
+    z-index: 1000;
   }
-  &__img{
-    width: 100%;
-    object-fit: cover;
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
 .close{
+  position: relative;
+  z-index: 111;
   &__btn{
-    position: fixed;
     top: 30px;
     right: 40px;
     padding: 10px 20px;
     border-radius: 20px;
     border: none;
-    box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
-    -webkit-box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
-    -moz-box-shadow: 7px 5px 4px -1px rgba(13,12,12,0.38);
+    background: none;
     cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.1rem;
   }
   &__title{
-    font-family: 'Gothic A1', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 15px;
-    color: var(--body-bg);
+    color: var(--title-color);
   }
+  &__icon{
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--title-color);
+  }
+}
+
+.swiper_container{
+  height: 100%;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+.swiper-slide {
+  width: 25rem;
+  height: 30rem;
+  position: relative;
+}
+
+@media (max-width: 500px) {
+  .swiper_container{
+    height: 47rem;
+  }
+  .swiper-slide{
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+
+  .swiper-slide img {
+    width: 28rem !important;
+    height: 36rem !important;
+  }
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  border-radius: 2rem;
+  object-fit: cover;
+  }
+
+.slider-controller{
+  position: relative;
+  top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-controller .swiper-button-next{
+  left: 58% !important;
+  transform: translateX(-58%) !important;
+}
+
+@media (max-width: 990px) {
+  .slider-controller .swiper-button-next{
+    left: 70% !important;
+    transform: translateX(-70%) !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .slider-controller .swiper-button-next{
+    left: 80% !important;
+    transform: translateX(-80%) !important;
+  }
+}
+
+@media (max-width: 990px) {
+  .slider-controller .swiper-button-prev{
+    left: 30% !important;
+    transform: translateX(-30%) !important;
+  }
+}
+
+@media (max-width: 450px) {
+  .slider-controller .swiper-button-prev{
+    left: 20% !important;
+    transform: translateX(-20%) !important;
+  }
+}
+
+.slider-controller .slider-arrow{
+  background: var(--title-color);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  left: 42%;
+  transform: translateX(-42%);
+  filter: drop-shadow(0px 8px 24px rgba(18, 28, 53, 0.1));
+}
+
+.slider-controller .slider-arrow ion-icon{
+  font-size: 2rem;
+  color: #222224;
+}
+
+.slider-controller .slider-arrow::after {
+  content: "";
+}
+
+.swiper-pagination {
+  position: relative;
+  width: 15rem !important;
+  bottom: 1rem;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+  background: #e8e7e7;
+  filter: drop-shadow(0px 8px 24px rgb(255, 255, 255));
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+  background: #6a59ff;
 }

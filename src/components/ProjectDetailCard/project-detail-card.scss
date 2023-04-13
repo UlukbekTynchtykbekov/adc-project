@@ -1,22 +1,8 @@
-.rate {
-  &__img {
-    width: 15px;
-  }
-
-  &__title {
-    margin-left: 5px;
-    font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 15px;
-    color: var(--body-bg);
-  }
-}
 
 .room {
-  margin-left: 20px;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &__img {
     width: 15px;
   }
@@ -64,16 +50,6 @@
   &__img{
     transition: .2s;
   }
-
-  &__title {
-    margin-left: 5px;
-    font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 15px;
-    color: var(--body-bg);
-  }
 }
 
 .share {
@@ -86,16 +62,6 @@
   &__share-btn {
     display: flex;
     align-items: center;
-  }
-
-  &__title {
-    margin-left: 5px;
-    font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 17px;
-    line-height: 15px;
-    color: var(--body-bg);
   }
 }
 
@@ -152,39 +118,5 @@
     font-size: 15px;
     line-height: 15px;
     color: var(--body-bg);
-  }
-}
-
-.sort {
-  max-width: 100%;
-  overflow-y: auto;
-  cursor: pointer;
-  padding: 10px 50px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: none;
-  outline: none;
-  border-radius: 12px;
-  color: var(--title-color);
-  font-size: 18px;
-  text-transform: capitalize;
-  background: var(--body-bg);
-  box-shadow: -3px 3px 5px 0px rgba(0, 0, 0, 0.10);
-
-  &__option {
-    padding: 10px 20px;
-    margin-bottom: 8px;
-    border-radius: 12px;
-    background-color: rgb(238, 238, 238);
-    white-space: pre-wrap;
-    cursor: pointer;
-
-    &:hover {
-      background-color: rgb(223, 223, 223);
-    }
-
-    &:checked {
-      box-shadow: 0 0 10px 100px #595959 inset;
-    }
   }
 }

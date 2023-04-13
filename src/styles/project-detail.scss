@@ -1,6 +1,5 @@
 .detail {
   width: 100%;
-  min-height: 100vh;
   margin-top: 80px;
   background: var(--title-color);
   padding-top: 40px;
@@ -8,7 +7,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px 0;
   }
+&__information{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
   &__name {
     font-family: 'Gothic A1', sans-serif;
@@ -31,7 +36,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 50%;
   }
 
   &__images {
@@ -47,8 +51,18 @@
   }
 
   &__bottom{
-    margin: 30px 0;
+    padding: 30px 0;
     display: grid;
     grid-template-columns: 2fr 1fr;
+  }
+
+  &__rating{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  &__stars{
+    display: flex;
+    align-items: center;
   }
 }

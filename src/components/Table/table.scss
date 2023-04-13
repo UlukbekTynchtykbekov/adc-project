@@ -1,0 +1,124 @@
+.table{
+  width: 82vw;
+  height: 90vh;
+  background-color: #fff5;
+
+  backdrop-filter: blur(7px);
+  box-shadow: 0 .4rem .8rem #0005;
+  border-radius: .8rem;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    width:  100%;
+    background-color: #fff4;
+    padding: .8rem 1rem;
+
+    &::-webkit-scrollbar{
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      border-radius: .5rem;
+      background-color: #0004;
+      visibility: hidden;
+    }
+
+    &:hover::-webkit-scrollbar-thumb{
+      visibility: visible;
+    }
+  }
+
+  &__body{
+    width:  95%;
+    max-height: calc(89% - 1.6rem);
+    background-color: #fffb;
+    margin: .8rem auto;
+    border-radius: .6rem;
+    overflow: auto;
+
+    &::-webkit-scrollbar{
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      border-radius: .5rem;
+      background-color: #0004;
+      visibility: hidden;
+    }
+
+    &:hover::-webkit-scrollbar-thumb{
+      visibility: visible;
+    }
+  }
+
+  &__main{
+    width: 100%;
+  }
+  &__img{
+    width: 36px;
+    height: 36px;
+    margin-right: .5rem;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  &__main,
+  &__category-name,
+  &__item {
+    border-collapse: collapse;
+    padding: 1rem;
+    text-align: left;
+  }
+
+  &__category-name{
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+  }
+
+  &__list:nth-child(even){
+    background-color: #0000000b;
+  }
+
+  &__list:hover{
+    background-color: #fff6;
+    border-radius: .5rem;
+  }
+  &__button{
+    margin: 0 auto;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  &__filter{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .table{
+    &__item{
+      &:not(:first-of-type){
+        min-width: 12.1rem;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 825px) {
+  .table{
+    &__header{
+      display: block;
+    }
+    &__filter{
+        margin: 20px 0;
+    }
+  }
+}

@@ -10,7 +10,6 @@ const ProjectDetailBottom = ({el}) => {
     const {
         _id,
         square,
-        design,
         architect,
     } = el
 
@@ -57,7 +56,7 @@ const ProjectDetailBottom = ({el}) => {
                     <h2 className="architect__main">About designer</h2>
                 <div className="architect__shape">
                     <img className="architect__image"
-                         src={`https://adc-mern-stack.herokuapp.com/${architect?.images[0]?.path}`} alt=""/>
+                         src={architect?.images[0].url} alt=""/>
                 </div>
                 <h3 className="architect__name">{architect.firstname} {architect.lastname}</h3>
                 <h3 className="architect__title">Designer</h3>

@@ -1,0 +1,11 @@
+.header{
+  &__dropdown{
+    position: absolute !important;
+    width: 140px !important;
+    top: 0;
+    right: 5px;
+  }
+  &__item{
+    color: var(--body-bg);
+  }
+}
