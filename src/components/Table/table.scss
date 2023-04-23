@@ -64,6 +64,7 @@
     margin-right: .5rem;
     border-radius: 50%;
     vertical-align: middle;
+    object-fit: cover;
   }
   &__main,
   &__category-name,
@@ -89,7 +90,7 @@
     border-radius: .5rem;
   }
   &__button{
-    margin: 0 auto;
+    margin: 0 2px;
     border: none;
     background: none;
     cursor: pointer;
@@ -99,6 +100,7 @@
     justify-content: space-between;
     gap: 1rem;
   }
+
 }
 
 @media (max-width: 1000px) {

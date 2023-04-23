@@ -32,6 +32,14 @@
     }
   }
 
+  &__non-add{
+    background: var(--title-color);
+    color: #b0afaf;
+    font-weight: bold;
+    transition: .2s;
+    border: 1px solid;
+  }
+
   &__table-btn {
     border: none;
     padding: 5px 10px;
@@ -42,6 +50,15 @@
     &:hover {
       transform: scale(1.02);
     }
+
+  }
+
+  &__table-non{
+    background: var(--title-color);
+    color: #b0afaf;
+    padding: 5px 10px;
+    transition: .2s;
+    border-radius: 5px;
   }
 
   &__table-btn:nth-child(1) {
@@ -63,5 +80,12 @@
       background: red;
       color: var(--title-color);
     }
+  }
+
+  &__error{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    color: red;
   }
 }
