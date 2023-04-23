@@ -29,6 +29,8 @@ import Square from "../Admin/Square";
 import NewSquare from "../Admin/NewSquare";
 import Room from "../Admin/Room";
 import NewRoom from "../Admin/NewRoom";
+import User from "../Admin/User";
+import Admins from "../Admin/Admins";
 
 const Routers = () => {
     return <Routes>
@@ -68,6 +70,8 @@ const Routers = () => {
             <Route exact path='/admin/rooms' element={<Room/>}/>
             <Route exact path='/admin/rooms/new' element={<NewRoom/>}/>
             <Route exact path='/admin/rooms/:id' element={<NewRoom/>}/>
+            <Route exact path='/admin/users' element={<User/>}/>
+            <Route exact path='/admin/admins' element={<Admins/>}/>
         </Route>
     </Routes>
 };

@@ -1,16 +1,55 @@
 .company{
-  position: relative;
-  background: var(--hero-bg-linear1),
-  url("../../static/img/architecture-bg.png") no-repeat center/cover;
-  width: 100%;
-  min-height: 100vh;
-  z-index: 1000;
+    position: relative;
+    height: 100vh;
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.5s ease;
+    &__table {
+        margin: 30px auto;
+        width: 95% !important;
+    }
+    &__header{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        place-items: center;
+    }
+    &__card{
+        width: 90%;
+        height: 100px;
+        margin-top: 20px;
+        background: #d22525;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 4rem;
+        border-radius: 10px;
+    }
+    &__card-title{
+        font-family: "Rubik", sans-serif;
+        font-size: 20px;
+        font-weight: 500;
+        color: var(--title-color);
+    }
+    &__card-subtitle{
+        margin-top: 10px;
+        font-family: "Rubik", sans-serif;
+        font-size: 17px;
+        font-weight: 400;
+        color: var(--title-color);
+    }
+    &__card-number{
+        margin-top: 10px;
+        font-family: "Rubik", sans-serif;
+        font-size: 17px;
+        font-weight: 400;
+        color: var(--title-color);
+    }
 }
 
-.hero-section{
-  position: relative;
-  height: 100vh;
-  left: 260px;
-  width: calc(100% - 260px);
-  transition: all 0.5s ease;
+.admins{
+    background: #96c50a;
+}
+
+.users{
+    background: #0000FF;
 }
