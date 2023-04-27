@@ -44,6 +44,16 @@
         font-weight: 400;
         color: var(--title-color);
     }
+    &__contact{
+        margin-left: 20px;
+        color: var(--title-color);
+    }
+    &__contact-text{
+        color: var(--title-color);
+    }
+    &__icon{
+        fill: var(--title-color) !important;
+    }
 }
 
 .admins{
