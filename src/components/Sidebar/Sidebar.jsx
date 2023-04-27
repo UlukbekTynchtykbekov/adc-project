@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import Logo from "../../static/img/logo.png";
-import './sidebar.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
+import './sidebar.scss'
+import User from "../../Admin/User";
 
 const Sidebar = () => {
 
@@ -46,7 +47,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link to="/admin/projects" className="nav__link">
+                            <Link to="/admin/project-info" className="nav__link">
                              <span className="nav__icon">
                                 <ion-icon name="information-circle-outline"></ion-icon>
                             </span>
@@ -56,7 +57,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/categories" className="nav__link">
                             <span className="nav__icon">
                                 <ion-icon name="list-outline"></ion-icon>
                             </span>
@@ -66,7 +67,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/architect" className="nav__link">
                         <span className="nav__icon">
                                 <ion-icon name="pencil-outline"></ion-icon>
                             </span>
@@ -76,7 +77,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/square" className="nav__link">
                         <span className="nav__icon">
                                 <ion-icon name="cube-outline"></ion-icon>
                             </span>
@@ -86,7 +87,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/rooms" className="nav__link">
                             <span className="nav__icon">
                                 <ion-icon name="storefront-outline"></ion-icon>
                             </span>
@@ -106,7 +107,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/users" className="nav__link">
                             <span className="nav__icon">
                                  <ion-icon name="people-circle-outline"></ion-icon>
                             </span>
@@ -116,7 +117,7 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link className="nav__link" to="/admin/admins">
                             <span className="nav__icon">
                                 <ion-icon name="people-outline"></ion-icon>
                             </span>

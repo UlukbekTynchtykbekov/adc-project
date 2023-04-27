@@ -19,24 +19,17 @@ const Login = () => {
     });
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const {mutate: addLogin, data, isLoading, isError, error} = useAddLoginData();
+
+    const {mutate: addLogin, data, isLoading} = useAddLoginData();
+    const {refetch} = useLoginMe();
 
     const onSubmit = (user) => {
         addLogin(user)
     };
 
-    if (isLoading) {
-        return <div style={{color: "white"}}>Loading....</div>
-    }
-
-    if (isError) {
-        return <div>
-            {error?.response.data}
-        </div>
-    }
-
-    if (data?.data){
-        window.localStorage.setItem("token", data?.data)
+    if (data?.data?.token){
+        window.localStorage.setItem("token", data?.data?.token)
+        refetch()
     }
 
     if (isAuthenticated){
@@ -62,7 +55,7 @@ const Login = () => {
                                 <span className="label-text">электронная почта</span>
                             </label>
                         </div>
-                        <p>{errors.email?.message}</p>
+                        <p>{errors?.email?.message}</p>
                         <div className="field login__field">
                             <input
                                 type="password"
@@ -74,8 +67,30 @@ const Login = () => {
                                 <span className="label-text">пароль</span>
                             </label>
                         </div>
-                        <p>{errors.password?.message}</p>
-                        <button className="checkbox__btn" type="submit">Отправить</button>
+                        <Link to="/forgot-password">
+                            <p className="reset-password">
+                                Forgot password?
+                            </p>
+                        </Link>
+                        <p>{errors?.password?.message}</p>
+                        {
+                            data?.response?.data?.message && <div className="login__message login__error">
+                                <p className="login__message-title">{data?.response?.data?.message}</p>
+                            </div>
+                        }
+                        {
+                            data?.response?.data && <div className="login__message login__error">
+                                <p className="login__message-title">{data?.response?.data}</p>
+                            </div>
+                        }
+                        <div className="checkbox__items">
+                            <button className="checkbox__btn" type="submit" disabled={isLoading}>Отправить</button>
+                            {
+                                isLoading ? <span className="hour-glass checkbox__hour-glass">
+                            <ion-icon name="hourglass-outline"></ion-icon>
+                        </span> : null
+                            }
+                        </div>
                         <div className="form__under-text">
                             У вас еще нет аккаунта?<Link className="form__link" to='/register'>Зарегистрироваться
                             сейчас</Link>

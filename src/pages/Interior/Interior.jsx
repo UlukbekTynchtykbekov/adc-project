@@ -25,7 +25,7 @@ const Interior = () => {
             <section className="short-desc" style={bgParallaxStyle}>
                 <div className="container">
                     <ShortDesc house={house}/>
-                    <Card category={house.category} imageType={house.imageType}/>
+                    <Card room={"ВСЕ"} category={house.category} imageType={house.imageType}/>
                 </div>
             </section>
         </Helmet>

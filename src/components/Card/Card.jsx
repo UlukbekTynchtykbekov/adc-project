@@ -21,6 +21,7 @@ const Card = ({ room, category, imageType }) => {
 
     const architectureProjects = data?.data.filter(project => {
         if (room === "ВСЕ") {
+            console.log(project.category.name.toLowerCase() === category.toLowerCase())
             return project.category.name.toLowerCase() === category.toLowerCase()
         } else {
             return project.category.name.toLowerCase() === category && project.room.quantity === +room

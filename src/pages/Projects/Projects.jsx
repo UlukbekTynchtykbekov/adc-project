@@ -3,21 +3,17 @@ import Helmet from "../../layout/Helmet";
 import Design from "../Design";
 import "../../styles/projects.scss"
 import Card from "../../components/Card";
-import {useProjectsData} from "../../CustomHooks/useProjectsData";
 
 const Projects = () => {
     const [page, setPage] = useState("design")
     const [room, setRoom] = useState("ВСЕ");
 
-    const {isLoading, data, isError} = useProjectsData()
-
-    const architectureProjects = data?.data.filter(project => {
-        if (room === "ВСЕ") {
-            return project.category.name === "architecture"
-        } else {
-            return project.category.name === "architecture" && project.room.quantity === +room
-        }
-    });
+    const house = {
+        title: "ДВУХ ЭТАЖНЫЙ ДОМ СОВРЕМЕННОГО СТИЛЯ",
+        subtitle: "300 МЕТР КВ",
+        category:"architecture",
+        imageType: "exterior",
+    }
 
     return (
         <Helmet title="Projects">
@@ -60,7 +56,7 @@ const Projects = () => {
                                             className="architecture__sort-item sort-item" onClick={() => setRoom("6")}>6-ком</p></li>
                                     </ul>
                                 </div>
-                                <Card projects={architectureProjects} isLoading={isLoading} isError={isError} imageType="exterior"/>
+                                <Card room={room} category={house.category} imageType={house.imageType}/>
                             </div>
                         </div>
                 }

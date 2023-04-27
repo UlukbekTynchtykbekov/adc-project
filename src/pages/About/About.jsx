@@ -1,4 +1,5 @@
 import React from 'react';
+import Slider from "react-slick"
 import "../../styles/about.scss"
 import Helmet from "../../layout/Helmet";
 import useParallax from "../../CustomHooks/useParallaxHook";
@@ -9,6 +10,7 @@ import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
 import handleScroll from "aos/src/js/helpers/handleScroll";
 
 
+
 const About = () => {
     const {isVisible, bgParallaxStyle} = useParallax()
     const house = {
@@ -17,7 +19,15 @@ const About = () => {
             "ДО КОНЦА",
         subtitle: "ARCHITECTURE + DESIGN + CONSTRUCTION",
         shortDesc: "Можно сколько угодно рассказывать про дизайн, но лучше посмотреть на что мы способны. Каждая работа выполняется индивидуально, поэтому посмотрев наши работы. Вы можете созвониться с нами, для того чтобы обсудить свой уникальный заказ\n"
-    }
+    };
+    const settings = {
+        dots: true,
+        arrows: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
     return (
         <Helmet title="About">
             <section className="about">
@@ -46,7 +56,16 @@ const About = () => {
             </section>
             <section className="sliders" style={bgParallaxStyle}>
                 <div className="container">
-
+                    <Slider {...settings}>
+                        <div>
+                            <img src={Card1} alt="Before" />
+                            <div className="caption">Before</div>
+                        </div>
+                        <div>
+                            <img src={Card2} alt="After" />
+                            <div className="caption">After</div>
+                        </div>
+                    </Slider>
                 </div>
             </section>
         </Helmet>

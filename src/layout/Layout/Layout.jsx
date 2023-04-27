@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from "../Header";
 import Footer from "../Footer";
 import Routers from "../../routers/Routers";
@@ -10,11 +10,13 @@ const Layout = () => {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch();
 
-    const successAuthMe = (data) => {
-        dispatch(authActions.selectIsAuth(data?.data))
-    }
+    const { data} = useLoginMe();
 
-    useLoginMe(successAuthMe);
+    useEffect(() => {
+        if (data?.data){
+            dispatch(authActions.selectIsAuth(data?.data))
+        }
+    },[data])
 
     return (
         <>
