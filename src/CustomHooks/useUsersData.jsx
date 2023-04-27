@@ -13,3 +13,11 @@ const  fetchUsers = () =>{
 export const useUsersData = () =>{
     return useQuery("users", fetchUsers)
 }
+
+const fetchToken = (tokenData) => {
+    console.log(tokenData)
+    return request({url: `/api/users/${tokenData.param.id}/verify/${tokenData.param.token}`, method: 'GET'});
+}
+export const useTokenData = (tokenData) => {
+    return useQuery(["token", tokenData], () => fetchToken(tokenData));
+}

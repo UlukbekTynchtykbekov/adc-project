@@ -3,7 +3,6 @@ import SuggestionCardItems from "./SuggestionCardItems";
 import "./suggestion.scss"
 
 const SuggestionCard = ({data, isLoading, isError, error}) => {
-    console.log(data)
 
     if (isLoading) {
         return <div style={{color: "white"}}>Loading...</div>;

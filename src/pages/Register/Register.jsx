@@ -5,8 +5,7 @@ import {useAddUsersData} from "../../CustomHooks/useUsersData";
 import {useForm} from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import {useDispatch, useSelector} from "react-redux";
-import {authActions} from "../../features/authenticatedSlice";
+import {useSelector} from "react-redux";
 
 const schema = yup.object({
     firstName: yup.string().required().min(2),
@@ -18,18 +17,15 @@ const schema = yup.object({
 
 const Register = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const dispatch = useDispatch();
+    const {} = useSelector(state => state)
 
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(schema)
     });
 
-    const successAuthMe = (data) => {
-        dispatch(authActions.selectIsAuth(data?.data))
-    }
-
-    const {mutate:addUser, data, isLoading, isError, error} = useAddUsersData(successAuthMe);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
+
+    const {mutate:addUser, data:addedUserData, isLoading} = useAddUsersData();
 
     const onSubmit = (data) => {
         if (data.password !== data.confirmPassword){
@@ -41,23 +37,8 @@ const Register = () => {
         }
     };
 
-    if (isLoading) {
-        return <div style={{color: "white"}}>Loading....</div>
-    }
-
-    if (isError) {
-        return <div style={{color: "white"}}>
-            {error?.response.data}
-        </div>
-    }
-
-    if (data){
-        alert("Вы успешно регистрировались!")
-        return <Navigate to="/login"/>
-    }
-
     if (isAuthenticated){
-        return <Navigate to="/"/>
+        return <Navigate to="/login"/>
     }
 
     return (
@@ -123,7 +104,7 @@ const Register = () => {
                             <p>{errors.password?.message}</p>
                         <div className="field login__field">
                             <input
-                                type="password  "
+                                type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
                                 autoComplete="off"
@@ -133,8 +114,29 @@ const Register = () => {
                                 <span className="label-text">подтвердите пароль</span>
                             </label>
                         </div>
-                            <p>{confirmPasswordError}</p>
-                        <button className="checkbox__btn" type="submit">Отправить</button>
+                        {
+                            confirmPasswordError && <div className="login__message login__error">
+                                <p className="login__message-title">{confirmPasswordError}!</p>
+                            </div>
+                        }
+                        {
+                            addedUserData?.data && <div className="login__message">
+                                <p className="login__message-title">{addedUserData?.data}!</p>
+                            </div>
+                        }
+                        {
+                            addedUserData?.response?.data && <div className="login__message login__error">
+                                <p className="login__message-title">{addedUserData?.response?.data}</p>
+                            </div>
+                        }
+                        <div className="checkbox__items">
+                            <button className="checkbox__btn" type="submit" disabled={isLoading}>Отправить</button>
+                            {
+                                isLoading ? <span className="hour-glass checkbox__hour-glass">
+                            <ion-icon name="hourglass-outline"></ion-icon>
+                        </span> : null
+                            }
+                        </div>
                         <div className="form__under-text">
                             У вас есть аккаунта?<Link className="form__link" to='/login'>Войдите</Link>
                         </div>
