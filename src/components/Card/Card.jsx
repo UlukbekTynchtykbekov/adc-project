@@ -19,8 +19,6 @@ const Card = ({ room, category, imageType }) => {
         return <div style={{color: "white"}}>No project</div>;
     }
 
-    console.log(room)
-
     const architectureProjects = data?.data.filter(project => {
         if (room === "ВСЕ") {
             console.log(project.category.name.toLowerCase() === category.toLowerCase())

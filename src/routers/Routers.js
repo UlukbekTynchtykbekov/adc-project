@@ -31,6 +31,10 @@ import Room from "../Admin/Room";
 import NewRoom from "../Admin/NewRoom";
 import User from "../Admin/User";
 import Admins from "../Admin/Admins";
+import EmailVerify from "../pages/EmailVerify";
+import ForgotPassword from "../pages/ForgotPassword";
+import PasswordReset from "../pages/PasswordReset";
+import Success from "../components/Success/Success";
 
 const Routers = () => {
     return <Routes>
@@ -49,6 +53,10 @@ const Routers = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/favorite" element={<Favorite/>}/>
         <Route path="/register" element={<Register/>}/>
+        <Route path="/users/:id/verify/:token" element={<EmailVerify/>}/>
+        <Route path="/forgot-password" element={<ForgotPassword/>}/>
+        <Route path="/password-reset/:id/:token" element={<PasswordReset/>}/>
+        <Route path="/success" element={<Success/>}/>
 
         <Route exact path='/' element={<ProtectedRoute role={"ADMIN"}/>}>
             <Route exact path='/admin/projects' element={<ProjectList/>}/>

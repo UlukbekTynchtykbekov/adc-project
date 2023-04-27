@@ -41,6 +41,8 @@ const NewProject = () => {
     const {data: singleProject, isLoading: singleProjectLoading, isError: singleProjectIsError, error: singleProjectError} = useProjectData(projectId);
     const {mutate: updateProject, data:updatedProjectData, isLoading: updateLoading} = useUpdateProject()
 
+    console.log(addedProjectData)
+
     const uploadExteriorPhoto = (e) => {
         const files = e.target.files;
         const data = new FormData();
