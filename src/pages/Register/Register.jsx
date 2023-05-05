@@ -3,7 +3,6 @@ import {Link, Navigate} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useAddUsersData} from "../../CustomHooks/useUsersData";
 import {useSelector} from "react-redux";
-import {toast, ToastContainer} from "react-toastify";
 
 const Register = () => {
     const [formData, setFormData] = useState({
