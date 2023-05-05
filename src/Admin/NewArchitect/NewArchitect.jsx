@@ -7,16 +7,14 @@ import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
 
 const NewArchitect = () => {
-
-    const [firstname, setFirstname] = useState("");
-    const [firstnameError, setFirstnameError] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [lastnameError, setLastnameError] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
-    const [dateOfBirthError, setDateOfBirthError] = useState("");
-    const [bio, setBio] = useState("");
-    const [images, setImages] = useState([]);
-    const [imagesError, setImagesError] = useState("");
+    const [formData, setFormData] = useState({
+        firstname: "",
+        lastname: "",
+        dateOfBirth: "",
+        bio: "",
+        images: [],
+    });
+    const [formErrors, setFormErrors] = useState({});
 
     const {id: architectId} = useParams();
 
@@ -24,66 +22,90 @@ const NewArchitect = () => {
     const {data: architectData, isLoading: architectLoading, isError: architectIsError, error: architectError} = useSingleArchitectData(architectId);
     const {mutate: updateArchitect, data:updatedArchitectData, isLoading: updateLoading} = useUpdateArchitect()
 
-    const uploadPhoto = (e) => {
-        const files = e.target.files;
-        const data = new FormData();
-        for (let i = 0; i < files.length; i++) {
-            data.append("images", files[i]);
-        }
-        return request({url: '/api/upload', method: 'POST', data: data})
-            .then(response => {
-                const {data} = response;
-                setImages(prev => {
-                    return [...prev, ...data?.data]
+    const handleInputChange = (event) => {
+        const {name, value, files} = event.target;
+        if (name === "images") {
+            const data = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                data.append("images", files[i]);
+            }
+            return request({url: '/api/upload', method: 'POST', data: data})
+                .then(response => {
+                    const {data} = response;
+                    setFormData((prevState) => ({
+                        ...prevState,
+                        images: [...prevState.images, ...data?.data]
+                    }));
                 })
-            })
-    }
+        }else {
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+    };
 
     const deleteImage = (id) => {
-        const findId = images.find(img => img.public_id === id);
+        const findId = formData.images.find(img => img.public_id === id);
         if (findId){
-            setImages(prevState => {
-                return images.filter(img => img.public_id !== id);
-            })
+            setFormData((prevState) => ({
+                ...prevState,
+                images: formData.images.filter(img => img.public_id !== id)
+            }));
         }
     }
 
     const selectArchitectMainPhoto = (id) => {
-        const mainImage = images.find(img => img.public_id === id);
-        const addedPhotosWithoutSelected = images.filter(img => img.public_id !== id);
+        const mainImage = formData.images.find(img => img.public_id === id);
+        const addedPhotosWithoutSelected = formData.images.filter(img => img.public_id !== id);
         const newAddedPhotos = [mainImage, ...addedPhotosWithoutSelected];
-        setImages(newAddedPhotos)
+        setFormData((prevState) => ({
+            ...prevState,
+            images: [...newAddedPhotos]
+        }));
     }
 
     const onSubmitProduct = (e) => {
         e.preventDefault();
-        if (firstname.length < 3 && firstname.length < 200){
-            setFirstnameError("Название должно быть больше 3 букв и меньше 200 букв")
+        const errors = validateInputs(formData);
+        setFormErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            if (architectId) {
+                updateArchitect({architectId, ...formData})
+            } else {
+                addArchitect(formData)
+            }
+        }
+    }
+
+    function validateInputs(inputData) {
+        let errors = {};
+        const types = ["png", "jpeg", "jpg"]
+
+        if (inputData.firstname.trim().length < 3 && inputData.firstname.trim().length < 200) {
+            errors.firstname = "Имя должно быть больше 3 букв и меньше 200 букв"
+        }
+        if (inputData.lastname.trim().length < 3 && inputData.lastname.trim().length < 200) {
+            errors.lastname = "Фамилия должно быть больше 3 букв и меньше 200 букв"
+        }
+        if (!inputData.dateOfBirth.length){
+            errors.dateOfBirth = "Обязательное поле"
         }
 
-        if (lastname.length < 3 && lastname.length < 200){
-            setLastnameError("Название должно быть больше 3 букв и меньше 200 букв")
+        if (inputData.images.length < 1) {
+            errors.images = "Обязательное поле";
         }
 
-        if (!dateOfBirth.length){
-            setDateOfBirthError("Обязательное поле")
+        for (let i = 0; i < inputData.images.length; i++) {
+            const file = inputData.images[i];
+            const fileType = file.format;
+            if (!types.includes(fileType)) {
+                errors.images = "Разрешены только изображения.";
+            }
         }
 
-        if (!images.length){
-            setImagesError("Обязательное поле")
-        }
-
-        const newArchitect = {
-            firstname, lastname,
-            dateOfBirth,
-            bio, images,
-        }
-
-        if (architectId){
-            updateArchitect({architectId, ...newArchitect})
-        }else{
-            addArchitect(newArchitect)
-        }
+        return errors;
     }
 
     useEffect(() => {
@@ -92,11 +114,14 @@ const NewArchitect = () => {
             const dateParts = dateString.split("T");
             const date = dateParts[0];
 
-            setFirstname(architectData?.data.firstname);
-            setLastname(architectData?.data.lastname);
-            setDateOfBirth(date);
-            setBio(architectData?.data.bio);
-            setImages(architectData?.data.images)
+            setFormData((prevState) => ({
+                ...prevState,
+                firstname: architectData?.data.firstname,
+                lastname: architectData?.data.lastname,
+                dateOfBirth: date,
+                bio: architectData?.data.bio,
+                images: architectData?.data.images
+            }));
         }
     }, [architectData?.data])
 
@@ -125,12 +150,13 @@ const NewArchitect = () => {
                             <input
                                 className="formik__input"
                                 type="text"
-                                value={firstname}
+                                name="firstname"
+                                value={formData.firstname}
                                 placeholder="Имя архитектора"
-                                onChange={(e) => setFirstname(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                firstnameError && <p className="formik__error">*{firstnameError}</p>
+                                formErrors.firstname && <p className="formik__error">*{formErrors.firstname}</p>
                             }
                         </div>
                         <div className="formik__group">
@@ -138,12 +164,13 @@ const NewArchitect = () => {
                             <input
                                 className="formik__input"
                                 type="text"
-                                value={lastname}
+                                name="lastname"
+                                value={formData.lastname}
                                 placeholder="Фамилия архитектора"
-                                onChange={(e) => setLastname(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                lastnameError && <p className="formik__error">*{lastnameError}</p>
+                                formErrors.lastname && <p className="formik__error">*{formErrors.lastname}</p>
                             }
                         </div>
                         <div className="formik__group">
@@ -151,12 +178,13 @@ const NewArchitect = () => {
                             <input
                                 className="formik__input"
                                 type="date"
-                                value={dateOfBirth}
+                                name="dateOfBirth"
+                                value={formData.dateOfBirth}
                                 placeholder="Дата рождения"
-                                onChange={(e) => setDateOfBirth(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                dateOfBirthError && <p className="formik__error">*{dateOfBirthError}</p>
+                                formErrors.dateOfBirth && <p className="formik__error">*{formErrors.dateOfBirth}</p>
                             }
                         </div>
                         <div className="formik__group">
@@ -166,12 +194,13 @@ const NewArchitect = () => {
                                 placeholder="Краткая биография"
                                 cols="30"
                                 rows="10"
-                                value={bio}
-                                onChange={(e) => setBio(e.target.value)}
+                                name="bio"
+                                value={formData.bio}
+                                onChange={handleInputChange}
                             >
                             </textarea>
                         </div>
-                        <UploadImages text="Фото" photos={images} deletePhoto={deleteImage} uploadPhoto={uploadPhoto} photosError={imagesError} selectMainPhoto={selectArchitectMainPhoto}/>
+                        <UploadImages namePhoto="images" text="Фото" photos={formData.images} deletePhoto={deleteImage} uploadPhoto={handleInputChange} photosError={formErrors.images} selectMainPhoto={selectArchitectMainPhoto}/>
                         <button className={ addArchitectLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addArchitectLoading || updateLoading}>добавить</button>
                         {
                             addArchitectLoading || updateLoading ? <span className="hour-glass">

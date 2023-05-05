@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './company.scss'
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useCompanyData} from "../../CustomHooks/useCompanyData";
+import {Link} from "react-router-dom";
+import {useProjectsData} from "../../CustomHooks/useProjectsData";
+import {useUsersData} from "../../CustomHooks/useUsersData";
 
 const Company = () => {
     const {
@@ -10,14 +13,43 @@ const Company = () => {
         isError: companyIsError,
         error: companyError
     } = useCompanyData();
+    const {
+        data: productData,
+        isLoading: productDataLoading,
+        isError: productDataIsError,
+        error: productDataError
+    } = useProjectsData();
+    const {data: users, isLoading: userLoading, isError: usersIsError, error: usersError} = useUsersData()
 
-    console.log(companyData)
+    const filteredUsers = useMemo(() => {
+        let onlyUsers = [];
+        if (users?.data) {
+            onlyUsers = users?.data.filter(user => {
+                return user.role === "USER"
+            })
+        }
+
+        return onlyUsers;
+    }, [users?.data])
+
+    const filteredAdmins = useMemo(() => {
+        let onlyAdmins = [];
+        if (users?.data) {
+            onlyAdmins = users?.data.filter(user => {
+                return user.role === "ADMIN"
+            })
+        }
+
+        return onlyAdmins;
+    }, [users?.data])
+
 
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
                 <div className="company">
+                    {companyLoading && productDataLoading && userLoading && <div>Loading...</div>}
                     <div className="table company__table">
                         <div className="table__header">
                             <h1 className="table__title">О компании</h1>
@@ -33,42 +65,41 @@ const Company = () => {
                                     </p>
                                 </div>
                                 <div className="company__card-quantity">
-                                    <p className="company__card-number">1123</p>
+                                    <p className="company__card-number">{productData?.data.length}</p>
                                 </div>
                             </div>
                             <div className="company__card users">
                                 <div className="company__card-item">
                                     <h4 className="company__card-title">
-                                        Проекты
+                                        Пользователи
                                     </h4>
                                     <p className="company__card-subtitle">
-                                        Всего проектов
+                                        Всего пользователей
                                     </p>
                                 </div>
                                 <div className="company__card-quantity">
-                                    <p className="company__card-number">1123</p>
+                                    <p className="company__card-number">{filteredUsers?.length}</p>
                                 </div>
                             </div>
                             <div className="company__card admins">
                                 <div className="company__card-item">
                                     <h4 className="company__card-title">
-                                        Проекты
+                                        Админы
                                     </h4>
                                     <p className="company__card-subtitle">
-                                        Всего проектов
+                                        Всего админов
                                     </p>
                                 </div>
                                 <div className="company__card-quantity">
-                                    <p className="company__card-number">1123</p>
+                                    <p className="company__card-number">{filteredAdmins.length}</p>
                                 </div>
                             </div>
                         </div>
-                        {companyLoading && <div>Loading...</div>}
                         {companyIsError && <div>{companyError?.message}</div>}
                         {companyData?.data.length > 0 &&
                             companyData?.data.map(el => (
-                                    <div className="contact company__contact">
-                                        <div className="contact__bar">
+                                    <div key={el._id} className="contact company__contact">
+                                        <div className="contact__bar company__bar">
                                             <div key={el._id} className="contact__menu">
                                                 <div className="menu__description">
                                                     <div className="contact__nav">
@@ -122,7 +153,7 @@ const Company = () => {
                                                         </p>
                                                     </div>
                                                     {
-                                                        el.workSchedule.map(schedule => (
+                                                        el.workSchedule && el.workSchedule.map(schedule => (
                                                             <div key={schedule._id} className="contact__des company__des">
                                                                 <svg className="contact__icon company__icon" width="33"
                                                                      height="33" viewBox="0 0 33 33" fill="white"
@@ -136,17 +167,25 @@ const Company = () => {
                                                                           strokeLinejoin="round"/>
                                                                 </svg>
                                                                 <p className="contact__text company__contact-text">
-                                                                    {schedule.dayOfWeek} {schedule.fromTime} {schedule.toTime}
+                                                                    {schedule.fromTime}-{schedule.toTime}
                                                                 </p>
                                                             </div>
                                                         ))
                                                     }
                                                 </div>
                                                 <div className="descriptions company__description">
-                                                    <p className="descriptions__consultation company__contact-text">Для консультации
+                                                    <div className="descriptions__consultation company__contact-text">Для
+                                                        консультации
                                                         <p>+{el.suggestionPhoneNumber}</p>
-                                                    </p>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div className="company__filter">
+                                                <Link to={`/admin/company/${el._id}`}>
+                                                    <button className="button company__add-btn">
+                                                        Редактировать
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>

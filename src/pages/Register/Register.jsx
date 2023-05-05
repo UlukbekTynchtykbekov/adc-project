@@ -2,39 +2,61 @@ import React, {useState} from 'react';
 import {Link, Navigate} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useAddUsersData} from "../../CustomHooks/useUsersData";
-import {useForm} from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 import {useSelector} from "react-redux";
-
-const schema = yup.object({
-    firstName: yup.string().required().min(2),
-    lastName: yup.string().required().min(2),
-    email: yup.string().required().email(),
-    password: yup.string().required().min(5),
-
-}).required();
+import {toast, ToastContainer} from "react-toastify";
 
 const Register = () => {
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const {} = useSelector(state => state)
-
-    const { register, handleSubmit, formState:{ errors } } = useForm({
-        resolver: yupResolver(schema)
+    const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
     });
-
+    const [formErrors, setFormErrors] = useState({});
+    const {} = useSelector(state => state)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-
     const {mutate:addUser, data:addedUserData, isLoading} = useAddUsersData();
 
-    const onSubmit = (data) => {
-        if (data.password !== data.confirmPassword){
-            setConfirmPasswordError("Parol ne sovpadaet")
-        }else {
-            setConfirmPasswordError("")
-            delete data["confirmPassword"]
-            addUser(data)
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const errors = validateForm(formData);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+            addUser(formData)
         }
+    };
+
+    const validateForm = (data) => {
+        const errors = {};
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (data.firstName.trim().length < 2) {
+            errors.firstName = "Имя должно быть больше 2"
+        }
+        if (data.lastName.trim().length < 2) {
+            errors.lastName = "Фамилия должно быть больше 2"
+        }
+        if (!data.email) {
+            errors.email = 'Электронная почта обязательна';
+        }else if (!re.test(String(data.email).toLowerCase())) {
+            errors.email = 'Электронная почта недействительна';
+        }
+        if (!data.password) {
+            errors.password = 'Необходим пароль';
+        } else if (data.password.length < 5) {
+            errors.password = 'Пароль должен быть не менее 5 символов';
+        }
+        if (data.password !== data.confirmPassword) {
+            errors.confirmPassword = 'Пароль не совпадает';
+        }
+
+        return errors
     };
 
     if (isAuthenticated){
@@ -45,7 +67,7 @@ const Register = () => {
         <Helmet title="Register">
             <section className="login">
                 <div className="container">
-                    <form onSubmit={handleSubmit(onSubmit)} className="form login__form">
+                    <form onSubmit={onSubmit} className="form login__form">
                         <div className="login__main">
                             <h3 className="login__description">Регистрация</h3>
                         </div>
@@ -55,69 +77,74 @@ const Register = () => {
                                 name="firstName"
                                 id="firstName"
                                 autoComplete="off"
-                                {...register("firstName")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="firstName" className="label-wrapper">
                                 <span className="label-text">Имя</span>
                             </label>
                         </div>
-                            <p>{errors.firstName?.message}</p>
+                        {
+                            formErrors.firstName && <p className="error">*{formErrors.firstName}</p>
+                        }
                         <div className="field login__field">
                             <input
                                 type="text"
                                 name="lastName"
                                 id="lastName"
                                 autoComplete="off"
-                                {...register("lastName")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="lastName" className="label-wrapper">
                                 <span className="label-text">Фамилия</span>
                             </label>
                         </div>
-                            <p>{errors.lastName?.message}</p>
+                        {
+                            formErrors.lastName && <p className="error">*{formErrors.lastName}</p>
+                        }
                         <div className="field login__field">
                             <input
                                 type="text"
                                 name="email"
                                 id="email"
                                 autoComplete="off"
-                                required
-                                {...register("email")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="email" className="label-wrapper">
                                 <span className="label-text">электронная почта</span>
                             </label>
                         </div>
-                            <p>{errors.email?.message}</p>
+                        {
+                            formErrors.email && <p className="error">*{formErrors.email}</p>
+                        }
                         <div className="field login__field">
                             <input
                                 type="password"
                                 name="password"
                                 id="password"
                                 autoComplete="off"
-                                {...register("password")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="password" className="label-wrapper">
                                 <span className="label-text">пароль</span>
                             </label>
                         </div>
-                            <p>{errors.password?.message}</p>
+                        {
+                            formErrors.password && <p className="error">*{formErrors.password}</p>
+                        }
                         <div className="field login__field">
                             <input
                                 type="password"
                                 name="confirmPassword"
                                 id="confirmPassword"
                                 autoComplete="off"
-                                {...register("confirmPassword")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="confirmPassword" className="label-wrapper">
                                 <span className="label-text">подтвердите пароль</span>
                             </label>
                         </div>
                         {
-                            confirmPasswordError && <div className="login__message login__error">
-                                <p className="login__message-title">{confirmPasswordError}!</p>
-                            </div>
+                            formErrors.confirmPassword && <p className="error">*{formErrors.confirmPassword}</p>
                         }
                         {
                             addedUserData?.data && <div className="login__message">

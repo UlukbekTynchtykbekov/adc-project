@@ -5,37 +5,60 @@ import {Navigate, useParams} from "react-router-dom";
 import {useAddCategory, useCategoryData, useUpdateCategory} from "../../CustomHooks/useCategoriesData";
 
 const NewCategory = () => {
-    const [name, setName] = useState("");
-    const [nameError, setNameError] = useState("");
+    const [formData, setFormData] = useState({
+        name: "",
+    });
+    const [formErrors, setFormErrors] = useState({});
     const {id: categoryId} = useParams();
 
     const {mutate: addCategory, data: addedCategoryData, isLoading: addCategoryLoading} = useAddCategory();
-    const {data: categoryData, isLoading: categoryLoading, isError: categoryIsError, error: categoryError} = useCategoryData(categoryId);
-    const {mutate: updateCategory, data:updatedCategoryData, isLoading: updateLoading} = useUpdateCategory()
+    const {
+        data: categoryData,
+        isLoading: categoryLoading,
+        isError: categoryIsError,
+        error: categoryError
+    } = useCategoryData(categoryId);
+    const {mutate: updateCategory, data: updatedCategoryData, isLoading: updateLoading} = useUpdateCategory()
+
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
+
     const onSubmitProduct = (e) => {
         e.preventDefault();
-        if (name.length === 0){
-            setNameError("Обязательное поле")
-        }
-
-        const newCategory = {
-            name
-        }
-
-        if (categoryId){
-            updateCategory({categoryId, ...newCategory})
-        }else{
-            addCategory(newCategory)
+        const errors = validateForm(formData);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+            if (categoryId) {
+                updateCategory({categoryId, ...formData})
+            } else {
+                addCategory(formData)
+            }
         }
     }
 
+    const validateForm = (data) => {
+        const errors = {};
+        const categories = ["architecture", "design"]
+
+        if (!categories.includes(data.name.trim())) {
+            errors.name = "Обязательное поле или необходимо добавить только категорию 'architecture' и 'design'";
+        }
+
+        return errors;
+    };
+
     useEffect(() => {
-        if (categoryData?.data){
-            setName(categoryData?.data.name);
+        if (categoryData?.data) {
+            setFormData((prevState) => ({
+                ...prevState,
+                name: categoryData?.data.name
+            }))
         }
     }, [categoryData?.data])
 
-    if (addedCategoryData?.data || updatedCategoryData?.data){
+    if (addedCategoryData?.data || updatedCategoryData?.data) {
         return <Navigate to="/admin/categories"/>
     }
 
@@ -44,11 +67,11 @@ const NewCategory = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    categoryLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    categoryLoading && <div style={{color: "white"}}>Loading...</div>
                 }
 
                 {
-                    categoryIsError &&  <div style={{color: "white"}}>{categoryError?.message}</div>
+                    categoryIsError && <div style={{color: "white"}}>{categoryError?.message}</div>
                 }
                 <div className="new">
                     <div className="new__wrapper">
@@ -60,15 +83,19 @@ const NewCategory = () => {
                             <input
                                 className="formik__input"
                                 type="text"
-                                value={name}
+                                name="name"
+                                value={formData.name}
                                 placeholder="Категория проекта"
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                nameError && <p className="formik__error">*{nameError}</p>
+                                formErrors.name && <p className="formik__error">*{formErrors.name}</p>
                             }
                         </div>
-                        <button className={ addCategoryLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addCategoryLoading || updateLoading}>добавить</button>
+                        <button
+                            className={addCategoryLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
+                            type="submit" disabled={addCategoryLoading || updateLoading}>добавить
+                        </button>
                         {
                             addCategoryLoading || updateLoading ? <span className="hour-glass">
                             <ion-icon name="hourglass-outline"></ion-icon>

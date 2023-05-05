@@ -6,22 +6,14 @@ const fetchReview = ({queryKey}) => {
     return request({url: `/api/projects/${projectId}/reviews`, method: 'GET'});
 }
 export const useReviewData = (projectId) => {
-    return useQuery(["review", projectId], fetchReview);
+    return useQuery(["reviews", projectId], fetchReview);
 }
 
-const fetchAddReview = (reviews) => {
-    return request({url: '/api/reviews', method: 'PUT', data: reviews})
+const fetchAllReview = ({queryKey}) => {
+    const projectId = queryKey[1]
+    return request({url: `/api/projects/${projectId}/all-reviews`, method: 'GET'});
+}
+export const useAllReviewData = (projectId) => {
+    return useQuery(["all-reviews", projectId], fetchAllReview);
 }
 
-export const useAddReviewData = (onSuccess, onError) => {
-    const queryClient = useQueryClient();
-    return useMutation(fetchAddReview,
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries("review");
-                onSuccess()
-            },
-            onError
-        }
-    );
-}

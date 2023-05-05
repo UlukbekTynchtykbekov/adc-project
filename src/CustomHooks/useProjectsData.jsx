@@ -45,3 +45,55 @@ export const useDeleteProject = () => {
         },
     });
 }
+
+const fetchAddReview = (reviews) => {
+    return request({url: '/api/reviews', method: 'PUT', data: reviews})
+}
+
+export const useAddReviewData = (onSuccess, onError) => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchAddReview,
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("projects");
+                queryClient.invalidateQueries("project");
+                onSuccess()
+            },
+            onError
+        }
+    );
+}
+
+const fetchAcceptReview = (data) => {
+    return request({url: `/api/projects/${data.projectId}/reviews/${data.reviewId}`, method: 'PUT',})
+}
+
+export const useAcceptReviewData = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchAcceptReview,
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("projects");
+                queryClient.invalidateQueries("project");
+                queryClient.invalidateQueries("all-reviews");
+            },
+        }
+    );
+}
+
+const fetchDeleteReview = (data) => {
+    return request({url: `/api/projects/${data.projectId}/reviews/${data.reviewId}`, method: 'DELETE',})
+}
+
+export const useDeleteReviewData = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchDeleteReview,
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("projects");
+                queryClient.invalidateQueries("project");
+                queryClient.invalidateQueries("all-reviews");
+            },
+        }
+    );
+}

@@ -21,7 +21,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        column-gap: 4rem;
+        column-gap: 2rem;
         border-radius: 10px;
     }
     &__card-title{
@@ -53,6 +53,26 @@
     }
     &__icon{
         fill: var(--title-color) !important;
+    }
+
+    &__add-btn {
+        margin-right: 10px;
+        border: none;
+        background: var(--title-color);
+        color: var(--body-bg);
+        font-weight: bold;
+        transition: .2s;
+
+        &:hover {
+            background: var(--body-bg);
+            color: var(--title-color);
+        }
+    }
+
+    &__bar{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: flex-end;
     }
 }
 

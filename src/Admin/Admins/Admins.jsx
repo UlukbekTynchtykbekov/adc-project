@@ -9,20 +9,30 @@ import AdminsCard from "../AdminsCard/AdminsCard";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
-    const {data:admins, isLoading:adminsLoading,isError:adminsIsError,error:adminsError} = useUsersData()
-    const filteredUsers = useMemo(()=>{
+    const {data: admins, isLoading: adminsLoading, isError: adminsIsError, error: adminsError} = useUsersData()
+    const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
-        let searchAdmin= [];
-        if (admins?.data){
-            onlyAdmins = admins?.data.filter(user =>{
-                return user.role=== "ADMIN"
+        let searchAdmin = [];
+        let sortedAdmin = [];
+        if (admins?.data) {
+            onlyAdmins = admins?.data.filter(user => {
+                return user.role === "ADMIN"
             })
-            searchAdmin = onlyAdmins.filter((user) =>
+            sortedAdmin = onlyAdmins.sort((a, b) => {
+                if (a.role === 'ADMIN') {
+                    return -1;
+                } else if (b.role === 'ADMIN') {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            searchAdmin = sortedAdmin.filter((user) =>
                 user.firstName.toLowerCase().includes(searchAdmins.toLowerCase())
             );
         }
         return searchAdmin;
-    },[admins?.data, searchAdmins])
+    }, [admins?.data, searchAdmins])
     return (
         <section className="dashboard">
             <div className="row">
@@ -33,11 +43,6 @@ const Admins = () => {
                             <h1 className="table__title">Администраторы</h1>
                             <div className="table__filter">
                                 <Search searchItem={searchAdmins} setSearchItem={setSearchAdmins}/>
-                                <Link to="/admin/categories/new">
-                                    <button className="button product__add-btn">
-                                        Добавить
-                                    </button>
-                                </Link>
                             </div>
                         </div>
                         <div className="table__body">
@@ -50,10 +55,11 @@ const Admins = () => {
                                     <th className="table__category-name">Имя</th>
                                     <th className="table__category-name">Фамилия</th>
                                     <th className="table__category-name">Почта</th>
+                                    <th className="table__category-name">Подробность</th>
                                 </tr>
                                 </thead>
                                 <tbody className="table__field">
-                                {filteredUsers.map((user , index)=>(
+                                {filteredUsers.map((user, index) => (
                                         <AdminsCard key={user._id} user={user} index={index}/>
                                     )
                                 )}

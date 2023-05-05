@@ -4,37 +4,55 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddRoom, useSingleRoomData, useUpdateRoom} from "../../CustomHooks/useRoomData";
 
 const NewRoom = () => {
-    const [room, setRoom] = useState(0);
-    const [roomsError, setRoomsError] = useState("");
+    const [formData, setFormData] = useState({
+        quantity: 0,
+    });
+    const [formErrors, setFormErrors] = useState({});
     const {id: roomId} = useParams();
 
     const {mutate: addRoom, data: addedRoomData, isLoading: addRoomLoading} = useAddRoom();
     const {data: roomData, isLoading: roomLoading, isError: roomIsError, error: roomError} = useSingleRoomData(roomId);
-    const {mutate: updateRoom, data:updatedRoomData, isLoading: updateLoading} = useUpdateRoom()
+    const {mutate: updateRoom, data: updatedRoomData, isLoading: updateLoading} = useUpdateRoom()
+
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
+
     const onSubmitProduct = (e) => {
         e.preventDefault();
-        if (room < 1){
-            setRoomsError("Количество комнат должно быть больше 0")
-        }
+        const errors = validateForm(formData);
+        setFormErrors(errors);
 
-        const newRoom = {
-            quantity: room
-        }
-
-        if (roomId){
-            updateRoom({roomId, ...newRoom})
-        }else{
-            addRoom(newRoom)
+        if (Object.keys(errors).length === 0) {
+            if (roomId) {
+                updateRoom({roomId, ...formData})
+            } else {
+                addRoom(formData)
+            }
         }
     }
 
+    const validateForm = (data) => {
+        const errors = {};
+
+        if (!data.quantity) {
+            errors.quantity = "Количество комнат должно быть больше 0";
+        }
+
+        return errors;
+    };
+
     useEffect(() => {
-        if (roomData?.data){
-            setRoom(roomData?.data.quantity);
+        if (roomData?.data) {
+            setFormData((prevState) => ({
+                ...prevState,
+                quantity: roomData?.data.quantity
+            }))
         }
     }, [roomData?.data])
 
-    if(addedRoomData?.data || updatedRoomData?.data){
+    if (addedRoomData?.data || updatedRoomData?.data) {
         return <Navigate to="/admin/rooms"/>
     }
 
@@ -43,11 +61,11 @@ const NewRoom = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    roomLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    roomLoading && <div style={{color: "white"}}>Loading...</div>
                 }
 
                 {
-                    roomIsError &&  <div style={{color: "white"}}>{roomError?.message}</div>
+                    roomIsError && <div style={{color: "white"}}>{roomError?.message}</div>
                 }
                 <div className="new">
                     <div className="new__wrapper">
@@ -59,15 +77,19 @@ const NewRoom = () => {
                             <input
                                 className="formik__input"
                                 type="number"
-                                value={room}
+                                name="quantity"
+                                value={formData.quantity}
                                 placeholder="Количество комнат"
-                                onChange={(e) => setRoom(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                roomsError && <p className="formik__error">*{roomsError}</p>
+                                formErrors.quantity && <p className="formik__error">*{formErrors.quantity}</p>
                             }
                         </div>
-                        <button className={ addRoomLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addRoomLoading || updateLoading}>добавить</button>
+                        <button
+                            className={addRoomLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
+                            type="submit" disabled={addRoomLoading || updateLoading}>добавить
+                        </button>
                         {
                             addRoomLoading || updateLoading ? <span className="hour-glass">
                             <ion-icon name="hourglass-outline"></ion-icon>
@@ -75,7 +97,8 @@ const NewRoom = () => {
                         }
                         {
                             addedRoomData?.response.data || updatedRoomData?.response.data ? <div>
-                                <p className="formik__error">Количество комнат проекта уже существует или вы должны правильно заполнить все данные</p>
+                                <p className="formik__error">Количество комнат проекта уже существует или вы должны
+                                    правильно заполнить все данные</p>
                             </div> : null
                         }
                     </form>

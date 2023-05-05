@@ -1,5 +1,6 @@
 import React from 'react';
 import Avatar from "../../static/img/avatar.jpeg";
+import {Link} from "react-router-dom";
 
 const UserCard = ({user, index}) => {
     return (
@@ -17,6 +18,13 @@ const UserCard = ({user, index}) => {
             </td>
             <td className="table__item">
                 {user.email}
+            </td>
+            <td className="table__item">
+                <Link to={`/admin/users/${user._id}`}>
+                    <button className="table__button product__table-btn">
+                        Показывать
+                    </button>
+                </Link>
             </td>
         </tr>
     );

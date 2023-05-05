@@ -1,0 +1,74 @@
+.account{
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--hero-bg-linear1), url("../../static/img/wall.webp")  no-repeat center/cover;
+
+  &__profile{
+    padding-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: flex-start center;
+  }
+
+  &__status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__avatar{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__img{
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__btn{
+    margin: 30px auto;
+    transition: .2s;
+
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
+
+  &__change-btn{
+    margin-bottom:  20px;
+    transition: .2s;
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
+
+  &__item{
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+  &__title{
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    font-size: 23px;
+    color: var(--title-color);
+  }
+
+  &__subtitle{
+    margin-top: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--title-color);
+  }
+
+  &__buttons{
+    display: flex;
+    flex-direction: column;
+  }
+}

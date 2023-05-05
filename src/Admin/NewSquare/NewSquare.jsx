@@ -4,34 +4,52 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddSquare, useSingleSquareData, useUpdateSquare} from "../../CustomHooks/useSquareData";
 
 const NewSquare = () => {
-
-    const [square, setSquare] = useState(0);
-    const [squareError, setSquareError] = useState("");
+    const [formData, setFormData] = useState({
+        square: 0,
+    });
+    const [formErrors, setFormErrors] = useState({});
     const {id: squareId} = useParams();
 
     const {mutate: addSquare, data: addedSquareData, isLoading: addSquareLoading} = useAddSquare();
     const {data: squaresData, isLoading: squaresLoading, isError: squaresIsError, error: squaresError} = useSingleSquareData(squareId);
     const {mutate: updateSquare, data:updatedSquareData, isLoading: updateLoading} = useUpdateSquare()
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
     const onSubmitProduct = (e) => {
         e.preventDefault();
-        if (square < 10){
-            setSquareError("Количество квадратов должно быть больше 10м2")
-        }
+        const errors = validateForm(formData);
+        setFormErrors(errors);
 
-        const newSquare = {
-            square
-        }
-
-        if (squareId){
-            updateSquare({squareId, ...newSquare})
-        }else{
-            addSquare(newSquare)
+        if (Object.keys(errors).length === 0) {
+            if (squareId){
+                updateSquare({squareId, ...formData})
+            }else{
+                addSquare(formData)
+            }
         }
     }
 
+    const validateForm = (data) => {
+        const errors = {};
+
+        if (data.square < 10) {
+            errors.square = "Количество квадратов должно быть больше 10м2";
+        }
+
+        return errors;
+    };
+
+    console.log(formData)
+
     useEffect(() => {
         if (squaresData?.data){
-            setSquare(squaresData?.data.square);
+            setFormData((prevState) => ({
+                ...prevState,
+                square: squaresData?.data.square
+            }))
         }
     }, [squaresData?.data])
 
@@ -59,13 +77,14 @@ const NewSquare = () => {
                             <h2 className="formik__text">Квадрат</h2>
                             <input
                                 className="formik__input"
+                                name="square"
                                 type="number"
-                                value={square}
+                                value={formData.square}
                                 placeholder="Количество квадратов"
-                                onChange={(e) => setSquare(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                squareError && <p className="formik__error">*{squareError}</p>
+                                formErrors.square && <p className="formik__error">*{formErrors.square}</p>
                             }
                         </div>
                         <button className={ addSquareLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addSquareLoading || updateLoading}>добавить</button>

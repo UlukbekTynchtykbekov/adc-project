@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import {request} from '../utils/axios-utils';
 
 const fetchLoginMe = () => {
@@ -15,4 +15,28 @@ const fetchAddLogin = (login) => {
 
 export const useAddLoginData = () => {
     return useMutation(fetchAddLogin);
+}
+
+const fetchUpdateUser = (updatedUser) => {
+    return request({url: `/api/users/update/profile`, method: 'PUT', data: updatedUser})
+}
+export const useUpdateUser = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchUpdateUser, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("auth");
+        },
+    });
+}
+
+const fetchChangePassword = (newPassword) => {
+    return request({url: `/api/users/update/password`, method: 'PUT', data: newPassword})
+}
+export const useChangePassword = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchChangePassword, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("auth");
+        },
+    });
 }

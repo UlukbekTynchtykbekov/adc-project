@@ -35,6 +35,14 @@ import EmailVerify from "../pages/EmailVerify";
 import ForgotPassword from "../pages/ForgotPassword";
 import PasswordReset from "../pages/PasswordReset";
 import Success from "../components/Success/Success";
+import Profile from "../pages/Profile";
+import AuthenticatedRoutes from "./AuthenticatedRoutes";
+import UpdateProfile from "../pages/UpdateProfile";
+import UpdatePassword from "../pages/UpdatePassword";
+import UserProfile from "../Admin/UserProfile";
+import NewCompany from "../Admin/NewCompany";
+import Comments from "../Admin/Comments";
+import ProductReviews from "../Admin/ProductReviews";
 
 const Routers = () => {
     return <Routes>
@@ -51,16 +59,23 @@ const Routers = () => {
         <Route path="/projects/exterior" element={<Exterior/>}/>
         <Route path="/projects/:projectId" element={<ProjectDetail/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/favorite" element={<Favorite/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/users/:id/verify/:token" element={<EmailVerify/>}/>
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/password-reset/:id/:token" element={<PasswordReset/>}/>
-        <Route path="/success" element={<Success/>}/>
+        <Route path="/:id/:token/success" element={<Success/>}/>
+
+        <Route exact path='/' element={<AuthenticatedRoutes/>}>
+            <Route path="/favorite" element={<Favorite/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/me/update" element={<UpdateProfile/>}/>
+            <Route path="/me/update/password" element={<UpdatePassword/>}/>
+        </Route>
 
         <Route exact path='/' element={<ProtectedRoute role={"ADMIN"}/>}>
             <Route exact path='/admin/projects' element={<ProjectList/>}/>
             <Route exact path='/admin/company' element={<Company/>}/>
+            <Route exact path='/admin/company/:id' element={<NewCompany/>}/>
             <Route exact path='/admin/projects/new' element={<NewProject/>}/>
             <Route exact path='/admin/projects/:id' element={<NewProject/>}/>
             <Route exact path='/admin/architect' element={<Architect/>}/>
@@ -80,6 +95,9 @@ const Routers = () => {
             <Route exact path='/admin/rooms/:id' element={<NewRoom/>}/>
             <Route exact path='/admin/users' element={<User/>}/>
             <Route exact path='/admin/admins' element={<Admins/>}/>
+            <Route exact path='/admin/users/:id' element={<UserProfile/>}/>
+            <Route exact path='/admin/comments' element={<Comments/>}/>
+            <Route exact path='/admin/comments/show/:id' element={<ProductReviews/>}/>
         </Route>
     </Routes>
 };

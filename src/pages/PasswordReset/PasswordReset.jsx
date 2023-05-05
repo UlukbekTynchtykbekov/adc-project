@@ -41,7 +41,7 @@ const PasswordReset = () => {
     }
 
     if (resetPasswordData?.data){
-        return <Navigate to="/success"/>
+        return <Navigate to={`/${param.id}/${param.token}/success`}/>
     }
 
     return (

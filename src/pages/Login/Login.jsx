@@ -1,30 +1,52 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import {useAddLoginData, useLoginMe} from "../../CustomHooks/useAuth";
 import {Link, Navigate} from "react-router-dom";
-import {useForm} from "react-hook-form";
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import "../../styles/login.scss"
 import {useSelector} from "react-redux";
-
-const schema = yup.object({
-    email: yup.string().required().email(),
-    password: yup.string().required().min(5),
-}).required();
+import "../../styles/login.scss"
 
 const Login = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm({
-        resolver: yupResolver(schema)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
     });
+    const [formErrors, setFormErrors] = useState({});
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-
     const {mutate: addLogin, data, isLoading} = useAddLoginData();
     const {refetch} = useLoginMe();
 
-    const onSubmit = (user) => {
-        addLogin(user)
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const errors = validateForm(formData);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+            addLogin(formData)
+        }
+    };
+
+    const validateForm = (data) => {
+        const errors = {};
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!data.email) {
+            errors.email = 'Электронная почта обязательна';
+        }else if (!re.test(String(data.email).toLowerCase())) {
+            errors.email = 'Электронная почта недействительна';
+        }
+
+        if (!data.password) {
+            errors.password = 'Необходим пароль';
+        } else if (data.password.length < 5) {
+            errors.password = 'Пароль должен быть не менее 5 символов';
+        }
+
+        return errors
     };
 
     if (data?.data?.token){
@@ -40,42 +62,53 @@ const Login = () => {
         <Helmet title="Login">
             <section className="login">
                 <div className="container">
-                    <form onSubmit={handleSubmit(onSubmit)} className="form login__form">
+                    <form onSubmit={onSubmit} className="form login__form">
                         <div className="login__main">
                             <h3 className="login__description">Логин</h3>
                         </div>
                         <div className="field login__field">
                             <input
-                                type="email"
+                                type="text"
                                 id="email"
+                                name="email"
                                 autoComplete="on"
-                                {...register("email")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="firstName" className="label-wrapper">
                                 <span className="label-text">электронная почта</span>
                             </label>
                         </div>
-                        <p>{errors?.email?.message}</p>
+                        {
+                            formErrors.email && <p className="error">*{formErrors.email}</p>
+                        }
                         <div className="field login__field">
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 autoComplete="on"
-                                {...register("password")}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="firstName" className="label-wrapper">
                                 <span className="label-text">пароль</span>
                             </label>
                         </div>
+                        {
+                            formErrors.password && <p className="error">*{formErrors.password}</p>
+                        }
                         <Link to="/forgot-password">
                             <p className="reset-password">
                                 Forgot password?
                             </p>
                         </Link>
-                        <p>{errors?.password?.message}</p>
                         {
                             data?.response?.data?.message && <div className="login__message login__error">
                                 <p className="login__message-title">{data?.response?.data?.message}</p>
+                            </div>
+                        }
+                        {
+                            data?.data?.message && <div className="login__message">
+                                <p className="login__message-title">{data?.data?.message}</p>
                             </div>
                         }
                         {

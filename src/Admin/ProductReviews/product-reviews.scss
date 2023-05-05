@@ -1,0 +1,217 @@
+.comments{
+  position: relative;
+  width:100%;
+  background: var(--hero-bg-linear1),
+  url("../../static/img/architecture-bg.png") no-repeat center/cover;
+  min-height: 100vh;
+  z-index: 1000;
+  padding-top: 20px;
+
+  &__wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__intro{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 95%;
+    min-height: 90vh;
+    background-color: rgba(255, 255, 255, 0.3333333333);
+    -webkit-backdrop-filter: blur(7px);
+    backdrop-filter: blur(7px);
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3333333333);
+    border-radius: 0.8rem;
+    overflow: hidden;
+    padding-bottom: 10px;
+  }
+
+  &__title{
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    color: #77619e;
+  }
+
+  &__reviews{
+    margin-top: 50px;
+    width: 90%;
+  }
+
+  &__tabs{
+    margin-bottom: 20px;
+  }
+
+  &__tab-items{
+    display: flex;
+    gap: 2rem;
+  }
+
+  &__tab-link{
+    position: relative;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--title-color);
+    transition: .2s ease-out;
+    cursor: pointer;
+
+    &.active{
+      &::after{
+        position: absolute;
+        bottom: -5px;
+        right: 0;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: var(--title-color);
+      }
+    }
+
+    &:hover{
+      &::after{
+        position: absolute;
+        bottom: -5px;
+        right: 0;
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: var(--title-color);
+      }
+    }
+  }
+
+  &__user{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__user-name{
+    line-height: 30px;
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 600;
+    color: var(--body-bg);
+  }
+
+  &__user-email{
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 500;
+    color: var(--body-bg);
+  }
+
+  &__user-stars{
+    display: flex;
+  }
+
+  &__comment-item{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width:  100%;
+    background-color: #fff4;
+    padding: .8rem 1rem;
+    border-radius: 10px;
+  }
+
+  &__comment-text{
+    margin-top: 10px;
+    font-size: 17px;
+    line-height: 23px;
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 400;
+    color: var(--body-bg);
+  }
+
+
+  &__delete-btn{
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px 50px;
+    background: red;
+    border: none;
+    transition: .2s ease;
+
+    &:hover{
+      transform: scale(1.02);
+    }
+  }
+
+  &__btn{
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px 50px;
+    background: #3b5998;
+    border: none;
+    transition: .2s ease;
+
+    &:hover{
+      transform: scale(1.02);
+    }
+  }
+  &__back{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  &__icon{
+    font-size: 20px;
+    color: var(--title-color);
+    cursor: pointer;
+  }
+}
+
+.shell{
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &__image{
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  &__img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &__title{
+    margin-bottom: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 400;
+    color: var(--title-color);
+  }
+
+  &__rating{
+    margin-bottom: 10px;
+    display: flex;
+    column-gap: 2rem;
+  }
+
+  &__stars{
+    display: flex;
+  }
+
+  &__reviews{
+    line-height: 30px;
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 400;
+    color: var(--title-color);
+  }
+
+  &__description{
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 30px;
+    font-family: "Gothic A1", sans-serif;
+    font-weight: 400;
+    color: var(--title-color);
+  }
+}
