@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from "../../layout/Helmet";
+import BgVideo from "../../static/assets/adc-video.mp4"
 import "../../styles/home.scss"
 import {Link} from "react-router-dom";
 
@@ -7,6 +8,8 @@ const Home = () => {
     return (
         <Helmet title="Home">
             <section className="hero">
+                <video className="hero__video" src={BgVideo} autoPlay loop muted></video>
+                <div className="hero__over-play"></div>
                 <div className="container">
                     <div className="hero__items">
                         <div className="hero__item">

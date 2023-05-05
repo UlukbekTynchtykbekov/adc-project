@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import "../../styles/about.scss"
 import Helmet from "../../layout/Helmet";
 import useParallax from "../../CustomHooks/useParallaxHook";
+import Video from "../../static/assets/adc-video.mp4"
 import Partner from "../../static/img/partners.png"
 import Img1 from "../../static/img/image 51.png"
 import Img2 from "../../static/img/image 52.png"
@@ -60,7 +61,7 @@ const About = ({src, width, height}) => {
                 <div className="container">
                     <video
                         ref={videoRef}
-                        src={"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}
+                        src={Video}
                         width={width}
                         height={height}
                         onClick={togglePlay}

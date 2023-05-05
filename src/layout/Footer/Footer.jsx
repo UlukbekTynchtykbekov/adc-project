@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import "./Footer.scss"
-import Like from "../../static/img/heart-line.svg";
 import {Link} from "react-router-dom";
 
 const Footer = () => {
