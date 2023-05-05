@@ -1,0 +1,117 @@
+.footer{
+  padding: 143px 0 60px;
+  font-family: "Gothic A1",sans-serif;
+  &__inner{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+  }
+  &__info{
+    max-width: 700px;
+    display: flex;
+    &__desc{
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 118.9%;
+      color: rgba(133, 128, 128, 0.94);
+      margin-bottom: 34px;
+    }
+    &__add{
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 120.9%;
+      color: #787878;
+      margin-bottom: 74px;
+    }
+    &__policy{
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 102.9%;
+      color: rgba(159, 158, 158, 0.94);
+    }
+  }
+  &__title{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 118.9%;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+  }
+  &__form{
+    &__title{
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 118.9%;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    &__description{
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 118.9%;
+      color: rgba(133, 128, 128, 0.94);
+      margin-bottom: 22px;
+    }
+    &__input{
+      min-width: 199px;
+      margin-bottom: 30px;
+      background-color: var(--title-color);
+      padding: 16px 10px 13px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 118.9%;
+      color: rgba(91, 91, 91, 0.79);
+      text-align: center;
+    }
+    &__btn{
+      display: block;
+      min-width: 199px;
+      padding: 17px 10px;
+      border: 1px solid #FFFFFF;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 118.9%;
+      color: var(--title-color);
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+  &__icon{
+    color: var(--title-color);
+  }
+}
+.footer-nav{
+  &__list{
+    display: flex;
+    gap: 17px ;
+  }
+  &__link{
+    width: 19px;
+    height: 19px;
+  }
+}
+.footer-contact{
+   padding-left: 50px;
+  &__title{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 118.9%;
+    color: #FFFFFF;
+    margin-bottom: 9px;
+  }
+  &__mail{
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 118.9%;
+    color: rgba(133, 128, 128, 0.94);
+    margin-bottom: 32px;
+  }
+  &__phone{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 120.9%;
+    color: #787878;
+  }
+}

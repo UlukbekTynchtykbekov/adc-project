@@ -25,34 +25,76 @@
   margin: 0 !important;
 }
 .partner-wrapper{
-  margin-top: 70px;
-  width: 100%;
+  margin: 70px 0;
   &__image{
     width: 100%;
-
     font-family: 'Gothic A1', sans-serif;
     font-style: normal;
     font-weight: 300;
     font-size: 40px;
     line-height: 45px;
-    color:  var(--title-color);
   }
   &__subtitle{
-    width: 90%;
+    width: 100%;
     text-align: center;
     margin: 0 auto;
     padding-top: 2em;
     font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
     font-weight: 300;
     font-size: 24px;
     line-height: 160.4%;
     color: rgba(0, 0, 0, 0.62);
   }
 }
-.sliders{
+.video-player {
   position: relative;
+}
+.video{
+  margin-left: -50px;
+}
+
+.play-icon {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.play-icon.hide {
+  display: none;
+}
+.all-des{
+  background: #FFFFFF;
   width: 100%;
-  z-index: -3;
+  min-height: 100vh;
+  text-align: center;
+  &__title{
+    font-family: 'Gothic A1',sans-serif;
+    font-style: normal;
+    font-weight: 275;
+    font-size: 40px;
+    line-height: 102.9%;
+    text-align: center;
+    color: #000000;
+    padding: 90px;
+  }
+  &__des{
+    font-family: 'Gothic A1',sans-serif;
+    font-weight: 250;
+    font-size: 24px;
+    line-height: 170.9%;
+    color: #2d2c2c;
+  }
+  &__gallery{
+    flex-direction: column-reverse;
+    width: 850px;
+    &__item{
+
+    }
+  }
 }
 
