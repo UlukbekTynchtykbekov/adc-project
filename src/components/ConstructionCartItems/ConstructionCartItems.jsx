@@ -12,7 +12,7 @@ const ConstructionCartItems = ({ data }) => {
        <>
            {
                data.map((el, idx) => (
-                   <div className="envelope">
+                   <div key={el._id} className="envelope">
                        <div data-aos="zoom-in-right" data-aos-duration="1500" className="col-6 envelope__column">
                            <img className="envelope__image" src={el.images[0].url} alt=""/>
                        </div>

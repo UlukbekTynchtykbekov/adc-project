@@ -1,10 +1,34 @@
 import {request} from "../utils/axios-utils";
-import {useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 
 
 const fetchCompany = () => {
     return request({url: `/api/company`, method: 'GET'});
 }
 export const useCompanyData = () => {
-    return useQuery("constructions", fetchCompany);
+    return useQuery("companies", fetchCompany);
+}
+
+const fetchSingleCompany = ({queryKey}) => {
+    const companyId = queryKey[1]
+    return request({url: `/api/company/${companyId}`, method: 'GET'});
+}
+export const useSingleCompanyData = (companyId) => {
+    return useQuery( ["company", companyId], fetchSingleCompany, {
+        enabled: !!companyId
+    });
+}
+
+const fetchUpdateCompany = (company) => {
+    const updatedCompany = {...company};
+    delete company.companyId
+    return request({url: `/api/company/${updatedCompany.companyId}`, method: 'PUT', data: company})
+}
+export const useUpdateCompany = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchUpdateCompany, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("companies");
+        },
+    });
 }

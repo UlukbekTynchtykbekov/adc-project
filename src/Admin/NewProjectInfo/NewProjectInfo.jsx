@@ -5,15 +5,15 @@ import {useAddProjectInfo, useProjectInfoData, useUpdateProjectInfo} from "../..
 import FormGroup from "../FormGroup/FormGroup";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import "./new-project-info.scss"
-import projectInfo from "../ProjectInfo";
 
 const NewProjectInfo = () => {
-    const [product, setProduct] = useState("");
-    const [productError, setProductError] = useState("");
-    const [title, setTitle] = useState("");
-    const [titleError, setTitleError] = useState("");
-    const [description, setDescription] = useState("");
-    const [descriptionError, setDescriptionError] = useState("");
+
+    const [formData, setFormData] = useState({
+        projectId: '',
+        title: '',
+        description: ""
+    });
+    const [formErrors, setFormErrors] = useState({});
     const [filteredProjects, setFilteredProjects] = useState([])
     const {id: projectInfoId} = useParams();
 
@@ -23,32 +23,42 @@ const NewProjectInfo = () => {
     const {data: projectInfoData, isLoading: projectInfoLoading, isError: projectInfoIsError, error: projectInfoError} = useProjectInfoData(projectInfoId);
     const {mutate: updateProjectInfo, data:updatedProjectInfoData, isLoading: updateLoading} = useUpdateProjectInfo();
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
     const onSubmitProduct = (e) => {
         e.preventDefault();
-        if (product.length === 0){
-            setProductError("Обязательное поле")
-        }
+        const errors = validateForm(formData);
+        setFormErrors(errors);
 
-        if ( title.trim().length === 0){
-            setTitleError("Обязательное поле")
-        }
-
-        if (description.trim().length === 0){
-            setDescriptionError("Обязательное поле")
-        }
-
-        const newProductInfo = {
-            projectId: product,
-            title,
-            description
-        }
-
-        if (projectInfoId){
-            updateProjectInfo({projectInfoId, ...newProductInfo})
-        }else{
-            addProjectInfo(newProductInfo)
+        if (Object.keys(errors).length === 0) {
+            if (projectInfoId){
+                updateProjectInfo({projectInfoId, ...formData})
+            }else{
+                addProjectInfo(formData)
+            }
         }
     }
+
+    const validateForm = (data) => {
+        const errors = {};
+
+        if (!data.projectId) {
+            errors.projectId = "Обязательное поле";
+        }
+
+        if (!data.title.trim().length) {
+            errors.title = "Обязательное поле";
+        }
+
+        if (!data.description.trim().length) {
+            errors.description = "Обязательное поле";
+        }
+
+        return errors;
+    };
 
     useEffect(() => {
         if (projects && projectInfoData?.data){
@@ -59,9 +69,12 @@ const NewProjectInfo = () => {
         }
 
         if (projectInfoData?.data){
-            setProduct(projectInfoData?.data.project._id);
-            setTitle(projectInfoData?.data.title);
-            setDescription(projectInfoData?.data.description);
+            setFormData((prevState) => ({
+                ...prevState,
+                projectId: projectInfoData?.data.project._id,
+                title: projectInfoData?.data.title,
+                description: projectInfoData?.data.description
+            }))
         }
     }, [projectInfoData?.data, projects])
 
@@ -88,36 +101,40 @@ const NewProjectInfo = () => {
                         <FormGroup
                             text={"Проект"}
                             option={"Выберите проект"}
-                            setData={setProduct}
+                            setData={handleInputChange}
                             data={filteredProjects}
-                            item={product}
-                            dataError={productError}
-                            type={"product"}
+                            item={formData.projectId}
+                            dataError={formErrors.projectId}
+                            type={"projectId"}
                         />
                         <div className="formik__group">
                             <h2 className="formik__text">Категория</h2>
                             <input
                                 className="formik__input"
                                 type="text"
-                                value={title}
+                                name="title"
+                                value={formData.title}
                                 placeholder="Категория проекта"
-                                onChange={(e) => setTitle(e.target.value)}
+                                onChange={handleInputChange}
                             />
                             {
-                                titleError && <p className="formik__error">*{titleError}</p>
+                                formErrors.title && <p className="formik__error">*{formErrors.title}</p>
                             }
                         </div>
                         <div className="formik__group">
                             <h2 className="formik__text">Описание</h2>
                             <textarea
                                 className="formik__input formik__input-textarea"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                placeholder="Описание проекта" name="" id="" cols="30"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                placeholder="Описание проекта"
+                                name="description"
+                                id=""
+                                cols="30"
                                 rows="10">
                             </textarea>
                             {
-                                descriptionError && <p className="formik__error">*{descriptionError}</p>
+                                formErrors.description && <p className="formik__error">*{formErrors.description}</p>
                             }
                         </div>
                         <button className={ addProjectInfoLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addProjectInfoLoading || updateLoading}>добавить</button>

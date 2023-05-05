@@ -27,7 +27,13 @@
     background: #e50909;
     color: var(--title-color);
   }
+
   &__form{
     width: 500px;
   }
+}
+
+.error{
+  padding-bottom: 5px;
+  color: red;
 }

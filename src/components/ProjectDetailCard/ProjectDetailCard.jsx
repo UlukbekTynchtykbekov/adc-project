@@ -126,8 +126,9 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
                         <div className="detail__stars">
                             <ProjectRating rating={totalRating}/>
                         </div>
-                        <div className="detail__rate">
-                            <p>{totalRating} (ratings)</p>
+                        <div className="detail__rate">{
+                            totalRating > 0 ? <p>{totalRating} (ratings)</p> : <p>0 (ratings)</p>
+                        }
                         </div>
                     </div>
                     <div className="detail__short-info">

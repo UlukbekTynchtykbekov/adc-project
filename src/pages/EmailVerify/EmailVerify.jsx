@@ -8,7 +8,7 @@ const EmailVerify = () => {
     const [validUrl, setValidUrl] = useState(false)
     const param = useParams()
 
-    const {data, isLoading} = useTokenData({param})
+    const {data, isLoading} = useTokenData(param)
 
     useEffect(() => {
         if (data?.data){

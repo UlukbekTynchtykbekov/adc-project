@@ -1,20 +1,33 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import Logo from "../../static/img/logo.png";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
 import './sidebar.scss'
-import User from "../../Admin/User";
+import {useProjectsData} from "../../CustomHooks/useProjectsData";
+import {reviewActions} from "../../features/reviewSlice";
 
 const Sidebar = () => {
 
-    const { data } = useSelector(state => state.auth);
+    const {data} = useSelector(state => state.auth);
+    const {data: productData} = useProjectsData();
+    const {unreadComments} = useSelector(state => state.review);
     const dispatch = useDispatch();
 
     const onClickLogout = () => {
         window.localStorage.removeItem("token")
         dispatch(authActions.logout())
     }
+
+    useEffect(() => {
+        productData?.data.map(obj => {
+            obj.reviews.filter((review) => {
+                if (review.accepted === false){
+                    dispatch(reviewActions.addUnacceptedComments(review))
+                }
+            });
+        });
+    }, [productData?.data])
 
     return (
         <div className="sidebar">
@@ -97,11 +110,15 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li className="nav__list">
-                            <Link className="nav__link">
+                            <Link to="/admin/comments" className="nav__link">
                             <span className="nav__icon">
                                 <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                             </span>
                                 <p className="nav__item">
+                                    {
+                                        unreadComments.length > 0 ? <span
+                                            className="nav__quantity">{unreadComments.length}</span> : ""
+                                    }
                                     Комментарии
                                 </p>
                             </Link>

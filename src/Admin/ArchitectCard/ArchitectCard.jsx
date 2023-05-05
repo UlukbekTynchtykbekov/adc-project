@@ -17,7 +17,7 @@ const ArchitectCard = ({el, idx}) => {
 
 
     if(deletedData?.data){
-        toast.success('Data deleted successfully', {
+        toast.success('Архитектор успешно удален', {
             position: "bottom-right",
             autoClose: 1000,
             hideProgressBar: false,

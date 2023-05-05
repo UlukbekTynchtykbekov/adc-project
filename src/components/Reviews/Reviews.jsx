@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Rate from "../Rate";
 import {useReviewData} from "../../CustomHooks/useReviewData";
 import "./reviews.scss"
-import {useAddReviewData} from "../../CustomHooks/useReviewData";
+import {useAddReviewData} from "../../CustomHooks/useProjectsData";
 import {toast} from "react-toastify";
-import {useLoginMe} from "../../CustomHooks/useAuth";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
@@ -43,8 +42,7 @@ const Reviews = ({el}) => {
     }
 
     const {data: reviewData, isLoading, isError, error} = useReviewData(el._id)
-
-    const {mutate: reviewMutation} = useAddReviewData(saveOnSuccess, saveOnError);
+    const {mutate: reviewMutation, data: reviewMutationData} = useAddReviewData(saveOnSuccess, saveOnError);
 
     const handleClick = (e, id) => {
         e.preventDefault()
@@ -53,7 +51,7 @@ const Reviews = ({el}) => {
         }
         reviewMutation(review)
     }
-
+    
     if (isLoading) {
         return <div style={{color: "white"}}>Loading...</div>;
     }
@@ -76,11 +74,11 @@ const Reviews = ({el}) => {
                     <div className="review__wrapper">
                         <ul className="review__list">
                             {reviewData?.data.map(review => (<li key={review._id} className="review__item">
-                                    <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
-                                    <span className="review__statistic">{review.star} (rating)</span>
-                                    <p className="review__text">{review.comments[0].comment}
-                                    </p>
-                                </li>))}
+                                <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
+                                <span className="review__statistic">{review.star} (rating)</span>
+                                <p className="review__text">{review.comments[0].comment}
+                                </p>
+                            </li>))}
                         </ul>
                         {isAuthenticated ? sentMessage ? <div className="review__check">
                             <h3 className="review__check-title">Спасибо, что оставили отзыв!</h3>
@@ -106,8 +104,9 @@ const Reviews = ({el}) => {
                             </form>
                         </div> : <div className="review__check">
                             <p className="review__check-message">
-                                Если вы хотите оставить свой отзыв, вы должны сначала <Link className="review__check-link" to='/register'>зарегистрироваться
-                                </Link>.
+                                Если вы хотите оставить свой отзыв, вы должны сначала <Link
+                                className="review__check-link" to='/register'>зарегистрироваться
+                            </Link>.
                             </p>
                         </div>}
                     </div>

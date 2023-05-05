@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UploadImages = ({text, photos, deletePhoto, uploadPhoto, photosError, selectMainPhoto}) => {
+const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photosError, selectMainPhoto}) => {
     return (
         <div className="formik__group formik__group-photo">
             <h2 className="formik__text">{text}</h2>
@@ -24,8 +24,11 @@ const UploadImages = ({text, photos, deletePhoto, uploadPhoto, photosError, sele
                 <div className="formik__photo">
                     <label className="formik__label formik__label-photo">
                         <input
-                            multiple className="formik__input formik__input-hidden"
-                            onChange={uploadPhoto} type="file"/>
+                            multiple
+                            className="formik__input formik__input-hidden"
+                            name={namePhoto}
+                            onChange={uploadPhoto}
+                            type="file"/>
                         <span className="formik__icon">
                                     <ion-icon name="cloud-upload-outline"></ion-icon>
                                     Upload
