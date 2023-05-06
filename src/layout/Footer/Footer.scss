@@ -1,6 +1,7 @@
 .footer{
   padding: 143px 0 60px;
   font-family: "Gothic A1",sans-serif;
+  background: var(--body-bg);
   &__inner{
     display: flex;
     -webkit-box-pack: justify;

@@ -24,6 +24,14 @@
     margin-top: -200px;
     gap: 22rem
   }
+  &__description{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    margin-top: -350px;
+  }
   &__item{
     position: relative;
     &:after{
@@ -61,6 +69,31 @@
     &__items{
       gap: 18rem;
     }
+  }
+}
+.main-title{
+  position: relative;
+  width: 100%;
+  z-index: 3;
+  &__title-hero{
+    width: 550px;
+    padding-top: 176px;
+    font-family: 'Gothic A1', sans-serif;
+    font-weight: 400;
+    font-size: 58px;
+    line-height: 132.4%;
+    letter-spacing: 8px;
+    color: #ffae00;
+  }
+  &__desc-hero{
+    width: 650px;
+    font-family: 'Gothic A1', sans-serif;
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 132.4%;
+    color: var(--title-color);
+    letter-spacing: 8px;
+    text-transform: uppercase;
   }
 }
 
