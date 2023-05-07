@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import TableCard from "./TableCard";
 import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import './table.scss'
@@ -9,29 +9,28 @@ const Table = () => {
     const options = ["дизайн", "архитектура"]
     const [searchItem, setSearchItem] = useState("")
     const [selected, setSelected] = useState("")
-    const {data: favoriteProjectsData, isLoading, isError} = useFavoriteProjects();
+    const {data: favoriteProjectsData, isLoading} = useFavoriteProjects();
 
-    if (isLoading) {
-        return <div style={{color: "white"}}>Loading...</div>;
-    }
+    const sortedAndFilteredProducts = useMemo(() => {
+        let filteredProducts = [];
+        let sortedProducts = [];
 
-    if (isError) {
-        return <div style={{color: "white"}}>Error</div>;
-    }
+        if (favoriteProjectsData?.data) {
+            filteredProducts = favoriteProjectsData?.data.filter((product) =>
+                product.project.name.toLowerCase().includes(searchItem.toLowerCase())
+            );
 
-    if (!favoriteProjectsData) {
-        return <div style={{color: "white"}}>No project</div>;
-    }
-
-    const favoriteData = favoriteProjectsData?.data.filter(el => {
-        if (selected === "дизайн") {
-            return el?.project.category.name === "design" && el?.project.name.toLowerCase().includes(searchItem.toLowerCase().trim())
-        } else if (selected === "архитектура") {
-            return el?.project.category.name === "architecture" && el?.project.name.toLowerCase().includes(searchItem.toLowerCase().trim())
-        } else {
-            return el?.project.name.toLowerCase().includes(searchItem.toLowerCase().trim())
+            if (selected === "архитектура"){
+                sortedProducts = filteredProducts.filter(product => product.project.category.name === "architecture");
+            }else if (selected === "дизайн"){
+                sortedProducts = filteredProducts.filter(product => product.project.category.name === "design")
+            }else {
+                sortedProducts = filteredProducts
+            }
         }
-    })
+
+        return sortedProducts;
+    }, [favoriteProjectsData?.data, searchItem, selected]);
 
     return (
         <div className="table">
@@ -43,6 +42,8 @@ const Table = () => {
                 </div>
             </div>
             <div className="table__body">
+                {isLoading && <div>Loading....</div>}
+                {favoriteProjectsData?.message && <div>{favoriteProjectsData?.message}</div>}
                 <table className="table__main">
                     <thead className="table__head">
                     <tr className="table__category-list">
@@ -55,12 +56,15 @@ const Table = () => {
                     </thead>
                     <tbody className="table__field">
                     {
-                        favoriteData.map((el, idx) => (
+                        sortedAndFilteredProducts.map((el, idx) => (
                             <TableCard key={el._id} el={el} idx={idx}/>
                         ))
                     }
                     </tbody>
                 </table>
+                {
+                    !isLoading && !favoriteProjectsData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                }
             </div>
         </div>
     );

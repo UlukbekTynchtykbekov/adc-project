@@ -1,15 +1,12 @@
 import React, {useMemo, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
-import {Link} from "react-router-dom";
-import Avatar from "../../static/img/avatar.jpeg";
-import {ToastContainer} from "react-toastify";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import AdminsCard from "../AdminsCard/AdminsCard";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
-    const {data: admins, isLoading: adminsLoading, isError: adminsIsError, error: adminsError} = useUsersData()
+    const {data: admins, isLoading: adminsLoading} = useUsersData()
     const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
         let searchAdmin = [];
@@ -20,9 +17,9 @@ const Admins = () => {
             })
             sortedAdmin = onlyAdmins.sort((a, b) => {
                 if (a.role === 'ADMIN') {
-                    return -1;
-                } else if (b.role === 'ADMIN') {
                     return 1;
+                } else if (b.role === 'ADMIN') {
+                    return -1;
                 } else {
                     return 0;
                 }
@@ -47,7 +44,7 @@ const Admins = () => {
                         </div>
                         <div className="table__body">
                             {adminsLoading && <div>loading...</div>}
-                            {adminsIsError && <div>{adminsError?.message}</div>}
+                            {admins?.message && <div>{admins?.message}</div>}
                             {filteredUsers.length > 0 && <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">
@@ -65,23 +62,11 @@ const Admins = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!adminsLoading && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!adminsLoading && !admins?.message && filteredUsers.length === 0 && <div>нет данных</div>}
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

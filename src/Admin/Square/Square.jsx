@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import {useSquareData} from "../../CustomHooks/useSquareData";
 import SquareCard from "../SquareCard/SquareCard";
 import Dropdown from "../../components/Dropdown";
@@ -11,7 +10,7 @@ const Square = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
 
-    const {data: squareData, isLoading: squareDataLoading, isError: squareDataIsError, error: squareDataError} = useSquareData();
+    const {data: squareData, isLoading: squareDataLoading} = useSquareData();
 
     const sortedAndFilteredSquare = useMemo(() => {
         let sortedProducts = [];
@@ -52,7 +51,7 @@ const Square = () => {
                         </div>
                         <div className="table__body">
                             {squareDataLoading && <div>Loading....</div>}
-                            {squareDataIsError && <div>{squareDataError?.message}</div>}
+                            {squareData?.message && <div>{squareData?.message}</div>}
                             {
                                 sortedAndFilteredSquare.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -73,24 +72,12 @@ const Square = () => {
                                 </table>
                             }
                             {
-                                !squareDataLoading && sortedAndFilteredSquare.length === 0 &&  <div>Нет данных</div>
+                                !squareDataLoading && !squareData?.message && sortedAndFilteredSquare.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

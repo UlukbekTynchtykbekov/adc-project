@@ -7,7 +7,7 @@ import UserCard from "../UserCard/UserCard";
 
 const User = () => {
     const [searchUser, setSearchUser] = useState("");
-    const {data:users, isLoading:userLoading,isError:usersIsError,error:usersError} = useUsersData()
+    const {data: users, isLoading: userLoading} = useUsersData()
     const filteredUsers = useMemo(()=>{
         let onlyUsers = [];
         let searchUsers= [];
@@ -35,7 +35,7 @@ const User = () => {
                         </div>
                         <div className="table__body">
                             {userLoading && <div>loading...</div>}
-                            {usersIsError && <div>{usersError?.message}</div>}
+                            {users?.message && <div>{users?.message}</div>}
                             {filteredUsers.length > 0 &&  <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">
@@ -53,23 +53,11 @@ const User = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!userLoading && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!userLoading && !users?.message && filteredUsers.length === 0 && <div>нет данных</div>}
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

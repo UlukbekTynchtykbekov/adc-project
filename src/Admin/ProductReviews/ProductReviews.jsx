@@ -2,42 +2,57 @@ import React, {useEffect, useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import "./product-reviews.scss"
 import ProjectRating from "../../components/ProjectRating";
-import  {useNavigate, useParams} from "react-router-dom";
-import {useProjectData} from "../../CustomHooks/useProjectData";
+import {Navigate, useParams} from "react-router-dom";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
-import { ToastContainer} from "react-toastify";
-import {useAcceptReviewData, useDeleteReviewData} from "../../CustomHooks/useProjectsData";
+import {
+    useAcceptReviewData,
+    useDeleteReviewData,
+    useProjectData,
+    useProjectsData
+} from "../../CustomHooks/useProjectsData";
 import {useAllReviewData} from "../../CustomHooks/useReviewData";
+import {reviewActions} from "../../features/reviewSlice";
+import {useDispatch} from "react-redux";
 
 const ProductReviews = () => {
     const [projectInfo, setProjectInfo] = useState([])
+    const [navigate, setNavigate] = useState(false)
     const [accepted, setAccepted] = useState(false);
-    const [reviews, setReviews] = useState([]);
+    const [acceptedReviews, setAcceptedReviews] = useState([]);
+    const [unAcceptedReviews, setUnAcceptedReviews] = useState([]);
+    const [deletedId, setDeletedId] = useState("")
 
-    const navigate = useNavigate()
-
+    const dispatch = useDispatch()
     const {id} = useParams()
-    const {data: projectData, isLoading, isError, error} = useProjectData(id);
+
+    const {data: projectData, isLoading} = useProjectData(id);
+
+    const {refetch} = useProjectsData();
     const {data: projectInfoData} = useProjectInfo();
     const {
         data: reviewData,
         isLoading: reviewLoading,
-        isError: reviewIsError,
-        error: reviewError
     } = useAllReviewData(id);
-    const {mutate: fetchAcceptReview} = useAcceptReviewData()
-    const {mutate: fetchDeleteReview} = useDeleteReviewData()
+
+    const {mutate: fetchAcceptReview, isSuccess: acceptSuccess} = useAcceptReviewData()
+    const {mutate: fetchDeleteReview, isSuccess: deletedSuccess} = useDeleteReviewData()
 
     const handleAcceptData = (reviewId) => {
+        setDeletedId(reviewId)
         fetchAcceptReview({projectId: id, reviewId})
     }
 
     const handleDeleteData = (reviewId) => {
+        setDeletedId(reviewId)
         fetchDeleteReview({projectId: id, reviewId})
     }
 
+    if (deletedSuccess || acceptSuccess){
+        dispatch(reviewActions.deleteUnacceptedComments(deletedId))
+    }
+
     const handleBack = () => {
-        navigate("/admin/comments")
+        setNavigate(true)
     }
 
     useEffect(() => {
@@ -48,14 +63,26 @@ const ProductReviews = () => {
             setProjectInfo(singleProjectInfo)
         }
 
-        if (reviewData?.data){
+        if (reviewData?.data) {
             const getReviews = reviewData?.data.filter(el => {
-                return el.accepted === accepted
+                return el.accepted === true
             })
-            setReviews(getReviews)
+            setAcceptedReviews(getReviews)
         }
 
-    }, [projectInfoData?.data, projectData?.data, reviewData?.data, accepted, id])
+        if (reviewData?.data) {
+            const getReviews = reviewData?.data.filter(el => {
+                return el.accepted === false
+            })
+            setUnAcceptedReviews(getReviews)
+        }
+
+    }, [projectInfoData?.data, projectData?.data, reviewData?.data, accepted, id]);
+
+    if (navigate === true) {
+        refetch()
+        return <Navigate to="/admin/comments"/>
+    }
 
     return (
         <Helmet title="Product Reviews">
@@ -66,15 +93,15 @@ const ProductReviews = () => {
                             isLoading && <div>Loading...</div>
                         }
                         {
-                            isError && <div>{error?.message}</div>
+                            projectData?.message && <div>{projectData?.message}</div>
                         }
                         {
                             projectData?.data && <div className="comments__intro">
-                            <div className="comments__back">
+                                <div className="comments__back">
                                 <span onClick={() => handleBack()} className="comments__icon">
                                     <ion-icon name="arrow-back-outline"></ion-icon>
                                 </span>
-                            </div>
+                                </div>
                                 <h1 className="comments__title">КОММЕНТАРИИ</h1>
                                 <div className="shell">
                                     <div className="shell__image">
@@ -100,10 +127,10 @@ const ProductReviews = () => {
                                     <div className="comments__tabs">
                                         <ul className="comments__tab-items">
                                             <li className="comments__tab-item" onClick={() => setAccepted(false)}>
-                                                <p className={accepted ? "comments__tab-link" : "comments__tab-link active"}>Непрочитанные(10)</p>
+                                                <p className={accepted ? "comments__tab-link" : "comments__tab-link active"}>Непрочитанные{`(${unAcceptedReviews.length})`}</p>
                                             </li>
                                             <li className="comments__tab-item" onClick={() => setAccepted(true)}>
-                                                <p className={accepted ?  "comments__tab-link active" : "comments__tab-link"}>Прочитанные(10)</p>
+                                                <p className={accepted ? "comments__tab-link active" : "comments__tab-link"}>Прочитанные{`(${acceptedReviews.length})`}</p>
                                             </li>
                                         </ul>
                                     </div>
@@ -111,12 +138,12 @@ const ProductReviews = () => {
                                         reviewLoading && <div>Loading...</div>
                                     }
                                     {
-                                        reviewIsError && <div>{reviewError?.message}</div>
+                                        reviewData?.message && <div>{reviewData?.message}</div>
                                     }
                                     <div className="comments__comment">
                                         <div className="comments__comment-items">
                                             {
-                                                reviews.length > 0 && reviews.map(el => (
+                                                accepted ? acceptedReviews.length > 0 && acceptedReviews.map(el => (
                                                     <div className="comments__comment-item" key={el._id}>
                                                         <div className="comments__user">
                                                             <div className="comments__user-profile">
@@ -129,24 +156,63 @@ const ProductReviews = () => {
                                                         </div>
                                                         {
                                                             el.comments.map(el => (
-                                                                <p className="comments__comment-text" key={el._id}>{el.comment}</p>
+                                                                <p className="comments__comment-text"
+                                                                   key={el._id}>{el.comment}</p>
                                                             ))
                                                         }
                                                         <div className="comments__comment-buttons">
-                                                            <button onClick={() => handleDeleteData(el._id)} className="button comments__delete-btn">
+                                                            <button onClick={() => handleDeleteData(el._id)}
+                                                                    className="button comments__delete-btn">
                                                                 Удалить
                                                             </button>
                                                             {
-                                                                !accepted && <button onClick={() => handleAcceptData(el._id)} className="button comments__btn">
+                                                                !accepted &&
+                                                                <button onClick={() => handleAcceptData(el._id)}
+                                                                        className="button comments__btn">
                                                                     Принимать
                                                                 </button>
                                                             }
                                                         </div>
                                                     </div>
-                                                ))
+                                                )) :
+                                                    unAcceptedReviews.length > 0 && unAcceptedReviews.map(el => (
+                                                        <div className="comments__comment-item" key={el._id}>
+                                                            <div className="comments__user">
+                                                                <div className="comments__user-profile">
+                                                                    <h3 className="comments__user-name">{el.postedBy.firstName}</h3>
+                                                                    <p className="comments__user-email">{el.postedBy.lastName}</p>
+                                                                </div>
+                                                                <div className="comments__user-stars">
+                                                                    <ProjectRating rating={el.star}/>
+                                                                </div>
+                                                            </div>
+                                                            {
+                                                                el.comments.map(el => (
+                                                                    <p className="comments__comment-text"
+                                                                       key={el._id}>{el.comment}</p>
+                                                                ))
+                                                            }
+                                                            <div className="comments__comment-buttons">
+                                                                <button onClick={() => handleDeleteData(el._id)}
+                                                                        className="button comments__delete-btn">
+                                                                    Удалить
+                                                                </button>
+                                                                {
+                                                                    !accepted &&
+                                                                    <button onClick={() => handleAcceptData(el._id)}
+                                                                            className="button comments__btn">
+                                                                        Принимать
+                                                                    </button>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    ))
                                             }
                                             {
-                                                !reviewLoading && reviews.length === 0 && <div>Net Dannyh</div>
+                                                accepted ? !reviewLoading && !reviewData?.message && acceptedReviews.length === 0 &&
+                                                    <div>Net Dannyh</div> :
+                                                    !reviewLoading && !reviewData?.message &&  unAcceptedReviews.length === 0 &&
+                                                    <div>Net Dannyh</div>
                                             }
                                         </div>
                                     </div>
@@ -154,21 +220,9 @@ const ProductReviews = () => {
                             </div>
                         }
                         {
-                            !isLoading && !projectData?.data && <div>NO DATA</div>
+                            !isLoading && !projectData?.message && !projectData?.data && <div>NO DATA</div>
                         }
                     </div>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={1000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="colored"
-                    />
                 </div>
             </section>
         </Helmet>

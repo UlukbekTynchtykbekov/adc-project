@@ -8,15 +8,8 @@ import {toast} from "react-toastify";
 
 const CategoryCard = ({el, idx, alreadyHave}) => {
 
-    const {data: projects} = useProjectsData();
-    const {mutate: deleteCategory, data: deletedData, isLoading: deletedDataIsLoading} = useDeleteCategory()
-
-    const handleDelete = (id) => {
-        deleteCategory(id)
-    }
-
-    if(deletedData?.data){
-        toast.success('Data deleted successfully', {
+    const deleteSuccess = () => {
+        toast.success('Категория успешно удалена', {
             position: "bottom-right",
             autoClose: 1000,
             hideProgressBar: false,
@@ -26,6 +19,26 @@ const CategoryCard = ({el, idx, alreadyHave}) => {
             progress: undefined,
             theme: "dark",
         });
+    }
+
+    const deleteError = () => {
+        toast.error('Ошибка удаления категории', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const {data: projects} = useProjectsData();
+    const {mutate: deleteCategory, isLoading: deletedDataIsLoading} = useDeleteCategory(deleteSuccess, deleteError)
+
+    const handleDelete = (id) => {
+        deleteCategory(id)
     }
 
     const sortedAndFilteredProjects = useMemo(() => {

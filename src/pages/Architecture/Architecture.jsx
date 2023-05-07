@@ -1,21 +1,42 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import Common from "../../components/Common";
 import Helmet from "../../layout/Helmet";
-import Card from "../../components/Card";
 import bgImage from "../../static/img/architecture-bg.png"
 import useParallax from "../../CustomHooks/useParallaxHook";
 import "../../styles/architecture.scss";
+import {useProjectsData} from "../../CustomHooks/useProjectsData";
+import CardItems from "../../components/CardItems";
 
 const Architecture = () => {
     const [room, setRoom] = useState("ВСЕ");
     const {handleScroll, scrollRef, isVisible, bgParallaxStyle} = useParallax();
 
+    const {data, isLoading} = useProjectsData();
+
     const house = {
         title: "ДВУХ ЭТАЖНЫЙ ДОМ СОВРЕМЕННОГО СТИЛЯ",
         subtitle: "300 МЕТР КВ",
-        category:"architecture",
+        category: "architecture",
         imageType: "exterior",
     }
+
+    const filteredProducts = useMemo(() => {
+        let filteredProducts = [];
+
+        if (data?.data) {
+            if (room === "ВСЕ") {
+                filteredProducts = data?.data.filter((product) =>
+                    product.category.name.toLowerCase() === house.category.toLowerCase()
+                );
+            } else {
+                filteredProducts = data?.data.filter((product) =>
+                    product.category.name.toLowerCase() === house.category.toLowerCase() && product.room.quantity === +room
+                );
+            }
+        }
+
+        return filteredProducts;
+    }, [data?.data, room]);
 
     return (
         <Helmet title="Architecture">
@@ -42,7 +63,20 @@ const Architecture = () => {
                                                                   onClick={() => setRoom("6")}>6-ком</p></li>
                         </ul>
                     </div>
-                    <Card room={room} category={house.category} imageType={house.imageType}/>
+                    <div className="card">
+                        <div className="row">
+                            {isLoading && <div>Loading...</div>}
+                            {data?.message && <div>{data?.message}</div>}
+                            {
+                                filteredProducts.length > 0 && filteredProducts.map(product => (
+                                    <CardItems key={product._id} project={product} imageType={house.imageType}/>
+                                ))
+                            }
+                            {
+                                !isLoading && !data?.message && filteredProducts.length === 0 && <div>NO DATA</div>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </Helmet>

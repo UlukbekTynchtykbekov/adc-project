@@ -66,7 +66,7 @@ const NewSquare = () => {
                 }
 
                 {
-                    squaresIsError &&  <div style={{color: "white"}}>{squaresError?.message}</div>
+                    squaresData?.message &&  <div style={{color: "white"}}>{squaresData?.message}</div>
                 }
                 <div className="new">
                     <div className="new__wrapper">

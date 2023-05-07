@@ -5,6 +5,7 @@ import {request} from "../../utils/axios-utils";
 import {useAddArchitect, useSingleArchitectData, useUpdateArchitect} from "../../CustomHooks/useArchitectData";
 import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
+import {toast} from "react-toastify";
 
 const NewArchitect = () => {
     const [formData, setFormData] = useState({
@@ -15,12 +16,37 @@ const NewArchitect = () => {
         images: [],
     });
     const [formErrors, setFormErrors] = useState({});
-
     const {id: architectId} = useParams();
 
-    const {mutate: addArchitect, data: addedArchitectData, isLoading: addArchitectLoading} = useAddArchitect();
+    const addingSuccess = () => {
+        toast.success('Архитектор был успешно добавлен', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const addingError = () => {
+        toast.error('Ошибка при добавлении архитектора', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const {mutate: addArchitect, data: addedArchitectData, isLoading: addArchitectLoading} = useAddArchitect(addingSuccess, addingError);
     const {data: architectData, isLoading: architectLoading, isError: architectIsError, error: architectError} = useSingleArchitectData(architectId);
-    const {mutate: updateArchitect, data:updatedArchitectData, isLoading: updateLoading} = useUpdateArchitect()
+    const {mutate: updateArchitect, data:updatedArchitectData, isLoading: updateLoading} = useUpdateArchitect(addingSuccess, addingError)
 
     const handleInputChange = (event) => {
         const {name, value, files} = event.target;

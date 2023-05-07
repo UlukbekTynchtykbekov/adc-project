@@ -21,12 +21,16 @@ export const useCategoryData = (categoryId) => {
 const fetchAddCategory = (category) => {
     return request({url: '/api/categories', method: 'POST', data: category})
 }
-export const useAddCategory = () => {
+export const useAddCategory = (addingSuccess, addingError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
+            addingSuccess()
         },
+         onError: () => {
+            addingError()
+        }
     });
 }
 
@@ -35,23 +39,31 @@ const fetchUpdateCategory = (category) => {
     delete category.categoryId
     return request({url: `/api/categories/${updatedProject.categoryId}`, method: 'PUT', data: category})
 }
-export const useUpdateCategory = () => {
+export const useUpdateCategory = (addingSuccess,addingError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
+            addingSuccess()
         },
+        onError: () => {
+            addingError()
+        }
     });
 }
 
 const fetchDeleteCategory = (categoryId) => {
     return request({url: `/api/categories/${categoryId}`, method: 'DELETE'})
 }
-export const useDeleteCategory = () => {
+export const useDeleteCategory = (deleteSuccess, deleteError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
+            deleteSuccess()
         },
+        onError: () => {
+            deleteError()
+        }
     });
 }
