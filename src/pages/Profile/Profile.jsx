@@ -4,7 +4,6 @@ import Helmet from "../../layout/Helmet";
 import {useDispatch, useSelector} from "react-redux";
 import "./profile.scss"
 import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import {authActions} from "../../features/authenticatedSlice";
 
 const Profile = () => {
@@ -59,18 +58,6 @@ const Profile = () => {
                             </div>
                         </div>
                     </div>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={1000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="colored"
-                    />
                 </div>
             </section>
         </Helmet>

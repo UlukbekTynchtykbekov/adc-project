@@ -1,4 +1,5 @@
 import React from 'react';
+import "./suggestion.scss"
 
 const SuggestionCardItems = ({item, index}) => {
     return (

@@ -11,7 +11,7 @@ const NewRoom = () => {
     const {id: roomId} = useParams();
 
     const {mutate: addRoom, data: addedRoomData, isLoading: addRoomLoading} = useAddRoom();
-    const {data: roomData, isLoading: roomLoading, isError: roomIsError, error: roomError} = useSingleRoomData(roomId);
+    const {data: roomData, isLoading: roomLoading} = useSingleRoomData(roomId);
     const {mutate: updateRoom, data: updatedRoomData, isLoading: updateLoading} = useUpdateRoom()
 
     const handleInputChange = (event) => {
@@ -65,7 +65,7 @@ const NewRoom = () => {
                 }
 
                 {
-                    roomIsError && <div style={{color: "white"}}>{roomError?.message}</div>
+                    roomData?.message && <div style={{color: "white"}}>{roomData?.message}</div>
                 }
                 <div className="new">
                     <div className="new__wrapper">

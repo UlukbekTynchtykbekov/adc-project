@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import {useUpdateUser} from "../../CustomHooks/useAuth";
-import "./update-profile.scss"
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import "./update-profile.scss"
 import {toast} from "react-toastify";
 
 const UpdateProfile = () => {
@@ -14,7 +14,7 @@ const UpdateProfile = () => {
         lastName: authMe?.firstName,
     });
     const [formErrors, setFormErrors] = useState({});
-    const {mutate: updateUser, data: updatedData, isLoading: updateLoading} = useUpdateUser();
+    const {mutate: updateUser, data: updatedData, isLoading: updateLoading, isSuccess} = useUpdateUser();
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -44,7 +44,7 @@ const UpdateProfile = () => {
         return errors;
     };
 
-    if (updatedData?.status === 200) {
+    if (isSuccess) {
         toast.success('Вы успешно изменили свой профиль', {
             position: "bottom-right",
             autoClose: 1000,

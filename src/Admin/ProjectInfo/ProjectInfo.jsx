@@ -1,16 +1,16 @@
 import React, {useMemo, useState} from 'react';
-import "./project-info.scss"
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
+import "./project-info.scss"
 
 const ProjectInfo = () => {
     const [searchItem, setSearchItem] = useState("");
 
-    const {data: projectInfoData, isLoading: projectInfoDataLoading, isError: projectInfoDataIsError, error: projectInfoDataError} = useProjectInfo();
+    const {data: projectInfoData, isLoading: projectInfoDataLoading} = useProjectInfo();
+
 
     const sortedAndFilteredProjectInfo = useMemo(() => {
         let filteredProjectInfo = [];
@@ -43,7 +43,7 @@ const ProjectInfo = () => {
                         </div>
                         <div className="table__body">
                             {projectInfoDataLoading && <div>Loading....</div>}
-                            {projectInfoDataIsError && <div>{projectInfoDataError?.message}</div>}
+                            {projectInfoData?.message && <div>{projectInfoData?.message}</div>}
                             {
                                 sortedAndFilteredProjectInfo.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -64,24 +64,12 @@ const ProjectInfo = () => {
                                 </table>
                             }
                             {
-                                !projectInfoDataLoading && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
+                                !projectInfoDataLoading && !projectInfoData?.message && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

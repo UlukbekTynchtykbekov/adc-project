@@ -3,13 +3,12 @@ import Avatar from "../../static/img/avatar.jpeg";
 import {Link, useParams} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
-import {toast, ToastContainer} from "react-toastify";
 
 const UserProfile = () => {
 
     const [date, setDate] = useState("");
     const {id} = useParams()
-    const {data: userData, isLoading: userLoading, isError: userError, error: userErrorMessage, refetch} = useUserData(id);
+    const {data: userData, isLoading: userLoading, refetch} = useUserData(id);
     const {mutate: updateUserRole, data: updateRoleData} = useUpdateUserRole();
 
     const handleChangeRoleUser = (id) => {
@@ -29,16 +28,6 @@ const UserProfile = () => {
         }
 
         if (updateRoleData?.data){
-            toast.success('Вы успешно изменили свой профиль', {
-                position: "bottom-right",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
             refetch()
         }
     }, [updateRoleData?.data])
@@ -48,7 +37,7 @@ const UserProfile = () => {
             <section className="account">
                 <div className="container">
                     {userLoading && <div>Loading...</div>}
-                    {userError && <div>{userErrorMessage?.message}</div>}
+                    {userData?.message && <div>{userData?.message}</div>}
                     {userData?.data &&
                         <div className="account__profile">
                             <div className="account__status">
@@ -80,19 +69,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                     }
-                    {!userLoading && !userData?.data && <div>нет данных</div>}
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={1000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="colored"
-                    />
+                    {!userLoading && !userData?.message && !userData?.data && <div>нет данных</div>}
                 </div>
             </section>
         </Helmet>

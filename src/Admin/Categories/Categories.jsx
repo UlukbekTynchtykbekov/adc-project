@@ -1,8 +1,7 @@
 import React, {useMemo, useState} from 'react';
+import {Link} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
-import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import {useCategoriesData} from "../../CustomHooks/useCategoriesData";
 import CategoryCard from "../CatgeoryCard/CategoryCard";
 import "./categories.scss"
@@ -11,7 +10,7 @@ const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
     const [alreadyHave, setAlreadyHave] = useState(false)
 
-    const {data: categoriesData, isLoading: categoriesDataLoading, isError: categoriesDataIsError, error: categoriesDataError} = useCategoriesData();
+    const {data: categoriesData, isLoading: categoriesDataLoading} = useCategoriesData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -53,7 +52,7 @@ const Categories = () => {
                         </div>
                         <div className="table__body">
                             {categoriesDataLoading && <div>Loading....</div>}
-                            {categoriesDataIsError && <div>{categoriesDataError?.message}</div>}
+                            {categoriesData?.message && <div>{categoriesData?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -74,7 +73,7 @@ const Categories = () => {
                                 </table>
                             }
                             {
-                                !categoriesDataLoading && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !categoriesDataLoading && !categoriesData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                         {
@@ -86,18 +85,6 @@ const Categories = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

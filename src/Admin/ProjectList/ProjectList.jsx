@@ -3,7 +3,6 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import ProductCard from "../ProjectListCard/ProductCard";
 import './project-list.scss'
@@ -13,7 +12,7 @@ const ProjectList = () => {
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
 
-    const {data: productData, isLoading: productDataLoading, isError: productDataIsError, error: productDataError} = useProjectsData();
+    const {data: productData, isLoading: productDataLoading} = useProjectsData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -54,7 +53,7 @@ const ProjectList = () => {
                         </div>
                         <div className="table__body">
                             {productDataLoading && <div>Loading....</div>}
-                            {productDataIsError && <div>{productDataError?.message}</div>}
+                            {productData?.message && <div>{productData?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -75,24 +74,12 @@ const ProjectList = () => {
                                 </table>
                             }
                             {
-                                !productDataLoading && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !productDataLoading && !productData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

@@ -37,7 +37,6 @@ export const useTokenData = (tokenData) => {
 const fetchUpdateUserRole = (user) => {
     const updatedUserRole = {...user};
     delete user.id
-    console.log(user)
     return request({url: `/api/users/${updatedUserRole.id}/update/role`, method: 'PUT', data: user})
 }
 export const useUpdateUserRole = () => {
