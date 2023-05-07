@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../Header";
-import Footer from "../Footer";
 import Routers from "../../routers/Routers";
 import ScrollTop from "../../helper/ScrollTop";
 import {useDispatch} from "react-redux";
@@ -25,7 +24,6 @@ const Layout = () => {
             <main className={`main ${isOpen ? 'no-scroll' : ''}`}>
             <Routers />
             </main>
-            <Footer />
         </>
     );
 };

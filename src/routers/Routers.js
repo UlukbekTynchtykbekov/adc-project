@@ -43,6 +43,7 @@ import UserProfile from "../Admin/UserProfile";
 import NewCompany from "../Admin/NewCompany";
 import Comments from "../Admin/Comments";
 import ProductReviews from "../Admin/ProductReviews";
+import Loader from "../components/Loader/Loader";
 
 const Routers = () => {
     return <Routes>
@@ -64,6 +65,7 @@ const Routers = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/password-reset/:id/:token" element={<PasswordReset/>}/>
         <Route path="/:id/:token/success" element={<Success/>}/>
+        <Route path="/loadergi" element={<Loader/>}/>
 
         <Route exact path='/' element={<AuthenticatedRoutes/>}>
             <Route path="/favorite" element={<Favorite/>}/>

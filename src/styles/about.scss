@@ -21,6 +21,9 @@
   }
 }
 .about-desc{
+  position: absolute;
+  width: 100%;
+  height: 612px !important;
   background: #FFFFFF;
   margin: 0 !important;
 }
@@ -29,7 +32,6 @@
   &__image{
     width: 100%;
     font-family: 'Gothic A1', sans-serif;
-    font-style: normal;
     font-weight: 300;
     font-size: 40px;
     line-height: 45px;
@@ -46,32 +48,13 @@
     color: rgba(0, 0, 0, 0.62);
   }
 }
-.video-player {
-  position: relative;
-}
-.video{
-  margin-left: -50px;
-}
-
-.play-icon {
-  position: absolute;
-  width: 125px;
-  height: 125px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  z-index: 1;
-}
-
-.play-icon.hide {
-  display: none;
-}
 .all-des{
+  position: absolute;
   background: #FFFFFF;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
+  z-index: 2;
   &__title{
     font-family: 'Gothic A1',sans-serif;
     font-style: normal;
@@ -91,6 +74,9 @@
   }
   &__gallery{
     display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
     &__item{
 
     }
