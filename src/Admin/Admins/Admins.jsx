@@ -62,7 +62,7 @@ const Admins = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!adminsLoading && !admins?.message && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!adminsLoading && !admins?.message && filteredUsers.length === 0 && <div>нет  данных</div>}
                         </div>
                     </div>
                 </div>
