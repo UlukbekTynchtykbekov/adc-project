@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import Rate from "../Rate";
 import {useReviewData} from "../../CustomHooks/useReviewData";
 import "./reviews.scss"
@@ -41,8 +41,8 @@ const Reviews = ({el}) => {
         });
     }
 
-    const {data: reviewData, isLoading, isError, error} = useReviewData(el._id)
-    const {mutate: reviewMutation, data: reviewMutationData} = useAddReviewData(saveOnSuccess, saveOnError);
+    const {data: reviewData, isLoading} = useReviewData(el._id)
+    const {mutate: reviewMutation} = useAddReviewData(saveOnSuccess, saveOnError);
 
     const handleClick = (e, id) => {
         e.preventDefault()
@@ -50,18 +50,6 @@ const Reviews = ({el}) => {
             star: rating, comment, projectId: id
         }
         reviewMutation(review)
-    }
-    
-    if (isLoading) {
-        return <div style={{color: "white"}}>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div style={{color: "white"}}>{error?.message}</div>;
-    }
-
-    if (!reviewData?.data) {
-        return <div style={{color: "white"}}>No Information</div>;
     }
 
     return (
@@ -72,14 +60,25 @@ const Reviews = ({el}) => {
                 </div>
                 <div className="review__items">
                     <div className="review__wrapper">
-                        <ul className="review__list">
-                            {reviewData?.data.map(review => (<li key={review._id} className="review__item">
-                                <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
-                                <span className="review__statistic">{review.star} (rating)</span>
-                                <p className="review__text">{review.comments[0].comment}
-                                </p>
-                            </li>))}
-                        </ul>
+                        {
+                            isLoading && <div>Loading...</div>
+                        }
+                        {
+                            reviewData?.message && <div>{reviewData?.message}</div>
+                        }
+                        {
+                            reviewData?.data &&
+                            <ul className="review__list">
+                                {
+                                    reviewData?.data.map(review => (<li key={review._id} className="review__item">
+                                    <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
+                                    <span className="review__statistic">{review.star} (rating)</span>
+                                    <p className="review__text">{review.comments[0].comment}
+                                    </p>
+                                </li>
+                                ))}
+                            </ul>
+                        }
                         {isAuthenticated ? sentMessage ? <div className="review__check">
                             <h3 className="review__check-title">Спасибо, что оставили отзыв!</h3>
                             <p className="review__check-message">

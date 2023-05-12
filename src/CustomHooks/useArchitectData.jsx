@@ -11,12 +11,16 @@ export const useArchitectData = () => {
 const fetchAddArchitect = (architect) => {
     return request({url: '/api/architects', method: 'POST', data: architect})
 }
-export const useAddArchitect = () => {
+export const useAddArchitect = (addingSuccess, addingError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
+            addingSuccess()
         },
+        onError: () => {
+            addingError()
+        }
     });
 }
 
@@ -37,23 +41,31 @@ const fetchUpdateArchitect = (architect) => {
     delete architect.architectId
     return request({url: `/api/architects/${updatedProject.architectId}`, method: 'PUT', data: architect})
 }
-export const useUpdateArchitect = () => {
+export const useUpdateArchitect = (addingSuccess, addingError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
+            addingSuccess()
         },
+        onError: () => {
+            addingError()
+        }
     });
 }
 
 const fetchDeleteArchitect = (architectId) => {
     return request({url: `/api/architects/${architectId}`, method: 'DELETE'})
 }
-export const useDeleteArchitect = () => {
+export const useDeleteArchitect = (deleteSuccess, deleteError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
+            deleteSuccess()
         },
+        onError: () => {
+            deleteError()
+        }
     });
 }

@@ -3,8 +3,6 @@ import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
-import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import CommentsCard from "../CommentsCard/CommentsCard";
 import "./comments.scss"
 
@@ -13,7 +11,7 @@ const Comments = () => {
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
 
-    const {data, isLoading, isError, error} = useProjectsData();
+    const {data, isLoading} = useProjectsData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -43,18 +41,15 @@ const Comments = () => {
                 <div className="product">
                     <div className="table product__table">
                         <div className="table__header">
-                            <h1 className="table__title">Проекты</h1>
+                            <h1 className="table__title">Комментарии</h1>
                             <div className="table__filter">
                                 <Search searchItem={searchItem} setSearchItem={setSearchItem}/>
                                 <Dropdown options={options} selected={selected} setSelected={setSelected}/>
-                                <Link to="/admin/projects/new" className="button product__add-btn">
-                                    Добавить
-                                </Link>
                             </div>
                         </div>
                         <div className="table__body">
                             {isLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {data?.message && <div>{data?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -76,24 +71,12 @@ const Comments = () => {
                                 </table>
                             }
                             {
-                                !isLoading && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !isLoading && !data?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

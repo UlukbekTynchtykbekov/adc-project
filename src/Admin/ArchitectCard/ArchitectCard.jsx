@@ -9,14 +9,7 @@ const ArchitectCard = ({el, idx}) => {
     const dateParts = dateString.split("T");
     const date = dateParts[0];
 
-    const {mutate: deleteArchitect, data: deletedData, isLoading: deletedDataIsLoading} = useDeleteArchitect()
-
-    const handleDelete = (id) => {
-        deleteArchitect(id)
-    }
-
-
-    if(deletedData?.data){
+    const deleteSuccess = () => {
         toast.success('Архитектор успешно удален', {
             position: "bottom-right",
             autoClose: 1000,
@@ -27,6 +20,25 @@ const ArchitectCard = ({el, idx}) => {
             progress: undefined,
             theme: "dark",
         });
+    }
+
+    const deleteError = () => {
+        toast.error('Ошибка удаления архитектора', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const {mutate: deleteArchitect, isLoading: deletedDataIsLoading} = useDeleteArchitect(deleteSuccess, deleteError)
+
+    const handleDelete = (id) => {
+        deleteArchitect(id)
     }
 
     return (

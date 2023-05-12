@@ -17,10 +17,10 @@ const NewProjectInfo = () => {
     const [filteredProjects, setFilteredProjects] = useState([])
     const {id: projectInfoId} = useParams();
 
-    const { data:projects } = useProjectsData();
+    const { data: projects, isLoading } = useProjectsData();
 
     const {mutate: addProjectInfo, data: addedProjectInfoData, isLoading: addProjectInfoLoading} = useAddProjectInfo();
-    const {data: projectInfoData, isLoading: projectInfoLoading, isError: projectInfoIsError, error: projectInfoError} = useProjectInfoData(projectInfoId);
+    const {data: projectInfoData, isLoading: projectInfoLoading} = useProjectInfoData(projectInfoId);
     const {mutate: updateProjectInfo, data:updatedProjectInfoData, isLoading: updateLoading} = useUpdateProjectInfo();
 
     const handleInputChange = (event) => {
@@ -91,7 +91,7 @@ const NewProjectInfo = () => {
                 }
 
                 {
-                    projectInfoIsError &&  <div style={{color: "white"}}>{projectInfoError?.message}</div>
+                    projectInfoData?.message &&  <div style={{color: "white"}}>{projectInfoData?.message}</div>
                 }
                 <div className="new">
                     <div className="new__wrapper">

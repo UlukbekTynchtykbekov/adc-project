@@ -8,7 +8,6 @@ const Footer = () => {
     const {bgParallaxStyle} = useParallax();
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({message});
         setMessage('');
     };
     return (

@@ -8,6 +8,7 @@ import {useSingleCompanyData, useUpdateCompany} from "../../CustomHooks/useCompa
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import "./new-company.scss"
+import {toast} from "react-toastify";
 
 const NewCompany = () => {
         const [formData, setFormData] = useState({
@@ -29,6 +30,32 @@ const NewCompany = () => {
 
         const [formErrors, setFormErrors] = useState({});
         const {id: companyId} = useParams();
+
+    const addingSuccess = () => {
+        toast.success('Архитектор был успешно добавлен', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+
+    const addingError = () => {
+        toast.error('Ошибка при добавлении архитектора', {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
 
         const {
             data: singleCompany,
@@ -204,7 +231,7 @@ const NewCompany = () => {
                     }
                     <div className="new">
                         <div className="new__wrapper">
-                            <h2 className="new__text">Добавить проект</h2>
+                            <h2 className="new__text">Добавить  компанию</h2>
                         </div>
                         <form onSubmit={onSubmitProduct} className="formik">
                             <div className="formik__group">

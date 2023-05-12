@@ -8,6 +8,16 @@ export const useProjectsData = () => {
     return useQuery("projects", fetchArchitecture);
 }
 
+const fetchProject = ({queryKey}) => {
+    const projectId = queryKey[1]
+    return request({url: `/api/projects/${projectId}`, method: 'GET'});
+}
+export const useProjectData = (projectId) => {
+    return useQuery( ["project", projectId], fetchProject, {
+        enabled: !!projectId
+    });
+}
+
 const fetchAddProject = (project) => {
     return request({url: '/api/projects', method: 'POST', data: project})
 }
@@ -56,7 +66,6 @@ export const useAddReviewData = (onSuccess, onError) => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries("projects");
-                queryClient.invalidateQueries("project");
                 onSuccess()
             },
             onError
@@ -74,7 +83,6 @@ export const useAcceptReviewData = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries("projects");
-                queryClient.invalidateQueries("project");
                 queryClient.invalidateQueries("all-reviews");
             },
         }
@@ -91,7 +99,6 @@ export const useDeleteReviewData = () => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries("projects");
-                queryClient.invalidateQueries("project");
                 queryClient.invalidateQueries("all-reviews");
             },
         }

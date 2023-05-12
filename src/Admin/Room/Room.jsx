@@ -2,7 +2,6 @@ import React, {useMemo, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
 import RoomCard from "../RoomCard/RoomCard";
 import {useRoomData} from "../../CustomHooks/useRoomData";
 
@@ -10,7 +9,7 @@ const Room = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
 
-    const {data: roomData, isLoading: roomDataLoading, isError: roomDataIsError, error: roomDataError} = useRoomData();
+    const {data: roomData, isLoading: roomDataLoading} = useRoomData();
 
     const sortedAndFilteredRoom = useMemo(() => {
         let sortedRooms = [];
@@ -51,7 +50,7 @@ const Room = () => {
                         </div>
                         <div className="table__body">
                             {roomDataLoading && <div>Loading....</div>}
-                            {roomDataIsError && <div>{roomDataError?.message}</div>}
+                            {roomData?.message && <div>{roomData?.message}</div>}
                             {
                                 sortedAndFilteredRoom.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -72,24 +71,12 @@ const Room = () => {
                                 </table>
                             }
                             {
-                                !roomDataLoading && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
+                                !roomDataLoading && !roomData?.message && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
         </section>
     );
 };

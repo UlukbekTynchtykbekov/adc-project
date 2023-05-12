@@ -3,9 +3,9 @@ import {Link} from "react-router-dom";
 import Logo from "../../static/img/logo.png";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
-import './sidebar.scss'
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {reviewActions} from "../../features/reviewSlice";
+import './sidebar.scss'
 
 const Sidebar = () => {
 
@@ -19,14 +19,17 @@ const Sidebar = () => {
         dispatch(authActions.logout())
     }
 
+
     useEffect(() => {
-        productData?.data.map(obj => {
-            obj.reviews.filter((review) => {
-                if (review.accepted === false){
-                    dispatch(reviewActions.addUnacceptedComments(review))
-                }
+        if (productData?.data){
+            productData?.data.map(obj => {
+                obj.reviews.filter((review) => {
+                    if (review.accepted === false){
+                        dispatch(reviewActions.addUnacceptedComments(review))
+                    }
+                });
             });
-        });
+        }
     }, [productData?.data])
 
     return (

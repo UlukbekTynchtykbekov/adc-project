@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Avatar from "../../static/img/avatar.jpeg";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 const AdminsCard = ({user, index}) => {
-
-    const [bold, setBold] = useState(false);
 
     const {data: authMe} = useSelector(state => state.auth);
 
