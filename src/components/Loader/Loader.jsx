@@ -2,8 +2,8 @@ import React from 'react';
 import  "./loader.scss"
 const Loader = () => {
     return (
-        <div className="loader">ADC
-            <span className="loader__load"></span>
+        <div className="loader">
+            <span className="loader__spinner"></span>
         </div>
     );
 };

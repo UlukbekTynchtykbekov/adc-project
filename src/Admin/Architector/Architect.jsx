@@ -6,6 +6,7 @@ import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
 import {useArchitectData} from "../../CustomHooks/useArchitectData";
 import './architect.scss'
+import Loader from "../../components/Loader/Loader";
 
 const Architect = () => {
     const options = ["все", "сначала старше", "сначала моложе"]
@@ -56,7 +57,7 @@ const Architect = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {architectDataLoading && <div>Loading....</div>}
+                            {architectDataLoading && <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredPeople.length > 0  && <table className="table__main">

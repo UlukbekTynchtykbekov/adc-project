@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
 import "./project-info.scss"
+import Loader from "../../components/Loader/Loader";
 
 const ProjectInfo = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -42,7 +43,7 @@ const ProjectInfo = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {projectInfoDataLoading && <div>Loading....</div>}
+                            {projectInfoDataLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProjectInfo.length > 0 && <table className="table__main">

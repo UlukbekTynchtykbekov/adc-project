@@ -9,6 +9,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./new-company.scss"
+import Loader from "../../components/Loader/Loader";
 
 const NewCompany = () => {
         const [formData, setFormData] = useState({
@@ -197,7 +198,7 @@ const NewCompany = () => {
                 <div className="row">
                     <Sidebar/>
                     {
-                        singleCompanyLoading && <div style={{color: "white"}}>Loading...</div>
+                        singleCompanyLoading &&  <Loader />
                     }
 
                     {

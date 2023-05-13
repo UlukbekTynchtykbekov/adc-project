@@ -3,10 +3,13 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import AdminsCard from "../AdminsCard/AdminsCard";
+import Loader from "../../components/Loader/Loader";
+import {useSelector} from "react-redux";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
     const {data: admins, isLoading: adminsLoading, isError, error} = useUsersData();
+    const {data: authMe} = useSelector(state => state.auth);
 
     const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
@@ -17,9 +20,9 @@ const Admins = () => {
                 return user.role === "ADMIN"
             })
             sortedAdmin = onlyAdmins.sort((a, b) => {
-                if (a.role === 'ADMIN') {
+                if (a.firstName === authMe.firstName) {
                     return -1;
-                } else if (b.role === 'ADMIN') {
+                } else if (b.firstName === authMe.firstName) {
                     return 1;
                 } else {
                     return 0;
@@ -44,7 +47,7 @@ const Admins = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {adminsLoading && <div>loading...</div>}
+                            {adminsLoading && <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {filteredUsers.length > 0 && <table className="table__main">
                                 <thead className="table__head">

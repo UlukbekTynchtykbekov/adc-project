@@ -44,6 +44,7 @@ import NewCompany from "../Admin/NewCompany";
 import Comments from "../Admin/Comments";
 import ProductReviews from "../Admin/ProductReviews";
 import Loader from "../components/Loader/Loader";
+import Error from "../components/ErrorComponent/Error";
 
 const Routers = () => {
     return <Routes>
@@ -65,7 +66,7 @@ const Routers = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/password-reset/:id/:token" element={<PasswordReset/>}/>
         <Route path="/:id/:token/success" element={<Success/>}/>
-        <Route path="/loader" element={<Loader/>}/>
+        <Route path="/loader" element={<Error/>}/>
 
         <Route exact path='/' element={<AuthenticatedRoutes/>}>
             <Route path="/favorite" element={<Favorite/>}/>

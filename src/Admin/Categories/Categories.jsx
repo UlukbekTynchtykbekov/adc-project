@@ -5,6 +5,7 @@ import Search from "../../components/Search/Search";
 import {useCategoriesData} from "../../CustomHooks/useCategoriesData";
 import CategoryCard from "../CatgeoryCard/CategoryCard";
 import "./categories.scss"
+import Loader from "../../components/Loader/Loader";
 
 const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -51,7 +52,7 @@ const Categories = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {categoriesDataLoading && <div>Loading....</div>}
+                            {categoriesDataLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">

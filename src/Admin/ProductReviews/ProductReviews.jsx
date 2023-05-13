@@ -9,6 +9,7 @@ import {reviewActions} from "../../features/reviewSlice";
 import {useDispatch} from "react-redux";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import "./product-reviews.scss"
+import Loader from "../../components/Loader/Loader";
 
 const ProductReviews = () => {
     const [projectInfo, setProjectInfo] = useState([])
@@ -88,7 +89,7 @@ const ProductReviews = () => {
                 <div className="container">
                     <div className="comments__wrapper">
                         {
-                            isLoading && <div>Loading...</div>
+                            isLoading &&  <Loader />
                         }
                         {
                             isError && <div>{error?.message}</div>
@@ -133,7 +134,9 @@ const ProductReviews = () => {
                                         </ul>
                                     </div>
                                     {
-                                        reviewLoading && <div>Loading...</div>
+                                        reviewLoading && <div className="comments__result">
+                                            <Loader />
+                                        </div>
                                     }
                                     {
                                         reviewIsError && <div>{reviewError?.message}</div>

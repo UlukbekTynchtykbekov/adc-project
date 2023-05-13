@@ -9,8 +9,8 @@ import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
-import "./Header.scss"
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
+import "./Header.scss"
 
 
 const Header = ({isOpen, setIsOpen}) => {

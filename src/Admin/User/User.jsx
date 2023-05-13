@@ -3,6 +3,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import UserCard from "../UserCard/UserCard";
+import Loader from "../../components/Loader/Loader";
 
 const User = () => {
     const [searchUser, setSearchUser] = useState("");
@@ -33,7 +34,7 @@ const User = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {userLoading && <div>loading...</div>}
+                            {userLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {filteredUsers.length > 0 &&  <table className="table__main">
                                 <thead className="table__head">

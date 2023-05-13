@@ -5,6 +5,7 @@ import {useSquareData} from "../../CustomHooks/useSquareData";
 import SquareCard from "../SquareCard/SquareCard";
 import Dropdown from "../../components/Dropdown";
 import "./square.scss"
+import Loader from "../../components/Loader/Loader";
 
 const Square = () => {
     const [options, setOptions] = useState([])
@@ -49,7 +50,7 @@ const Square = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {squareDataLoading && <div>Loading....</div>}
+                            {squareDataLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredSquare.length > 0 && <table className="table__main">

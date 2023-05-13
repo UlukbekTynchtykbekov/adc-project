@@ -4,6 +4,7 @@ import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
 import RoomCard from "../RoomCard/RoomCard";
 import {useRoomData} from "../../CustomHooks/useRoomData";
+import Loader from "../../components/Loader/Loader";
 
 const Room = () => {
     const [options, setOptions] = useState([])
@@ -49,7 +50,7 @@ const Room = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {roomDataLoading && <div>Loading....</div>}
+                            {roomDataLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredRoom.length > 0 && <table className="table__main">

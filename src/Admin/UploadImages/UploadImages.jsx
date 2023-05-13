@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from "../../components/Loader/Loader";
 
 const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photosError, selectMainPhoto, loader}) => {
     return (
@@ -22,7 +23,7 @@ const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photos
                     ))
                 }
                 {
-                    loader && <div>Loading...</div>
+                    loader &&  <Loader />
                 }
                 <div className="formik__photo">
                     <label className="formik__label formik__label-photo">

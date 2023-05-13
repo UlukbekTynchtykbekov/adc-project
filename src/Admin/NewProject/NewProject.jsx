@@ -11,6 +11,7 @@ import UploadImages from "../UploadImages/UploadImages";
 import FormGroup from "../FormGroup/FormGroup";
 import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./new-project.scss"
+import Loader from "../../components/Loader/Loader";
 
 const NewProject = () => {
     const [formData, setFormData] = useState({
@@ -289,7 +290,7 @@ const NewProject = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    singleProjectLoading && <div style={{color: "white"}}>Loading...</div>
+                    singleProjectLoading && <Loader />
                 }
                 {
                     singleProjectIsError && <div style={{color: "white"}}>ERROR 404</div>

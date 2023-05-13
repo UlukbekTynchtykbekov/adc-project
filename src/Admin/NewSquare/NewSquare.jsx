@@ -3,6 +3,7 @@ import {Navigate, useParams} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddSquare, useSingleSquareData, useUpdateSquare} from "../../CustomHooks/useSquareData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
 
 
 const NewSquare = () => {
@@ -64,7 +65,7 @@ const NewSquare = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    squaresLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    squaresLoading &&   <Loader />
                 }
 
                 {

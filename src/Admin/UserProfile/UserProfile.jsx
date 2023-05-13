@@ -4,6 +4,7 @@ import { useParams} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
 
 const UserProfile = () => {
 
@@ -37,7 +38,7 @@ const UserProfile = () => {
         <Helmet title="My Profile">
             <section className="account">
                 <div className="container">
-                    {userLoading && <div>Loading...</div>}
+                    {userLoading &&  <Loader />}
                     {isError && <div>{error?.message}</div>}
                     {userData?.data &&
                         <div className="account__profile">

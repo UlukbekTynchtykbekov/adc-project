@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import './company.scss'
+import Loader from "../../components/Loader/Loader";
 
 const Company = () => {
     const {data: companyData, isLoading: companyLoading, isError} = useCompanyData();
@@ -47,7 +48,7 @@ const Company = () => {
                             <h1 className="table__title">О компании</h1>
                         </div>
                         <>
-                            {productDataLoading || userLoading || productDataLoading ? <div>Loading...</div> : null}
+                            {productDataLoading || userLoading || productDataLoading ?  <Loader /> : null}
                             {isError || productIsError || usersIsError ? <div>ERROR 404</div> : null}
                             {
                                 companyData?.data && productData?.data && users?.data && <>

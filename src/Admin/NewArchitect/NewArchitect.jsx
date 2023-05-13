@@ -6,6 +6,7 @@ import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
 import './new-architect.scss'
+import Loader from "../../components/Loader/Loader";
 
 const NewArchitect = () => {
     const [formData, setFormData] = useState({
@@ -139,7 +140,7 @@ const NewArchitect = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    architectLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    architectLoading &&  <Loader />
                 }
 
                 {

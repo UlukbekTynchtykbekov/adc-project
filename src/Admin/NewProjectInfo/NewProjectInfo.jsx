@@ -6,6 +6,7 @@ import FormGroup from "../FormGroup/FormGroup";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import "./new-project-info.scss"
+import Loader from "../../components/Loader/Loader";
 
 const NewProjectInfo = () => {
 
@@ -88,7 +89,7 @@ const NewProjectInfo = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    projectInfoLoading || isLoading ? <div style={{color: "white"}}>Loading...</div> : null
+                    projectInfoLoading || isLoading ?  <Loader /> : null
                 }
 
                 {

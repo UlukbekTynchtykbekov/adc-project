@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import ProductCard from "../ProjectListCard/ProductCard";
 import './project-list.scss'
+import Loader from "../../components/Loader/Loader";
 
 const ProjectList = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -52,7 +53,7 @@ const ProjectList = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {productDataLoading && <div>Loading....</div>}
+                            {productDataLoading &&  <Loader />}
                             {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
