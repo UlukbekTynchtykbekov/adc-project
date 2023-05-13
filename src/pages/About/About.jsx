@@ -9,7 +9,6 @@ import Img3 from "../../static/img/image 53.png"
 import Img4 from "../../static/img/image 54.png"
 import ArrowIcon from "../../Ui/ArrowIcon/ArrowIcon";
 import handleScroll from "aos/src/js/helpers/handleScroll";
-// import Footer from "../../layout/Footer";
 
 const About = () => {
     const {isVisible} = useParallax()
@@ -71,7 +70,6 @@ const About = () => {
                     </div>
                 </div>
             </section>
-            {/*<Footer />*/}
         </Helmet>
     );
 };

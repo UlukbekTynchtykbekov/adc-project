@@ -23,6 +23,24 @@
     gap: 3rem;
   }
 
+  &__link{
+    position: relative;
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--hover-line-color);
+      transition: 0.3s;
+    }
+
+    &:hover:after{
+      width: 100%;
+    }
+  }
+
   &__title {
     font-family: 'Rubik', sans-serif;
     font-style: normal;
@@ -91,17 +109,6 @@
     gap: 1rem;
   }
 
-  &__user-roller{
-    display: flex;
-    justify-content: space-between;
-    gap: .5rem;
-    color: var(--title-color);
-    background: rgba(171, 205, 239, 0.3);
-    border-radius: 10px;
-    padding: 3px 5px;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
   &__user-wrapper{
     width: 20px;
     height: 20px;
@@ -111,6 +118,10 @@
     border-radius: 50%;
     border: 1px solid #FFFFFF;
     overflow: hidden;
+
+    &.close{
+      display: none;
+    }
   }
   &__user{
     width: 17px;
@@ -143,6 +154,17 @@
   cursor: pointer;
   position: relative !important;
   &__name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--title-color);
+    background: #4646e0;
+    border-radius: 50%;
+    padding: 3px 5px;
+    text-transform: capitalize;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import {useChangePassword} from "../../CustomHooks/useAuth";
 import {Navigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
 
 const UpdatePassword = () => {
 
@@ -12,7 +12,7 @@ const UpdatePassword = () => {
         confirmPassword: "",
     });
     const [formErrors, setFormErrors] = useState({});
-    const {mutate: updatePassword, data: updatedData, isLoading: updateLoading} = useChangePassword();
+    const {mutate: updatePassword, data: updatedData, isLoading: updateLoading, isSuccess} = useChangePassword(showSuccessNotification, showErrorNotification);
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
@@ -28,17 +28,7 @@ const UpdatePassword = () => {
         }
     }
 
-    if (updatedData?.status === 200) {
-        toast.success('Вы успешно изменили свой пароль', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
+    if (isSuccess) {
         return <Navigate to="/profile"/>
     }
 

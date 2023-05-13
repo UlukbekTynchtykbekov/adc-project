@@ -9,7 +9,7 @@ const Room = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
 
-    const {data: roomData, isLoading: roomDataLoading} = useRoomData();
+    const {data: roomData, isLoading: roomDataLoading, isError, error} = useRoomData();
 
     const sortedAndFilteredRoom = useMemo(() => {
         let sortedRooms = [];
@@ -50,7 +50,7 @@ const Room = () => {
                         </div>
                         <div className="table__body">
                             {roomDataLoading && <div>Loading....</div>}
-                            {roomData?.message && <div>{roomData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredRoom.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -71,7 +71,7 @@ const Room = () => {
                                 </table>
                             }
                             {
-                                !roomDataLoading && !roomData?.message && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
+                                !roomDataLoading && !isError && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

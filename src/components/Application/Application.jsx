@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./application.scss"
 import {useSendMessage} from "../../CustomHooks/useTelegrammBot";
-
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 
 const Application = () => {
 
@@ -11,7 +11,7 @@ const Application = () => {
     const [categories, setCategories] = useState({});
     const [request, setRequest] = useState("");
 
-    const { mutate: senMessage, isSuccess } = useSendMessage()
+    const { mutate: senMessage, isLoading } = useSendMessage(showSuccessNotification, showErrorNotification)
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
         setCategories(prevState => ({
@@ -25,9 +25,6 @@ const Application = () => {
         senMessage(data);
     };
 
-    if (isSuccess){
-        alert("Sended message successfully")
-    }
     return (
         <form onSubmit={handleSubmit} className="form">
             <div className="field">
@@ -170,7 +167,7 @@ const Application = () => {
                     <span className="label-text">ваш запрос</span>
                 </label>
             </div>
-            <button className="checkbox__btn" type="submit">Отправить</button>
+            <button className="checkbox__btn" type="submit" disabled={isLoading}>Отправить</button>
         </form>
     );
 };

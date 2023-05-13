@@ -8,7 +8,7 @@ const EmailVerify = () => {
     const [validUrl, setValidUrl] = useState(false)
     const param = useParams()
 
-    const {data, isLoading} = useTokenData(param)
+    const {data, isLoading, isError} = useTokenData(param)
 
     useEffect(() => {
         if (data?.data){
@@ -20,6 +20,10 @@ const EmailVerify = () => {
 
     if (isLoading){
         return <div>Loading....</div>
+    }
+
+    if (isError){
+        setValidUrl(false)
     }
     return (
         <section className="verification">

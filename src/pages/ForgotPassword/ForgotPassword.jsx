@@ -1,35 +1,47 @@
 import React, {useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import {useAddPassword} from "../../CustomHooks/useForgotPassword";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
 
 const ForgotPassword = () => {
-    const [email, setEmail] = useState('');
+    const [formData, setFormData] = useState({
+        email: ""
+    });
+    const [formErrors, setFormErrors] = useState({});
+    const {mutate: postEmail, data: postedEmail, isLoading: postingEmailLoading, isError, error} = useAddPassword(showSuccessNotification, showErrorNotification);
 
-    const {mutate: postEmail, data: postedEmail, isLoading: postingEmailLoading} = useAddPassword()
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
 
-
-    const handleEmailChange = (event) => {
-        const newEmail = event.target.value;
-
-        const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-        if (emailRegex.test(newEmail) && newEmail.trim().length > 0){
-            setEmail(newEmail);
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const errors = validateForm(formData);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+            postEmail(formData)
         }
-    }
+    };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const emailObj = {
-            email
+    const validateForm = (data) => {
+        const errors = {};
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!data.email) {
+            errors.email = 'Электронная почта обязательна';
+        }else if (!re.test(String(data.email).toLowerCase())) {
+            errors.email = 'Электронная почта недействительна';
         }
-        postEmail(emailObj)
-    }
+
+        return errors
+    };
 
     return (
         <Helmet title="Forgot Password">
             <section className="login">
                 <div className="container">
-                    <form onSubmit={handleSubmit}  className="form login__form">
+                    <form onSubmit={onSubmit}  className="form login__form">
                         <div className="login__main">
                             <h3 className="login__description">Забыли пароль</h3>
                         </div>
@@ -39,21 +51,23 @@ const ForgotPassword = () => {
                                 name="email"
                                 id="email"
                                 autoComplete="off"
-                                required
-                                onChange={(e) => handleEmailChange(e)}
+                                onChange={handleInputChange}
                             />
                             <label htmlFor="email" className="label-wrapper">
                                 <span className="label-text">электронная почта</span>
                             </label>
                         </div>
                         {
-                            postedEmail?.data?.message && <div className="login__message">
-                                <p className="login__message-title">{postedEmail?.data?.message}</p>
+                            formErrors.email && <p className="error">*{formErrors.email}</p>
+                        }
+                        {
+                            isError && <div className="login__message">
+                                <p className="login__message-title">{error?.message}</p>
                             </div>
                         }
                         {
-                            postedEmail?.response?.data?.message && <div className="login__message login__error">
-                                <p className="login__message-title">{postedEmail?.response?.data?.message}</p>
+                            postedEmail?.data?.message && <div className="login__message">
+                                <p className="login__message-title">{postedEmail?.data?.message}</p>
                             </div>
                         }
                         <div className="checkbox__items">

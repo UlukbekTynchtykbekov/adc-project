@@ -6,14 +6,14 @@ import {useConstructionData} from "../../CustomHooks/useConstruction";
 
 const Construction = () => {
 
-    const {data, isLoading} = useConstructionData()
+    const {data, isLoading, isError, error} = useConstructionData()
 
     return (
         <Helmet title="Construction">
             <section className="construction">
                 <div className="container">
                     {isLoading && <div>Loading...</div>}
-                    {data?.message && <div>{data?.message}</div>}
+                    {isError && <div>{error?.message}</div>}
                     {
                         data?.data &&
                         <div className="construction__wrapper">
@@ -26,7 +26,7 @@ const Construction = () => {
                         </div>
                     }
                     {
-                        !isLoading && !data?.message && data?.data.length === 0 && <div>No DATA</div>
+                        !isLoading && !isError && data?.data.length === 0 && <div>No DATA</div>
                     }
                 </div>
             </section>

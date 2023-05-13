@@ -1,18 +1,20 @@
 import {useMutation, useQuery, useQueryClient} from "react-query";
 import {request} from '../utils/axios-utils';
 
-const fetchFavoriteProjects = () => {
-    return request({url: `/api/project-favorite`, method: 'GET'});
+const fetchFavoriteProjects = (favoriteId) => {
+    return request({url: `/api/project-favorite/${favoriteId}`, method: 'GET'});
 }
-export const useFavoriteProjects = () => {
-    return useQuery( "favorite-projects", fetchFavoriteProjects);
+export const useFavoriteProjects = (favoriteId) => {
+    return useQuery( "favorite-projects", () => fetchFavoriteProjects(favoriteId),{
+        enabled: !!favoriteId
+    });
 }
 
-const fetchFavoriteProject = (projectId) => {
-    return request({url: `/api/project-favorite/${projectId}`, method: 'GET'});
+const fetchFavoriteProject = (data) => {
+    return request({url: `/api/project-favorite/${data.projectId}/${data.favoriteId}`, method: 'GET'});
 }
-export const useFavoriteProject = (projectId) => {
-    return useQuery( ["favorite-project", projectId], () =>  fetchFavoriteProject(projectId));
+export const useFavoriteProject = (data) => {
+    return useQuery( ["favorite-project", data], () =>  fetchFavoriteProject(data));
 }
 
 const fetchAddFavoriteProject = (favoriteProject) => {
@@ -24,24 +26,27 @@ export const useAddFavoriteProject = (onSuccess, onError) => {
         onSuccess: () => {
             queryClient.invalidateQueries("favorite-projects");
             queryClient.invalidateQueries("favorite-project");
-            onSuccess()
+            onSuccess("Проект был успешно добавлен")
         },
-        onError
+        onError: () => {
+            onError("Ошибка при добавлении проекта")
+        }
     });
 }
 
-const fetchDeleteFavoriteProject = (id) => {
-    return request({url: `/api/project-favorite/${id}`, method: 'DELETE'})
+const fetchDeleteFavoriteProject = (data) => {
+    return request({url: `/api/project-favorite/${data.projectId}/${data.favoriteId}`, method: 'DELETE'})
 }
 export const useDeleteFavoriteProject = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteFavoriteProject, {
-        onSuccess: (data, variables) => {
-            const { id } = variables;
+        onSuccess: () => {
             queryClient.invalidateQueries('favorite-projects');
             queryClient.invalidateQueries('favorite-project');
-            onSuccess()
+            onSuccess("Проект успешно удален")
         },
-        onError
+        onError: () => {
+            onError("Ошибка удаления проекта")
+        }
     });
 }

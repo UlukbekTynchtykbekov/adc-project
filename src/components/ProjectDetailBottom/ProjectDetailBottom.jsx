@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import Ruler from "../../static/img/pencil-ruler-2-fill.svg";
 import House from "../../static/img/home-2-line.svg";
 import "./project-detail-bottom.scss"
 
 const ProjectDetailBottom = ({el}) => {
+    const [projectInfo, setProjectInfo] = useState([])
 
     const {data} = useProjectInfo()
     const {
@@ -13,16 +14,21 @@ const ProjectDetailBottom = ({el}) => {
         architect,
     } = el
 
-    const project = data?.data?.filter(el => {
-        return el.project._id === _id
-    })
+    useEffect(() => {
+        if (data?.data){
+            const project = data?.data?.filter(el => {
+                return el.project._id === _id
+            });
+            setProjectInfo(project)
+        }
+    },[])
 
     return (
         <div className="detail__bottom">
             <div className="description">
                 {
-                    project?.length === 0 ? "" :
-                        project?.map(el => (
+                    projectInfo?.length === 0 ? "" :
+                        projectInfo?.map(el => (
                             <div key={el._id} className="description__desc">
                                 <h2 className="description__title">
                                     Описание
@@ -60,9 +66,6 @@ const ProjectDetailBottom = ({el}) => {
                 </div>
                 <h3 className="architect__name">{architect.firstname} {architect.lastname}</h3>
                 <h3 className="architect__title">Designer</h3>
-                <button className="button architect__button">
-                    Подробнее
-                </button>
             </div>
         </div>
     );

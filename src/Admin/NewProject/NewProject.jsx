@@ -7,9 +7,10 @@ import {useRoomData} from "../../CustomHooks/useRoomData";
 import {useSquareData} from "../../CustomHooks/useSquareData";
 import {useAddProject, useUpdateProject, useProjectData} from "../../CustomHooks/useProjectsData";
 import {Navigate, useParams} from "react-router-dom";
-import "./new-project.scss"
 import UploadImages from "../UploadImages/UploadImages";
 import FormGroup from "../FormGroup/FormGroup";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
+import "./new-project.scss"
 
 const NewProject = () => {
     const [formData, setFormData] = useState({
@@ -23,64 +24,94 @@ const NewProject = () => {
         roomId: "",
         squareId: ""
     });
-
+    const [exteriorImagesLoading, setExteriorImagesLoading] = useState(false);
+    const [interiorImagesLoading, setInteriorImagesLoading] = useState(false);
+    const [designImagesLoading, setDesignImagesLoading] = useState(false);
     const [formErrors, setFormErrors] = useState({});
-
     const {id: projectId} = useParams();
 
-    const {data: architects, isLoading: architectsLoading} = useArchitectData();
-    const {data: categories, isLoading: categoriesLoading} = useCategoriesData();
-    const {data: rooms, isLoading: roomsLoading} = useRoomData();
-    const {data: squares, isLoading: squaresLoading} = useSquareData();
-    const {mutate: addProject, data: addedProjectData, isLoading: addedProjectLoading} = useAddProject();
+    const {
+        data: architects,
+    } = useArchitectData();
+    const {
+        data: categories,
+    } = useCategoriesData();
+    const {data: rooms} = useRoomData();
+    const {data: squares} = useSquareData();
+    const {
+        mutate: addProject,
+        data: addedProjectData,
+        isLoading: addedProjectLoading,
+        isError: addedProjectIsError,
+        error: addedProjectError
+    } = useAddProject(showSuccessNotification, showErrorNotification);
     const {
         data: singleProject,
         isLoading: singleProjectLoading,
+        isError: singleProjectIsError,
     } = useProjectData(projectId);
-    const {mutate: updateProject, data: updatedProjectData, isLoading: updateLoading} = useUpdateProject();
+    const {
+        mutate: updateProject,
+        data: updatedProjectData,
+        isLoading: updateLoading,
+        isError: updateProjectIsError,
+        error: updateProjectError
+    } = useUpdateProject(showSuccessNotification, showErrorNotification);
 
     const handleInputChange = (event) => {
         const {name, value, files} = event.target;
         if (name === "exterior") {
-            const data = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                data.append("images", files[i]);
+            if (files.length > 0){
+                setExteriorImagesLoading(true)
+                const data = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    data.append("images", files[i]);
+                }
+                return request({url: '/api/upload', method: 'POST', data: data})
+                    .then(response => {
+                        const {data} = response;
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            exterior: [...prevState.exterior, ...data?.data]
+                        }));
+                        setExteriorImagesLoading(false)
+                    });
             }
-            return request({url: '/api/upload', method: 'POST', data: data})
-                .then(response => {
-                    const {data} = response;
-                    setFormData((prevState) => ({
-                        ...prevState,
-                        exterior: [...prevState.exterior, ...data?.data]
-                    }));
-                })
         } else if (name === "interior") {
-            const data = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                data.append("images", files[i]);
+            if (files.length > 0) {
+                setInteriorImagesLoading(true)
+                const data = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    data.append("images", files[i]);
+                }
+                return request({url: '/api/upload', method: 'POST', data: data})
+                    .then(response => {
+                        const {data} = response;
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            interior: [...prevState.interior, ...data?.data]
+                        }));
+                        setInteriorImagesLoading(false)
+                    })
             }
-            return request({url: '/api/upload', method: 'POST', data: data})
-                .then(response => {
-                    const {data} = response;
-                    setFormData((prevState) => ({
-                        ...prevState,
-                        interior: [...prevState.interior, ...data?.data]
-                    }));
-                })
         } else if (name === "design") {
-            const data = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                data.append("images", files[i]);
+            if (files.length > 0){
+                setDesignImagesLoading(true)
+                const data = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    data.append("images", files[i]);
+                }
+                return request({url: '/api/upload', method: 'POST', data: data})
+                    .then(response => {
+                        const {data} = response;
+                        setFormData((prevState) => ({
+                            ...prevState,
+                            design: [...prevState.design, ...data?.data]
+                        }));
+                        setDesignImagesLoading(false)
+                    })
             }
-            return request({url: '/api/upload', method: 'POST', data: data})
-                .then(response => {
-                    const {data} = response;
-                    setFormData((prevState) => ({
-                        ...prevState,
-                        design: [...prevState.design, ...data?.data]
-                    }));
-                })
-        }else {
+        } else {
             setFormData((prevState) => ({
                 ...prevState,
                 [name]: value
@@ -258,124 +289,124 @@ const NewProject = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    singleProjectLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    singleProjectLoading && <div style={{color: "white"}}>Loading...</div>
                 }
                 {
-                    singleProject?.message ||
-                    architects?.message ||
-                    categories?.message ||
-                    rooms?.message ||
-                    squares?.message ?
-                        <div style={{color: "white"}}>ERROR 404</div>
-                        :
-                        <div className="new">
-                            <div className="new__wrapper">
-                                <h2 className="new__text">Добавить проект</h2>
+                    singleProjectIsError && <div style={{color: "white"}}>ERROR 404</div>
+                }
+                {
+                    !singleProjectLoading && !singleProjectIsError && <div className="new">
+                        <div className="new__wrapper">
+                            <h2 className="new__text">Добавить проект</h2>
+                        </div>
+                        <form onSubmit={onSubmitProduct} className="formik">
+                            <div className="formik__group">
+                                <h2 className="formik__text">Название</h2>
+                                <input
+                                    className="formik__input"
+                                    value={formData.name}
+                                    type="text"
+                                    name="name"
+                                    onChange={handleInputChange}
+                                    placeholder="Название проекта"/>
+                                {
+                                    formErrors.name && <p className="formik__error">*{formErrors.name}</p>
+                                }
                             </div>
-                            <form onSubmit={onSubmitProduct} className="formik">
-                                <div className="formik__group">
-                                    <h2 className="formik__text">Название</h2>
-                                    <input
-                                        className="formik__input"
-                                        value={formData.name}
-                                        type="text"
-                                        name="name"
-                                        onChange={handleInputChange}
-                                        placeholder="Название проекта"/>
-                                    {
-                                        formErrors.name && <p className="formik__error">*{formErrors.name}</p>
-                                    }
-                                </div>
-                                <div className="formik__group">
-                                    <h2 className="formik__text">Краткое описание</h2>
-                                    <textarea
-                                        className="formik__input formik__input-textarea"
-                                        value={formData.shortDesc}
-                                        placeholder="Краткое описание проекта"
-                                        name="shortDesc"
-                                        id=""
-                                        cols="30"
-                                        rows="10"
-                                        onChange={handleInputChange}
-                                    >
+                            <div className="formik__group">
+                                <h2 className="formik__text">Краткое описание</h2>
+                                <textarea
+                                    className="formik__input formik__input-textarea"
+                                    value={formData.shortDesc}
+                                    placeholder="Краткое описание проекта"
+                                    name="shortDesc"
+                                    id=""
+                                    cols="30"
+                                    rows="10"
+                                    onChange={handleInputChange}
+                                >
                             </textarea>
-                                    {
-                                        formErrors.shortDesc && <p className="formik__error">*{formErrors.shortDesc}</p>
-                                    }
+                                {
+                                    formErrors.shortDesc && <p className="formik__error">*{formErrors.shortDesc}</p>
+                                }
+                            </div>
+                            <UploadImages namePhoto="exterior" text="Экстерьер фото" photos={formData.exterior}
+                                          deletePhoto={deleteExteriorPhoto}
+                                          uploadPhoto={handleInputChange} photosError={formErrors.exterior}
+                                          selectMainPhoto={selectExteriorMainPhoto} loader={exteriorImagesLoading}/>
+                            <UploadImages namePhoto="interior" text="Интерьер фото" photos={formData.interior}
+                                          deletePhoto={deleteInteriorPhoto}
+                                          uploadPhoto={handleInputChange} photosError={formErrors.interior}
+                                          selectMainPhoto={selectInteriorMainPhoto} loader={interiorImagesLoading}/>
+                            <UploadImages namePhoto="design" text="Дизайн фото" photos={formData.design}
+                                          deletePhoto={deleteDesignPhoto}
+                                          uploadPhoto={handleInputChange} selectMainPhoto={selectDesignMainPhoto}
+                                          loader={designImagesLoading}/>
+                            {
+                                architects?.data && <FormGroup
+                                    text={"Архитектор или дизайнер проекта"}
+                                    option={"Выберите архитектора"}
+                                    setData={handleInputChange}
+                                    data={architects}
+                                    item={formData.architectId}
+                                    dataError={formErrors.architectId}
+                                    type={"architectId"}
+                                />
+                            }
+                            {
+                                categories?.data && <FormGroup
+                                    text={"Категории проекта"}
+                                    option={"Выберите категорию"}
+                                    setData={handleInputChange}
+                                    data={categories}
+                                    item={formData.categoryId}
+                                    dataError={formErrors.categoryId}
+                                    type={"categoryId"}
+                                />
+                            }
+                            {
+                                rooms?.data && <FormGroup
+                                    text={"Комнаты проекта"}
+                                    option={"Выберите количество комнат"}
+                                    setData={handleInputChange}
+                                    data={rooms}
+                                    item={formData.roomId}
+                                    dataError={formErrors.roomId}
+                                    type={"roomId"}
+                                />
+                            }
+                            {
+                                squares?.data && <FormGroup
+                                    text={"Площадь проекта"}
+                                    option={"Выберите площадь"}
+                                    setData={handleInputChange}
+                                    data={squares}
+                                    item={formData.squareId}
+                                    dataError={formErrors.squareId}
+                                    type={"squareId"}
+                                />
+                            }
+                            {
+                                updateProjectIsError && <div className="formik__error">
+                                    <p className="login__message-title">*{updateProjectError?.response?.data}</p>
                                 </div>
-                                <UploadImages namePhoto="exterior" text="Экстерьер фото" photos={formData.exterior} deletePhoto={deleteExteriorPhoto}
-                                              uploadPhoto={handleInputChange} photosError={formErrors.exterior}
-                                              selectMainPhoto={selectExteriorMainPhoto}/>
-                                <UploadImages namePhoto="interior" text="Интерьер фото" photos={formData.interior} deletePhoto={deleteInteriorPhoto}
-                                              uploadPhoto={handleInputChange} photosError={formErrors.interior}
-                                              selectMainPhoto={selectInteriorMainPhoto}/>
-                                <UploadImages namePhoto="design" text="Дизайн фото" photos={formData.design} deletePhoto={deleteDesignPhoto}
-                                              uploadPhoto={handleInputChange} selectMainPhoto={selectDesignMainPhoto}/>
-                                {
-                                    architects?.data && <FormGroup
-                                        text={"Архитектор или дизайнер проекта"}
-                                        option={"Выберите архитектора"}
-                                        setData={handleInputChange}
-                                        data={architects}
-                                        item={formData.architectId}
-                                        dataError={formErrors.architectId}
-                                        type={"architectId"}
-                                    />
-                                }
-                                {
-                                    categories?.data && <FormGroup
-                                        text={"Категории проекта"}
-                                        option={"Выберите категорию"}
-                                        setData={handleInputChange}
-                                        data={categories}
-                                        item={formData.categoryId}
-                                        dataError={formErrors.categoryId}
-                                        type={"categoryId"}
-                                    />
-                                }
-                                {
-                                    rooms?.data && <FormGroup
-                                        text={"Комнаты проекта"}
-                                        option={"Выберите количество комнат"}
-                                        setData={handleInputChange}
-                                        data={rooms}
-                                        item={formData.roomId}
-                                        dataError={formErrors.roomId}
-                                        type={"roomId"}
-                                    />
-                                }
-                                {
-                                    squares?.data && <FormGroup
-                                        text={"Площадь проекта"}
-                                        option={"Выберите площадь"}
-                                        setData={handleInputChange}
-                                        data={squares}
-                                        item={formData.squareId}
-                                        dataError={formErrors.squareId}
-                                        type={"squareId"}
-                                    />
-                                }
-                                {
-                                    updatedProjectData?.response?.data && <div className="formik__error">
-                                        <p className="login__message-title">*{updatedProjectData?.response?.data}</p>
-                                    </div>
-                                }
-                                {
-                                    addedProjectData?.response?.data && <div className="formik__error">
-                                        <p className="login__message-title">*{addedProjectData?.response?.data}</p>
-                                    </div>
-                                }
-                                <button
-                                    className={addedProjectLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
-                                    type="submit" disabled={addedProjectLoading || updateLoading}>добавить
-                                </button>
-                                {
-                                    addedProjectLoading || updateLoading ? <span className="hour-glass">
+                            }
+                            {
+                                addedProjectIsError && <div className="formik__error">
+                                    <p className="login__message-title">*{addedProjectError?.response?.data}</p>
+                                </div>
+                            }
+                            <button
+                                className={addedProjectLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
+                                type="submit" disabled={addedProjectLoading || updateLoading}>добавить
+                            </button>
+                            {
+                                addedProjectLoading || updateLoading ? <span className="hour-glass">
                             <ion-icon name="hourglass-outline"></ion-icon>
                         </span> : null
-                                }
-                            </form>
-                        </div>
+                            }
+                        </form>
+                    </div>
                 }
             </div>
         </section>

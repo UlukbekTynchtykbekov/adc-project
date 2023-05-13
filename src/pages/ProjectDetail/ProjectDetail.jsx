@@ -5,22 +5,20 @@ import {useProjectData} from "../../CustomHooks/useProjectsData";
 import ShowAllPhotos from "../../components/ShowAllPhotos";
 import ProjectDetailCard from "../../components/ProjectDetailCard";
 import ProjectDetailBottom from "../../components/ProjectDetailBottom";
-import 'react-toastify/dist/ReactToastify.css';
-import "../../styles/project-detail.scss"
 import Reviews from "../../components/Reviews";
 
 const ProjectDetail = () => {
     const {projectId} = useParams();
     const [showAllPhotos, setShowAllPhotos] = useState(false);
     const [selected, setSelected] = useState("экстерьер");
-    const {data, isLoading} = useProjectData(projectId);
+    const {data, isLoading, isError, error} = useProjectData(projectId);
 
     if (isLoading) {
         return <div style={{color: "white"}}>Loading...</div>;
     }
 
-    if (data?.message) {
-        return <div style={{color: "white"}}>{data?.message}</div>;
+    if (isError) {
+        return <div style={{color: "white"}}>{error?.message}</div>;
     }
 
     if (!data?.data) {

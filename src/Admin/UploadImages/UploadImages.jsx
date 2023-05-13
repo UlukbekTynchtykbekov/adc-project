@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photosError, selectMainPhoto}) => {
+const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photosError, selectMainPhoto, loader}) => {
     return (
         <div className="formik__group formik__group-photo">
             <h2 className="formik__text">{text}</h2>
@@ -20,6 +20,9 @@ const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photos
                                             </span>
                         </div>
                     ))
+                }
+                {
+                    loader && <div>Loading...</div>
                 }
                 <div className="formik__photo">
                     <label className="formik__label formik__label-photo">

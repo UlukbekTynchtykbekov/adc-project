@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {toast} from "react-toastify";
+import { showSuccessNotification, showErrorNotification} from  "../../CustomHooks/useToast"
 import {useDeleteArchitect} from "../../CustomHooks/useArchitectData";
 
 const ArchitectCard = ({el, idx}) => {
@@ -9,33 +9,7 @@ const ArchitectCard = ({el, idx}) => {
     const dateParts = dateString.split("T");
     const date = dateParts[0];
 
-    const deleteSuccess = () => {
-        toast.success('Архитектор успешно удален', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const deleteError = () => {
-        toast.error('Ошибка удаления архитектора', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const {mutate: deleteArchitect, isLoading: deletedDataIsLoading} = useDeleteArchitect(deleteSuccess, deleteError)
+    const {mutate: deleteArchitect, isLoading: deletedDataIsLoading} = useDeleteArchitect(showSuccessNotification, showErrorNotification)
 
     const handleDelete = (id) => {
         deleteArchitect(id)

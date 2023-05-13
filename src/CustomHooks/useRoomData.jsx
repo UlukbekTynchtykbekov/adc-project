@@ -21,12 +21,16 @@ export const useSingleRoomData = (roomId) => {
 const fetchAddRoom = (room) => {
     return request({url: '/api/rooms', method: 'POST', data: room})
 }
-export const useAddRoom = () => {
+export const useAddRoom = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddRoom, {
         onSuccess: () => {
             queryClient.invalidateQueries("rooms");
+            onSuccess("Комната был успешно добавлена")
         },
+        onError: () => {
+            onError("Ошибка добавления комнаты")
+        }
     });
 }
 
@@ -35,23 +39,31 @@ const fetchUpdateRoom = (room) => {
     delete room.roomId
     return request({url: `/api/rooms/${updatedProject.roomId}`, method: 'PUT', data: room})
 }
-export const useUpdateRoom = () => {
+export const useUpdateRoom = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateRoom, {
         onSuccess: () => {
             queryClient.invalidateQueries("rooms");
+            onSuccess("Комната был успешно обновлена")
         },
+        onError: () => {
+            onError("Ошибка обновления комнаты")
+        }
     });
 }
 
 const fetchDeleteRoom = (roomId) => {
     return request({url: `/api/rooms/${roomId}`, method: 'DELETE'})
 }
-export const useDeleteRoom = () => {
+export const useDeleteRoom = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteRoom, {
         onSuccess: () => {
             queryClient.invalidateQueries("rooms");
+            onSuccess("Комната был успешно удалена")
         },
+        onError: () => {
+            onError("Ошибка удалении комнаты")
+        }
     });
 }

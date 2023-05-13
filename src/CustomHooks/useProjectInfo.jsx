@@ -21,12 +21,16 @@ export const useProjectInfoData = (projectInfoId) => {
 const fetchAddProjectInfo = (projectInfo) => {
     return request({url: '/api/project-info', method: 'POST', data: projectInfo})
 }
-export const useAddProjectInfo = () => {
+export const useAddProjectInfo = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddProjectInfo, {
         onSuccess: () => {
             queryClient.invalidateQueries("project-info");
+            onSuccess("Информация был успешно добавлена")
         },
+        onError: () => {
+            onError("Ошибка добавления информации")
+        }
     });
 }
 
@@ -35,23 +39,31 @@ const fetchUpdateProjectInfo = (projectInfo) => {
     delete projectInfo.projectInfoId
     return request({url: `/api/project-info/${updatedProject.projectInfoId}`, method: 'PUT', data: projectInfo})
 }
-export const useUpdateProjectInfo = () => {
+export const useUpdateProjectInfo = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateProjectInfo, {
         onSuccess: () => {
             queryClient.invalidateQueries("project-info");
+            onSuccess("Информация был успешно обновлена")
         },
+        onError: () => {
+            onError("Ошибка обновления информации")
+        }
     });
 }
 
 const fetchDeleteProjectInfo = (projectInfoId) => {
     return request({url: `/api/project-info/${projectInfoId}`, method: 'DELETE'})
 }
-export const useDeleteProjectInfo = () => {
+export const useDeleteProjectInfo = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteProjectInfo, {
         onSuccess: () => {
             queryClient.invalidateQueries("project-infos");
+            onSuccess("Информация был успешно удалена")
         },
+        onError: () => {
+            onError("Ошибка удалении информации")
+        }
     });
 }

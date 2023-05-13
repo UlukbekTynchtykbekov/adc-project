@@ -7,8 +7,8 @@ import UploadImages from "../UploadImages/UploadImages";
 import {useSingleCompanyData, useUpdateCompany} from "../../CustomHooks/useCompanyData";
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./new-company.scss"
-import {toast} from "react-toastify";
 
 const NewCompany = () => {
         const [formData, setFormData] = useState({
@@ -31,32 +31,6 @@ const NewCompany = () => {
         const [formErrors, setFormErrors] = useState({});
         const {id: companyId} = useParams();
 
-    const addingSuccess = () => {
-        toast.success('Архитектор был успешно добавлен', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const addingError = () => {
-        toast.error('Ошибка при добавлении архитектора', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
         const {
             data: singleCompany,
             isLoading: singleCompanyLoading,
@@ -64,7 +38,7 @@ const NewCompany = () => {
             error: singleCompanyError
         } = useSingleCompanyData(companyId);
 
-        const {mutate: updateCompany, data: updatedCompanyData, isLoading: updateLoading} = useUpdateCompany()
+        const {mutate: updateCompany, data: updatedCompanyData, isLoading: updateLoading} = useUpdateCompany(showSuccessNotification, showErrorNotification)
 
         const handleInputChange = (event) => {
             const {name, value, files} = event.target;

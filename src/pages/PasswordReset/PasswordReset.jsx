@@ -4,17 +4,46 @@ import {Navigate, useParams} from "react-router-dom";
 import {useResetData, useResetPasswordData} from "../../CustomHooks/useForgotPassword";
 
 const PasswordReset = () => {
+    const [formData, setFormData] = useState({
+        password: "",
+        confirmPassword: "",
+        param: ""
+    });
+    const [formErrors, setFormErrors] = useState({});
     const [validUrl, setValidUrl] = useState(false);
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("");
-
     const param = useParams()
 
     const {data, isLoading} = useResetPasswordData({param});
-    const {mutate: postNewPassword, data: resetPasswordData, isLoading: resetPasswordLoading} = useResetData()
+    const {mutate: postNewPassword, data: resetPasswordData, isLoading: resetPasswordLoading, isError: resetPasswordIsError, error, isSuccess} = useResetData()
 
-    console.log(resetPasswordData)
+    const handleInputChange = (event) => {
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
+    };
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const errors = validateForm(formData);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
+            postNewPassword({...formData, param: param})
+        }
+    };
+
+    const validateForm = (data) => {
+        const errors = {};
+
+        if (!data.password) {
+            errors.password = 'Необходим пароль';
+        } else if (data.password.length < 5) {
+            errors.password = 'Пароль должен быть не менее 5 символов';
+        }
+        if (data.password !== data.confirmPassword) {
+            errors.confirmPassword = 'Пароль не совпадает';
+        }
+
+        return errors
+    };
 
     useEffect(() => {
         if (data?.data) {
@@ -22,26 +51,14 @@ const PasswordReset = () => {
         } else {
             setValidUrl(false)
         }
-    }, [data])
+    }, [data]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        const newPassword = {
-            password
-        }
-        if (newPassword.password === confirmPassword) {
-            postNewPassword({... param, ...newPassword})
-        } else {
-            setError("пароль не совпадает")
-        }
+    if (isSuccess){
+        return <Navigate to={`/${param.id}/${param.token}/success`}/>
     }
 
     if (isLoading) {
         return <div>Loading...</div>
-    }
-
-    if (resetPasswordData?.data){
-        return <Navigate to={`/${param.id}/${param.token}/success`}/>
     }
 
     return (
@@ -49,7 +66,7 @@ const PasswordReset = () => {
             <section className="login">
                 <div className="container">
                     {
-                        validUrl ? <form onSubmit={handleSubmit} className="form login__form">
+                        validUrl ? <form onSubmit={onSubmit} className="form login__form">
                             <div className="login__main">
                                 <h3 className="login__description">Добавить новый пароль</h3>
                             </div>
@@ -59,32 +76,29 @@ const PasswordReset = () => {
                                     name="password"
                                     id="password"
                                     autoComplete="off"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={handleInputChange}
                                 />
                                 <label htmlFor="password" className="label-wrapper">
                                     <span className="label-text">пароль</span>
                                 </label>
                             </div>
+                            {
+                                formErrors.password && <p className="error">*{formErrors.password}</p>
+                            }
                             <div className="field login__field">
                                 <input
                                     type="text"
                                     name="confirmPassword"
                                     id="confirmPassword"
                                     autoComplete="off"
-                                    required
-                                    value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onChange={handleInputChange}
                                 />
                                 <label htmlFor="confirmPassword" className="label-wrapper">
                                     <span className="label-text">подтвердите пароль</span>
                                 </label>
                             </div>
                             {
-                                error && <div className="login__message  login__error">
-                                    <p className="login__message-title">{error}</p>
-                                </div>
+                                formErrors.confirmPassword && <p className="error">*{formErrors.confirmPassword}</p>
                             }
                             {
                                 resetPasswordData?.data && <div className="login__message">
@@ -92,8 +106,8 @@ const PasswordReset = () => {
                                 </div>
                             }
                             {
-                                resetPasswordData?.response?.data?.message && <div className="login__message login__error">
-                                    <p className="login__message-title">{resetPasswordData?.response?.data?.message}</p>
+                                resetPasswordIsError && <div className="login__message login__error">
+                                    <p className="login__message-title">{error?.message}</p>
                                 </div>
                             }
                             <div className="checkbox__items">

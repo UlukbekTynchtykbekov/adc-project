@@ -9,8 +9,7 @@ import "./square.scss"
 const Square = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
-
-    const {data: squareData, isLoading: squareDataLoading} = useSquareData();
+    const {data: squareData, isLoading: squareDataLoading, isError, error} = useSquareData();
 
     const sortedAndFilteredSquare = useMemo(() => {
         let sortedProducts = [];
@@ -51,7 +50,7 @@ const Square = () => {
                         </div>
                         <div className="table__body">
                             {squareDataLoading && <div>Loading....</div>}
-                            {squareData?.message && <div>{squareData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredSquare.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -72,7 +71,7 @@ const Square = () => {
                                 </table>
                             }
                             {
-                                !squareDataLoading && !squareData?.message && sortedAndFilteredSquare.length === 0 &&  <div>Нет данных</div>
+                                !squareDataLoading && !isError && sortedAndFilteredSquare.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

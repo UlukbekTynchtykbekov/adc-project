@@ -65,7 +65,7 @@ const Routers = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/password-reset/:id/:token" element={<PasswordReset/>}/>
         <Route path="/:id/:token/success" element={<Success/>}/>
-        <Route path="/loadergi" element={<Loader/>}/>
+        <Route path="/loader" element={<Loader/>}/>
 
         <Route exact path='/' element={<AuthenticatedRoutes/>}>
             <Route path="/favorite" element={<Favorite/>}/>

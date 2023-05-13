@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Logo from "../../static/img/logo.png"
-import {Outlet, Link, useNavigate} from "react-router-dom";
+import {Outlet, Link, useNavigate, NavLink} from "react-router-dom";
 import useParallax from "../../CustomHooks/useParallaxHook";
 import Search from "../../static/img/search-line (1).svg"
 import Like from "../../static/img/heart-line.svg"
@@ -10,6 +10,7 @@ import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
 import "./Header.scss"
+import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
 
 
 const Header = ({isOpen, setIsOpen}) => {
@@ -18,7 +19,9 @@ const Header = ({isOpen, setIsOpen}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {bgParallaxStyle} = useParallax();
-    const {data: favoriteProjectsData} = useFavoriteProjects();
+    const {data: favoriteData} = useFavoriteData();
+    const favoriteId = favoriteData?.data._id;
+    const {data: favoriteProjectsData} = useFavoriteProjects(favoriteId);
     const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
 
     const goLogin = () => {
@@ -42,19 +45,19 @@ const Header = ({isOpen, setIsOpen}) => {
                     <nav onClick={() => setIsOpen(false)} className={`menu ${isOpen && "open"}`}>
                         <ul className="menu__item">
                             <li className="menu__link">
-                                <Link className="menu__title" to="/projects">ПРОЕКТЫ</Link>
+                                <NavLink className="menu__title" to="/projects">ПРОЕКТЫ</NavLink>
                             </li>
                             <li className="menu__link">
-                                <Link className="menu__title" to="/services">УСЛУГИ</Link>
+                                <NavLink className="menu__title" to="/services">УСЛУГИ</NavLink>
                             </li>
                             <li className="menu__link">
-                                <Link className="menu__title" to="/consultation">КОНСУЛЬТАЦИЯ</Link>
+                                <NavLink className="menu__title" to="/consultation">КОНСУЛЬТАЦИЯ</NavLink>
                             </li>
                             <li className="menu__link">
-                                <Link className="menu__title" to="/about">О НАС</Link>
+                                <NavLink className="menu__title" to="/about">О НАС</NavLink>
                             </li>
                             <li className="menu__link">
-                                <Link className="menu__title" to="/contacts">КОНТАКТЫ</Link>
+                                <NavLink className="menu__title" to="/contacts">КОНТАКТЫ</NavLink>
                             </li>
                         </ul>
                     </nav>
@@ -75,13 +78,13 @@ const Header = ({isOpen, setIsOpen}) => {
                             <li className="panel__item user">
                                 <div className={isAuthenticated ? "panel__user-roller" : ""}
                                      onClick={isAuthenticated ? () => setHeaderDropdown(!headerDropdown) : () => goLogin()}>
-                                    <div className="panel__user-wrapper">
+                                    <div className={isAuthenticated ? "panel__user-wrapper close" : "panel__user-wrapper"}>
                                         <img className="panel__user" src={User} alt=""/>
                                     </div>
                                     {
                                         isAuthenticated && (
                                             <div className="user__info">
-                                                <p className="user__name">{authMe?.firstName}</p>
+                                                <p className="user__name">{authMe?.firstName.charAt(0)}</p>
                                             </div>
                                         )
                                     }

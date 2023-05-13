@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
 import {
     useAddFavoriteProject,
-    useDeleteFavoriteProject,
-    useFavoriteProject
+    useDeleteFavoriteProject, useFavoriteProjects,
 } from "../../CustomHooks/useProjectFavorite";
-import {toast} from "react-toastify";
 import Dropdown from "../Dropdown";
 import ProjectRating from "../ProjectRating";
 import SharePage from "../ShareComponent";
@@ -13,91 +11,30 @@ import Home from "../../static/img/home-2-line.svg";
 import Pen from "../../static/img/edit-line.svg";
 import Share from "../../static/img/share-line.svg";
 import Grid from "../../static/img/grid-fill.svg";
-import "./project-detail-card.scss"
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import "./project-detail-card.scss"
 
 const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
 
+    const [favoriteProject, setFavoriteProject] = useState([])
     const [activeButton, setActiveButton] = useState(false);
     const options = ["экстерьер", "интерьер"]
-    const navigate = useNavigate()
-
-    let userId;
-
+    const navigate = useNavigate();
     const {
         _id, name, room,
         exterior, interior, category, totalRating
     } = el
 
-    const saveOnSuccess = () => {
-        toast.success('Data added successfully', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
+    const {isAuthenticated} = useSelector(state => state.auth);
+    const {data: favoriteData} = useFavoriteData();
+    const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject(showSuccessNotification, showErrorNotification )
+    const {mutate: addFavoriteProject, isLoading: saveFavoriteProjectLoading} = useAddFavoriteProject(showSuccessNotification, showErrorNotification );
 
-    const saveOnError = () => {
-        toast.error('Error adding data', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
+    const favoriteId = favoriteData?.data._id
+    const {data: favoriteProjectsData} = useFavoriteProjects(favoriteId);
 
-    const removeOnSuccess = () => {
-        toast.success('Data deleted successfully', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const removeOnError = () => {
-        toast.error('Error deleting data', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
-
-    if (authMe){
-        userId = authMe._id
-    }
-
-    const {data: favoriteData} = useFavoriteData(userId);
-    const {
-        mutate: removeFavoriteProject,
-        isLoading: removeLoading
-    } = useDeleteFavoriteProject(removeOnSuccess, removeOnError)
-    const {
-        mutate: addFavoriteProject,
-        isLoading: saveFavoriteProjectLoading
-    } = useAddFavoriteProject(saveOnSuccess, saveOnError);
-    const {data: favoriteAddedProject} = useFavoriteProject(_id)
     const saveFavoriteProject = (id) => {
         const favoriteProject = {
             projectId: id,
@@ -107,12 +44,21 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
     }
 
     const deleteFavoriteProject = (id) => {
-        removeFavoriteProject(id)
+        removeFavoriteProject({projectId: id, favoriteId: favoriteData?.data._id})
     }
 
     const goLoginPage = () => {
         return navigate("/login")
     }
+
+    useEffect(() => {
+        if (favoriteProjectsData?.data){
+            const checkedProject = favoriteProjectsData?.data.filter(el => {
+                return el.project._id === _id
+            });
+            setFavoriteProject(checkedProject)
+        }
+    }, [favoriteProjectsData?.data])
 
     return (
         <div className="detail__info">
@@ -154,10 +100,10 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
                         <SharePage activeButton={activeButton} setActiveButton={setActiveButton}/>
                     </div>
                     <button className="save"
-                            onClick={isAuthenticated ? favoriteAddedProject?.data ? () => deleteFavoriteProject(_id) : () => saveFavoriteProject(_id) : () => goLoginPage()}
+                            onClick={isAuthenticated ? favoriteProject.length > 0 ? () => deleteFavoriteProject(_id) : () => saveFavoriteProject(_id) : () => goLoginPage()}
                             disabled={removeLoading || saveFavoriteProjectLoading}>
                         {
-                            favoriteAddedProject?.data ?
+                            favoriteProject.length > 0 ?
                                 <svg className="save__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                      width="24" height="24">
                                     <path fill="none" d="M0 0H24V24H0z"/>
@@ -210,7 +156,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
                                          src={exterior[2].url} alt=""/>
                                 ) : interior?.[2] && (
                                     <img className="grid--image grid--image-2"
-                                         src={exterior[2].url} alt=""/>
+                                         src={interior[2].url} alt=""/>
                                 )
                             }
                         </div>
