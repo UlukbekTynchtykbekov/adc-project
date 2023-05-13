@@ -1,13 +1,12 @@
 import React, {useMemo, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
-import {ToastContainer} from "react-toastify";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import UserCard from "../UserCard/UserCard";
 
 const User = () => {
     const [searchUser, setSearchUser] = useState("");
-    const {data: users, isLoading: userLoading} = useUsersData()
+    const {data: users, isLoading: userLoading, isError, error} = useUsersData()
     const filteredUsers = useMemo(()=>{
         let onlyUsers = [];
         let searchUsers= [];
@@ -35,7 +34,7 @@ const User = () => {
                         </div>
                         <div className="table__body">
                             {userLoading && <div>loading...</div>}
-                            {users?.message && <div>{users?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {filteredUsers.length > 0 &&  <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">
@@ -53,7 +52,7 @@ const User = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!userLoading && !users?.message && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!userLoading && !isError && filteredUsers.length === 0 && <div>нет данных</div>}
                         </div>
                     </div>
                 </div>

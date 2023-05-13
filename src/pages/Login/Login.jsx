@@ -3,6 +3,7 @@ import Helmet from "../../layout/Helmet";
 import {useAddLoginData, useLoginMe} from "../../CustomHooks/useAuth";
 import {Link, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
 import "../../styles/login.scss"
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
     const [formErrors, setFormErrors] = useState({});
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const {mutate: addLogin, data, isLoading} = useAddLoginData();
+    const {mutate: addLogin, data, isLoading, isError, error} = useAddLoginData(showSuccessNotification, showErrorNotification);
     const {refetch} = useLoginMe();
 
     const handleInputChange = (event) => {
@@ -102,18 +103,13 @@ const Login = () => {
                             </p>
                         </Link>
                         {
-                            data?.response?.data?.message && <div className="login__message login__error">
-                                <p className="login__message-title">{data?.response?.data?.message}</p>
+                            isError && <div className="login__message login__error">
+                                <p className="login__message-title">{error?.response?.data}</p>
                             </div>
                         }
                         {
                             data?.data?.message && <div className="login__message">
                                 <p className="login__message-title">{data?.data?.message}</p>
-                            </div>
-                        }
-                        {
-                            data?.response?.data && <div className="login__message login__error">
-                                <p className="login__message-title">{data?.response?.data}</p>
                             </div>
                         }
                         <div className="checkbox__items">

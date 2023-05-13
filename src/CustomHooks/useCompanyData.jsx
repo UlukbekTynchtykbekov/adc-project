@@ -1,7 +1,6 @@
 import {request} from "../utils/axios-utils";
 import {useMutation, useQuery, useQueryClient} from "react-query";
 
-
 const fetchCompany = () => {
     return request({url: `/api/company`, method: 'GET'});
 }
@@ -24,11 +23,16 @@ const fetchUpdateCompany = (company) => {
     delete company.companyId
     return request({url: `/api/company/${updatedCompany.companyId}`, method: 'PUT', data: company})
 }
-export const useUpdateCompany = () => {
+
+export const useUpdateCompany = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateCompany, {
         onSuccess: () => {
             queryClient.invalidateQueries("companies");
+            onSuccess('Компания успешно обновлена')
         },
+        onError: () => {
+            onError('Не удалось обновить обновление')
+        }
     });
 }

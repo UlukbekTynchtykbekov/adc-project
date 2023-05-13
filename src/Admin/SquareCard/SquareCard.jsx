@@ -1,28 +1,15 @@
 import React, {useMemo} from 'react';
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
-import {toast} from "react-toastify";
 import {Link} from "react-router-dom";
 import {useDeleteSquare} from "../../CustomHooks/useSquareData";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 
 const SquareCard = ({el, idx}) => {
     const {data: projects} = useProjectsData();
-    const {mutate: deleteSquare, data: deletedData, isLoading: deletedDataIsLoading} = useDeleteSquare()
+    const {mutate: deleteSquare, isLoading: deletedDataIsLoading} = useDeleteSquare(showSuccessNotification, showErrorNotification)
 
     const handleDelete = (id) => {
         deleteSquare(id)
-    }
-
-    if(deletedData?.data){
-        toast.success('Data deleted successfully', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
     }
 
     const sortedAndFilteredProjects = useMemo(() => {

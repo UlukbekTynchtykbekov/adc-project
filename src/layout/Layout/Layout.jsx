@@ -1,30 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../Header";
-import Footer from "../Footer";
 import Routers from "../../routers/Routers";
 import ScrollTop from "../../helper/ScrollTop";
 import {useDispatch} from "react-redux";
 import {useLoginMe} from "../../CustomHooks/useAuth";
 import {authActions} from "../../features/authenticatedSlice";
+import 'react-toastify/dist/ReactToastify.css';
+import "../../styles/project-detail.scss"
 import {ToastContainer} from "react-toastify";
 
 const Layout = () => {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch();
-    const {data} = useLoginMe();
+
+    const { data} = useLoginMe();
 
     useEffect(() => {
-        if (data?.data) {
+        if (data?.data){
             dispatch(authActions.selectIsAuth(data?.data))
         }
-    }, [data])
+    },[data])
 
     return (
         <>
-            <Header isOpen={isOpen} setIsOpen={setIsOpen}/>
+          <Header isOpen={isOpen} setIsOpen={ setIsOpen}/>
             <ScrollTop/>
             <main className={`main ${isOpen ? 'no-scroll' : ''}`}>
-                <Routers/>
+            <Routers />
                 <ToastContainer
                     position="top-right"
                     autoClose={1000}
@@ -38,7 +40,6 @@ const Layout = () => {
                     theme="colored"
                 />
             </main>
-            {/*<Footer />*/}
         </>
     );
 };

@@ -1,18 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Helmet from "../../layout/Helmet";
-import "./product-reviews.scss"
 import ProjectRating from "../../components/ProjectRating";
 import {Navigate, useParams} from "react-router-dom";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
-import {
-    useAcceptReviewData,
-    useDeleteReviewData,
-    useProjectData,
-    useProjectsData
-} from "../../CustomHooks/useProjectsData";
+import {useAcceptReviewData, useDeleteReviewData, useProjectData, useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useAllReviewData} from "../../CustomHooks/useReviewData";
 import {reviewActions} from "../../features/reviewSlice";
 import {useDispatch} from "react-redux";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import "./product-reviews.scss"
 
 const ProductReviews = () => {
     const [projectInfo, setProjectInfo] = useState([])
@@ -25,17 +21,19 @@ const ProductReviews = () => {
     const dispatch = useDispatch()
     const {id} = useParams()
 
-    const {data: projectData, isLoading} = useProjectData(id);
+    const {data: projectData, isLoading, isError, error} = useProjectData(id);
 
     const {refetch} = useProjectsData();
     const {data: projectInfoData} = useProjectInfo();
     const {
         data: reviewData,
         isLoading: reviewLoading,
+        isError: reviewIsError,
+        error: reviewError
     } = useAllReviewData(id);
 
-    const {mutate: fetchAcceptReview, isSuccess: acceptSuccess} = useAcceptReviewData()
-    const {mutate: fetchDeleteReview, isSuccess: deletedSuccess} = useDeleteReviewData()
+    const {mutate: fetchAcceptReview, isSuccess: acceptSuccess} = useAcceptReviewData( showSuccessNotification, showErrorNotification)
+    const {mutate: fetchDeleteReview, isSuccess: deletedSuccess} = useDeleteReviewData( showSuccessNotification, showErrorNotification)
 
     const handleAcceptData = (reviewId) => {
         setDeletedId(reviewId)
@@ -93,7 +91,7 @@ const ProductReviews = () => {
                             isLoading && <div>Loading...</div>
                         }
                         {
-                            projectData?.message && <div>{projectData?.message}</div>
+                            isError && <div>{error?.message}</div>
                         }
                         {
                             projectData?.data && <div className="comments__intro">
@@ -138,7 +136,7 @@ const ProductReviews = () => {
                                         reviewLoading && <div>Loading...</div>
                                     }
                                     {
-                                        reviewData?.message && <div>{reviewData?.message}</div>
+                                        reviewIsError && <div>{reviewError?.message}</div>
                                     }
                                     <div className="comments__comment">
                                         <div className="comments__comment-items">
@@ -209,9 +207,9 @@ const ProductReviews = () => {
                                                     ))
                                             }
                                             {
-                                                accepted ? !reviewLoading && !reviewData?.message && acceptedReviews.length === 0 &&
+                                                accepted ? !reviewLoading && !reviewIsError && acceptedReviews.length === 0 &&
                                                     <div>Net Dannyh</div> :
-                                                    !reviewLoading && !reviewData?.message &&  unAcceptedReviews.length === 0 &&
+                                                    !reviewLoading && !reviewIsError &&  unAcceptedReviews.length === 0 &&
                                                     <div>Net Dannyh</div>
                                             }
                                         </div>
@@ -220,7 +218,7 @@ const ProductReviews = () => {
                             </div>
                         }
                         {
-                            !isLoading && !projectData?.message && !projectData?.data && <div>NO DATA</div>
+                            !isLoading && !isError && !projectData?.data && <div>NO DATA</div>
                         }
                     </div>
                 </div>

@@ -12,7 +12,7 @@ const ProjectList = () => {
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
 
-    const {data: productData, isLoading: productDataLoading} = useProjectsData();
+    const {data: productData, isLoading: productDataLoading, isError, error} = useProjectsData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -53,7 +53,7 @@ const ProjectList = () => {
                         </div>
                         <div className="table__body">
                             {productDataLoading && <div>Loading....</div>}
-                            {productData?.message && <div>{productData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -74,7 +74,7 @@ const ProjectList = () => {
                                 </table>
                             }
                             {
-                                !productDataLoading && !productData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !productDataLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

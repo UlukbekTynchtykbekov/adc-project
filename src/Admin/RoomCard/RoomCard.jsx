@@ -1,28 +1,15 @@
 import React, {useMemo} from 'react';
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
-import {toast} from "react-toastify";
 import {Link} from "react-router-dom";
 import {useDeleteRoom} from "../../CustomHooks/useRoomData";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 
 const RoomCard = ({el, idx}) => {
     const {data: projects} = useProjectsData();
-    const {mutate: deleteRoom, data: deletedData, isLoading: deletedDataIsLoading} = useDeleteRoom()
+    const {mutate: deleteRoom, isLoading: deletedDataIsLoading} = useDeleteRoom(showSuccessNotification, showErrorNotification)
 
     const handleDelete = (id) => {
         deleteRoom(id)
-    }
-
-    if(deletedData?.data){
-        toast.success('Data deleted successfully', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
     }
 
     const sortedAndFilteredProjects = useMemo(() => {

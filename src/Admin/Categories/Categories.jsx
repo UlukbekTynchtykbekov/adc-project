@@ -10,7 +10,7 @@ const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
     const [alreadyHave, setAlreadyHave] = useState(false)
 
-    const {data: categoriesData, isLoading: categoriesDataLoading} = useCategoriesData();
+    const {data: categoriesData, isLoading: categoriesDataLoading, isError, error} = useCategoriesData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -52,7 +52,7 @@ const Categories = () => {
                         </div>
                         <div className="table__body">
                             {categoriesDataLoading && <div>Loading....</div>}
-                            {categoriesData?.message && <div>{categoriesData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -73,7 +73,7 @@ const Categories = () => {
                                 </table>
                             }
                             {
-                                !categoriesDataLoading && !categoriesData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !categoriesDataLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                         {

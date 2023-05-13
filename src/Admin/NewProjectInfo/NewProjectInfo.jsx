@@ -4,6 +4,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddProjectInfo, useProjectInfoData, useUpdateProjectInfo} from "../../CustomHooks/useProjectInfo";
 import FormGroup from "../FormGroup/FormGroup";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import "./new-project-info.scss"
 
 const NewProjectInfo = () => {
@@ -19,9 +20,9 @@ const NewProjectInfo = () => {
 
     const { data: projects, isLoading } = useProjectsData();
 
-    const {mutate: addProjectInfo, data: addedProjectInfoData, isLoading: addProjectInfoLoading} = useAddProjectInfo();
-    const {data: projectInfoData, isLoading: projectInfoLoading} = useProjectInfoData(projectInfoId);
-    const {mutate: updateProjectInfo, data:updatedProjectInfoData, isLoading: updateLoading} = useUpdateProjectInfo();
+    const {mutate: addProjectInfo, data: addedProjectInfoData, isLoading: addProjectInfoLoading, isError:addInfoIsError} = useAddProjectInfo(showSuccessNotification, showErrorNotification);
+    const {data: projectInfoData, isLoading: projectInfoLoading, isError, error} = useProjectInfoData(projectInfoId);
+    const {mutate: updateProjectInfo, data:updatedProjectInfoData, isLoading: updateLoading, isError : updateInfoIsError} = useUpdateProjectInfo(showSuccessNotification, showErrorNotification);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -87,69 +88,76 @@ const NewProjectInfo = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    projectInfoLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    projectInfoLoading || isLoading ? <div style={{color: "white"}}>Loading...</div> : null
                 }
 
                 {
-                    projectInfoData?.message &&  <div style={{color: "white"}}>{projectInfoData?.message}</div>
+                    isError &&  <div style={{color: "white"}}>{error?.message}</div>
                 }
-                <div className="new">
-                    <div className="new__wrapper">
-                        <h2 className="new__text">Добавить категорию</h2>
-                    </div>
-                    <form className="formik" onSubmit={onSubmitProduct}>
-                        <FormGroup
-                            text={"Проект"}
-                            option={"Выберите проект"}
-                            setData={handleInputChange}
-                            data={filteredProjects}
-                            item={formData.projectId}
-                            dataError={formErrors.projectId}
-                            type={"projectId"}
-                        />
-                        <div className="formik__group">
-                            <h2 className="formik__text">Категория</h2>
-                            <input
-                                className="formik__input"
-                                type="text"
-                                name="title"
-                                value={formData.title}
-                                placeholder="Категория проекта"
-                                onChange={handleInputChange}
+                {
+                    !projectInfoLoading && !isError && !isLoading && <div className="new">
+                        <div className="new__wrapper">
+                            <h2 className="new__text">Добавить категорию</h2>
+                        </div>
+                        <form className="formik" onSubmit={onSubmitProduct}>
+                            <FormGroup
+                                text={"Проект"}
+                                option={"Выберите проект"}
+                                setData={handleInputChange}
+                                data={filteredProjects}
+                                item={formData.projectId}
+                                dataError={formErrors.projectId}
+                                type={"projectId"}
                             />
-                            {
-                                formErrors.title && <p className="formik__error">*{formErrors.title}</p>
-                            }
-                        </div>
-                        <div className="formik__group">
-                            <h2 className="formik__text">Описание</h2>
-                            <textarea
-                                className="formik__input formik__input-textarea"
-                                value={formData.description}
-                                onChange={handleInputChange}
-                                placeholder="Описание проекта"
-                                name="description"
-                                id=""
-                                cols="30"
-                                rows="10">
+                            <div className="formik__group">
+                                <h2 className="formik__text">Категория</h2>
+                                <input
+                                    className="formik__input"
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    placeholder="Категория проекта"
+                                    onChange={handleInputChange}
+                                />
+                                {
+                                    formErrors.title && <p className="formik__error">*{formErrors.title}</p>
+                                }
+                            </div>
+                            <div className="formik__group">
+                                <h2 className="formik__text">Описание</h2>
+                                <textarea
+                                    className="formik__input formik__input-textarea"
+                                    value={formData.description}
+                                    onChange={handleInputChange}
+                                    placeholder="Описание проекта"
+                                    name="description"
+                                    id=""
+                                    cols="30"
+                                    rows="10">
                             </textarea>
+                                {
+                                    formErrors.description && <p className="formik__error">*{formErrors.description}</p>
+                                }
+                            </div>
+                            <button className={ addProjectInfoLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addProjectInfoLoading || updateLoading}>добавить</button>
                             {
-                                formErrors.description && <p className="formik__error">*{formErrors.description}</p>
-                            }
-                        </div>
-                        <button className={ addProjectInfoLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"} type="submit" disabled={addProjectInfoLoading || updateLoading}>добавить</button>
-                        {
-                            addProjectInfoLoading || updateLoading ? <span className="hour-glass">
+                                addProjectInfoLoading || updateLoading ? <span className="hour-glass">
                             <ion-icon name="hourglass-outline"></ion-icon>
                         </span> : null
-                        }
-                        {
-                            addedProjectInfoData?.response.data && <div>
-                                <p className="formik__error">Информация о проекте уже существует или вы должны правильно заполнить все данные</p>
-                            </div>
-                        }
-                    </form>
-                </div>
+                            }
+                            {
+                                updateInfoIsError && <div>
+                                    <p className="formik__error">Информация о проекте уже существует или вы должны правильно заполнить все данные</p>
+                                </div>
+                            }
+                            {
+                                addInfoIsError && <div>
+                                    <p className="formik__error">Информация о проекте уже существует или вы должны правильно заполнить все данные</p>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                }
             </div>
         </section>
     );

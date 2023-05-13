@@ -4,6 +4,7 @@ import {request} from "../utils/axios-utils";
 const fetchCategories = () => {
     return request({url: `/api/categories`, method: 'GET'});
 }
+
 export const useCategoriesData = () => {
     return useQuery("categories", fetchCategories);
 }
@@ -26,10 +27,10 @@ export const useAddCategory = (addingSuccess, addingError) => {
     return useMutation(fetchAddCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
-            addingSuccess()
+            addingSuccess("Категория был успешно добавлен")
         },
          onError: () => {
-            addingError()
+            addingError("Ошибка при добавлении категорию")
         }
     });
 }
@@ -44,10 +45,10 @@ export const useUpdateCategory = (addingSuccess,addingError) => {
     return useMutation(fetchUpdateCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
-            addingSuccess()
+            addingSuccess("Категория успешно обновлена")
         },
         onError: () => {
-            addingError()
+            addingError("Ошибка обновления категорию")
         }
     });
 }
@@ -60,10 +61,10 @@ export const useDeleteCategory = (deleteSuccess, deleteError) => {
     return useMutation(fetchDeleteCategory, {
         onSuccess: () => {
             queryClient.invalidateQueries("categories");
-            deleteSuccess()
+            deleteSuccess("Категория успешно удалена")
         },
         onError: () => {
-            deleteError()
+            deleteError("Ошибка удаления категории")
         }
     });
 }

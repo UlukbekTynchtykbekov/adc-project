@@ -4,38 +4,12 @@ import ArchitectureHouse from '../../static/img/free-3-bedroom-house-plans.jpeg'
 import DesignHouse from '../../static/img/designCategory.jpeg'
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useDeleteCategory} from "../../CustomHooks/useCategoriesData";
-import {toast} from "react-toastify";
+import { showSuccessNotification, showErrorNotification} from  "../../CustomHooks/useToast"
 
 const CategoryCard = ({el, idx, alreadyHave}) => {
 
-    const deleteSuccess = () => {
-        toast.success('Категория успешно удалена', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
-    const deleteError = () => {
-        toast.error('Ошибка удаления категории', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
     const {data: projects} = useProjectsData();
-    const {mutate: deleteCategory, isLoading: deletedDataIsLoading} = useDeleteCategory(deleteSuccess, deleteError)
+    const {mutate: deleteCategory, isLoading: deletedDataIsLoading} = useDeleteCategory(showSuccessNotification, showErrorNotification)
 
     const handleDelete = (id) => {
         deleteCategory(id)

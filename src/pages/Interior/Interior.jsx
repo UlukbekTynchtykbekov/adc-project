@@ -10,7 +10,7 @@ import CardItems from "../../components/CardItems";
 
 const Interior = () => {
     const {isVisible, bgParallaxStyle} = useParallax()
-    const {data, isLoading} = useProjectsData();
+    const {data, isLoading, isError, error} = useProjectsData();
 
     const house = {
         title: "ВЫ МОЖЕТЕ НАЙТИ ВЕСЬ НА ПРОЕКТ",
@@ -42,14 +42,14 @@ const Interior = () => {
                     <div className="card">
                         <div className="row">
                             {isLoading && <div>Loading...</div>}
-                            {data?.message && <div>{data?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 filteredProducts.length > 0 && filteredProducts.map(product => (
                                     <CardItems key={product._id} project={product} imageType={house.imageType}/>
                                 ))
                             }
                             {
-                                !isLoading && !data?.message && filteredProducts.length === 0 && <div>NO DATA</div>
+                                !isLoading && !isError && filteredProducts.length === 0 && <div>NO DATA</div>
                             }
                         </div>
                     </div>

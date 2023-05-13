@@ -35,15 +35,15 @@ const Profile = () => {
                         </div>
                         <div className="account__info">
                             <div className="account__item">
-                                <h2 className="account__title">Full Name:</h2>
+                                <h2 className="account__title">Полное имя:</h2>
                                 <p className="account__subtitle">{authMe?.firstName} {authMe?.lastName}</p>
                             </div>
                             <div className="account__item">
-                                <h2 className="account__title">Email:</h2>
+                                <h2 className="account__title">Электронная почта:</h2>
                                 <p className="account__subtitle">{authMe?.email}</p>
                             </div>
                             <div className="account__item">
-                                <h2 className="account__title">Joined on:</h2>
+                                <h2 className="account__title">Присоединился:</h2>
                                 <p className="account__subtitle">{date}</p>
                             </div>
                             <div className="account__buttons">

@@ -1,15 +1,18 @@
 import React, {useMemo, useState} from 'react';
 import TableCard from "./TableCard";
 import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
-import './table.scss'
 import Dropdown from "../Dropdown/Dropdown";
 import Search from "../Search/Search";
+import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
+import './table.scss'
 
 const Table = () => {
     const options = ["дизайн", "архитектура"]
-    const [searchItem, setSearchItem] = useState("")
-    const [selected, setSelected] = useState("")
-    const {data: favoriteProjectsData, isLoading} = useFavoriteProjects();
+    const [searchItem, setSearchItem] = useState("");
+    const [selected, setSelected] = useState("");
+    const {data: favoriteData} = useFavoriteData();
+    const favoriteId = favoriteData?.data._id;
+    const {data: favoriteProjectsData, isLoading, isError, error} = useFavoriteProjects(favoriteId);
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -43,7 +46,7 @@ const Table = () => {
             </div>
             <div className="table__body">
                 {isLoading && <div>Loading....</div>}
-                {favoriteProjectsData?.message && <div>{favoriteProjectsData?.message}</div>}
+                {isError && <div>{error?.message}</div>}
                 <table className="table__main">
                     <thead className="table__head">
                     <tr className="table__category-list">
@@ -54,13 +57,15 @@ const Table = () => {
                         <th className="table__category-name">Действие</th>
                     </tr>
                     </thead>
-                    <tbody className="table__field">
                     {
-                        sortedAndFilteredProducts.map((el, idx) => (
-                            <TableCard key={el._id} el={el} idx={idx}/>
-                        ))
+                        sortedAndFilteredProducts.length > 0 && <tbody className="table__field">
+                        {
+                            sortedAndFilteredProducts.map((el, idx) => (
+                                <TableCard key={el._id} el={el} idx={idx} favoriteId={favoriteId}/>
+                            ))
+                        }
+                        </tbody>
                     }
-                    </tbody>
                 </table>
                 {
                     !isLoading && !favoriteProjectsData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>

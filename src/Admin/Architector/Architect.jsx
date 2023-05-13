@@ -12,7 +12,7 @@ const Architect = () => {
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("все");
 
-    const { data: architectData, isLoading: architectDataLoading} = useArchitectData();
+    const { data: architectData, isLoading: architectDataLoading, isError, error} = useArchitectData();
 
     const compareDates = (person1, person2) => {
         const date1 = new Date(person1.dateOfBirth);
@@ -57,7 +57,7 @@ const Architect = () => {
                         </div>
                         <div className="table__body">
                             {architectDataLoading && <div>Loading....</div>}
-                            {architectData?.message && <div>{architectData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredPeople.length > 0  && <table className="table__main">
                                     <thead className="table__head">
@@ -78,7 +78,7 @@ const Architect = () => {
                                 </table>
                             }
                             {
-                                !architectDataLoading && !architectData?.message && sortedAndFilteredPeople.length === 0 &&  <div>Нет данных</div>
+                                !architectDataLoading && !isError && sortedAndFilteredPeople.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

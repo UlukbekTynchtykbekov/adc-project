@@ -9,7 +9,7 @@ const Projects = () => {
     const [page, setPage] = useState("design")
     const [room, setRoom] = useState("ВСЕ");
 
-    const {data, isLoading} = useProjectsData();
+    const {data, isLoading, isError, error} = useProjectsData();
 
     const house = {
         title: "ДВУХ ЭТАЖНЫЙ ДОМ СОВРЕМЕННОГО СТИЛЯ",
@@ -87,14 +87,14 @@ const Projects = () => {
                                 <div className="card">
                                     <div className="row">
                                         {isLoading && <div>Loading...</div>}
-                                        {data?.message && <div>{data?.message}</div>}
+                                        {isError && <div>{error?.message}</div>}
                                         {
                                             filteredProducts.length > 0 && filteredProducts.map(product => (
                                                 <CardItems key={product._id} project={product} imageType={house.imageType}/>
                                             ))
                                         }
                                         {
-                                            !isLoading && !data?.message && filteredProducts.length === 0 &&
+                                            !isLoading && !isError && filteredProducts.length === 0 &&
                                             <div>NO DATA</div>
                                         }
                                     </div>

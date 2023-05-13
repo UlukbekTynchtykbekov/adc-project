@@ -1,48 +1,21 @@
 import React, { useState} from 'react';
 import Rate from "../Rate";
 import {useReviewData} from "../../CustomHooks/useReviewData";
-import "./reviews.scss"
 import {useAddReviewData} from "../../CustomHooks/useProjectsData";
 import {toast} from "react-toastify";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import "./reviews.scss"
 
 const Reviews = ({el}) => {
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
     const [sentMessage, setSentMessage] = useState(false);
-    const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
-
-    const saveOnSuccess = () => {
-        toast.success('Data added successfully', {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-        setSentMessage(true)
-    }
-
-    const saveOnError = () => {
-        toast.error('Error adding data', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    }
-
+    const {isAuthenticated} = useSelector(state => state.auth);
     const {data: reviewData, isLoading} = useReviewData(el._id)
-    const {mutate: reviewMutation} = useAddReviewData(saveOnSuccess, saveOnError);
+    const {mutate: reviewMutation, isLoading: mutationLoading} = useAddReviewData(showSuccessNotification, showErrorNotification, setSentMessage);
 
     const handleClick = (e, id) => {
         e.preventDefault()
@@ -98,7 +71,7 @@ const Reviews = ({el}) => {
                                                                   placeholder="Сообщение отзыва ..."
                                                                   required
                                                         />
-                                    <button className="button review__btn" type="submit">Отправить</button>
+                                    <button className="button review__btn" type="submit" disabled={mutationLoading}>Отправить</button>
                                 </div>
                             </form>
                         </div> : <div className="review__check">
@@ -107,7 +80,8 @@ const Reviews = ({el}) => {
                                 className="review__check-link" to='/register'>зарегистрироваться
                             </Link>.
                             </p>
-                        </div>}
+                        </div>
+                        }
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ const Comments = () => {
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
 
-    const {data, isLoading} = useProjectsData();
+    const {data, isLoading, isError, error} = useProjectsData();
 
     const sortedAndFilteredProducts = useMemo(() => {
         let filteredProducts = [];
@@ -49,7 +49,7 @@ const Comments = () => {
                         </div>
                         <div className="table__body">
                             {isLoading && <div>Loading....</div>}
-                            {data?.message && <div>{data?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -71,7 +71,7 @@ const Comments = () => {
                                 </table>
                             }
                             {
-                                !isLoading && !data?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

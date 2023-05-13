@@ -6,7 +6,8 @@ import AdminsCard from "../AdminsCard/AdminsCard";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
-    const {data: admins, isLoading: adminsLoading} = useUsersData()
+    const {data: admins, isLoading: adminsLoading, isError, error} = useUsersData();
+
     const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
         let searchAdmin = [];
@@ -17,9 +18,9 @@ const Admins = () => {
             })
             sortedAdmin = onlyAdmins.sort((a, b) => {
                 if (a.role === 'ADMIN') {
-                    return 1;
-                } else if (b.role === 'ADMIN') {
                     return -1;
+                } else if (b.role === 'ADMIN') {
+                    return 1;
                 } else {
                     return 0;
                 }
@@ -44,7 +45,7 @@ const Admins = () => {
                         </div>
                         <div className="table__body">
                             {adminsLoading && <div>loading...</div>}
-                            {admins?.message && <div>{admins?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {filteredUsers.length > 0 && <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">
@@ -62,7 +63,7 @@ const Admins = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!adminsLoading && !admins?.message && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!adminsLoading && !isError && filteredUsers.length === 0 && <div>нет  данных</div>}
                         </div>
                     </div>
                 </div>

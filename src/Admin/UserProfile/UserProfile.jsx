@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Avatar from "../../static/img/avatar.jpeg";
-import {Link, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 
 const UserProfile = () => {
 
     const [date, setDate] = useState("");
     const {id} = useParams()
-    const {data: userData, isLoading: userLoading, refetch} = useUserData(id);
-    const {mutate: updateUserRole, data: updateRoleData} = useUpdateUserRole();
+    const {data: userData, isLoading: userLoading, isError, error, refetch} = useUserData(id);
+    const {mutate: updateUserRole, data: updateRoleData} = useUpdateUserRole( showSuccessNotification, showErrorNotification );
 
     const handleChangeRoleUser = (id) => {
         updateUserRole({id, role: "USER"})
@@ -37,7 +38,7 @@ const UserProfile = () => {
             <section className="account">
                 <div className="container">
                     {userLoading && <div>Loading...</div>}
-                    {userData?.message && <div>{userData?.message}</div>}
+                    {isError && <div>{error?.message}</div>}
                     {userData?.data &&
                         <div className="account__profile">
                             <div className="account__status">
@@ -51,19 +52,19 @@ const UserProfile = () => {
                             </div>
                             <div className="account__info">
                                 <div className="account__item">
-                                    <h2 className="account__title">Full Name:</h2>
+                                    <h2 className="account__title">Полное имя:</h2>
                                     <p className="account__subtitle">{userData?.data.firstName} {userData?.data.lastName}</p>
                                 </div>
                                 <div className="account__item">
-                                    <h2 className="account__title">Email:</h2>
+                                    <h2 className="account__title">Электронная почта:</h2>
                                     <p className="account__subtitle">{userData?.data.email}</p>
                                 </div>
                                 <div className="account__item">
-                                    <h2 className="account__title">Joined on:</h2>
+                                    <h2 className="account__title">Присоединился:</h2>
                                     <p className="account__subtitle">{date}</p>
                                 </div>
                                 <div className="account__item">
-                                    <h2 className="account__title">Role:</h2>
+                                    <h2 className="account__title">Роль:</h2>
                                     <p className="account__subtitle">{userData?.data.role}</p>
                                 </div>
                             </div>

@@ -16,14 +16,13 @@ export const useAddArchitect = (addingSuccess, addingError) => {
     return useMutation(fetchAddArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
-            addingSuccess()
+            addingSuccess("Архитектор был успешно добавлен")
         },
         onError: () => {
-            addingError()
+            addingError("Ошибка при добавлении архитектора")
         }
     });
 }
-
 
 const fetchSingleArchitect = ({queryKey}) => {
     const architectId = queryKey[1]
@@ -35,7 +34,6 @@ export const useSingleArchitectData = (architectId) => {
     });
 }
 
-
 const fetchUpdateArchitect = (architect) => {
     const updatedProject = {...architect};
     delete architect.architectId
@@ -46,10 +44,10 @@ export const useUpdateArchitect = (addingSuccess, addingError) => {
     return useMutation(fetchUpdateArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
-            addingSuccess()
+            addingSuccess("Архитектор успешно обновлен")
         },
         onError: () => {
-            addingError()
+            addingError("Ошибка обновления архитектора")
         }
     });
 }
@@ -62,10 +60,10 @@ export const useDeleteArchitect = (deleteSuccess, deleteError) => {
     return useMutation(fetchDeleteArchitect, {
         onSuccess: () => {
             queryClient.invalidateQueries("architects");
-            deleteSuccess()
+            deleteSuccess("Архитектор успешно удален")
         },
         onError: () => {
-            deleteError()
+            deleteError("Ошибка удаления архитектора")
         }
     });
 }

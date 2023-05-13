@@ -11,12 +11,16 @@ export const useSquareData = () => {
 const fetchAddSquare = (square) => {
     return request({url: '/api/squares', method: 'POST', data: square})
 }
-export const useAddSquare = () => {
+export const useAddSquare = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchAddSquare, {
         onSuccess: () => {
             queryClient.invalidateQueries("squares");
+            onSuccess("Площадь был успешно добавлена")
         },
+        onError: () => {
+            onError("Ошибка при добавлении площади")
+        }
     });
 }
 
@@ -35,23 +39,31 @@ const fetchUpdateSquare = (square) => {
     delete square.squareId
     return request({url: `/api/squares/${updatedProject.squareId}`, method: 'PUT', data: square})
 }
-export const useUpdateSquare = () => {
+export const useUpdateSquare = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchUpdateSquare, {
         onSuccess: () => {
             queryClient.invalidateQueries("squares");
+            onSuccess("Площадь был успешно обновлена")
         },
+        onError: () => {
+            onError("Ошибка при  обновлении площади")
+        }
     });
 }
 
 const fetchDeleteSquare = (squareId) => {
     return request({url: `/api/squares/${squareId}`, method: 'DELETE'})
 }
-export const useDeleteSquare = () => {
+export const useDeleteSquare = (onSuccess, onError) => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteSquare, {
         onSuccess: () => {
             queryClient.invalidateQueries("squares");
+            onSuccess("Площадь был успешно удалена")
         },
+        onError: () => {
+            onError("Ошибка при  удалении площади")
+        }
     });
 }

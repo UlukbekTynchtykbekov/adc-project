@@ -18,7 +18,6 @@ const reviewSlice = createSlice({
         },
 
         deleteUnacceptedComments: (state, action) => {
-            console.log(action.payload)
             const findId = state.unreadComments.find(el => el._id === action.payload)
             if (Boolean(findId) === true){
                 const deletedItems = state.unreadComments.filter(el => el._id !== action.payload)

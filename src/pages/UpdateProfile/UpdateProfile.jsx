@@ -4,7 +4,7 @@ import {useUpdateUser} from "../../CustomHooks/useAuth";
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import "./update-profile.scss"
-import {toast} from "react-toastify";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
 
 const UpdateProfile = () => {
     const {data: authMe} = useSelector(state => state.auth);
@@ -14,7 +14,7 @@ const UpdateProfile = () => {
         lastName: authMe?.firstName,
     });
     const [formErrors, setFormErrors] = useState({});
-    const {mutate: updateUser, data: updatedData, isLoading: updateLoading, isSuccess} = useUpdateUser();
+    const {mutate: updateUser, isLoading: updateLoading, isSuccess} = useUpdateUser(showSuccessNotification, showErrorNotification);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -45,16 +45,6 @@ const UpdateProfile = () => {
     };
 
     if (isSuccess) {
-        toast.success('Вы успешно изменили свой профиль', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
         return <Navigate to="/profile"/>
     }
 

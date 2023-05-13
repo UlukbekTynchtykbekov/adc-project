@@ -9,7 +9,7 @@ import "./project-info.scss"
 const ProjectInfo = () => {
     const [searchItem, setSearchItem] = useState("");
 
-    const {data: projectInfoData, isLoading: projectInfoDataLoading} = useProjectInfo();
+    const {data: projectInfoData, isLoading: projectInfoDataLoading, isError, error} = useProjectInfo();
 
 
     const sortedAndFilteredProjectInfo = useMemo(() => {
@@ -43,7 +43,7 @@ const ProjectInfo = () => {
                         </div>
                         <div className="table__body">
                             {projectInfoDataLoading && <div>Loading....</div>}
-                            {projectInfoData?.message && <div>{projectInfoData?.message}</div>}
+                            {isError && <div>{error?.message}</div>}
                             {
                                 sortedAndFilteredProjectInfo.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -64,7 +64,7 @@ const ProjectInfo = () => {
                                 </table>
                             }
                             {
-                                !projectInfoDataLoading && !projectInfoData?.message && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
+                                !projectInfoDataLoading && !isError && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
                             }
                         </div>
                     </div>

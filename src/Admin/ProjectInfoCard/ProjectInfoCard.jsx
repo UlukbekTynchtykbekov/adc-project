@@ -1,28 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {toast} from "react-toastify";
 import {useDeleteProjectInfo} from "../../CustomHooks/useProjectInfo";
+import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 
 const ProjectInfoCard = ({el, idx}) => {
 
-    const {mutate: deleteProjectInfo, data: deletedData, isLoading: deletedDataIsLoading} = useDeleteProjectInfo()
+    const {mutate: deleteProjectInfo, isLoading: deletedDataIsLoading} = useDeleteProjectInfo(showSuccessNotification, showErrorNotification)
 
     const handleDelete = (id) => {
         deleteProjectInfo(id)
-    }
-
-
-    if(deletedData?.data){
-        toast.success('Data deleted successfully', {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
     }
 
     return (

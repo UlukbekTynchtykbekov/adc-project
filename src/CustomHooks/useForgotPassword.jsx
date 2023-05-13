@@ -4,8 +4,15 @@ import {useMutation, useQuery} from "react-query";
 const fetchAddPassword = (email) => {
     return request({url: '/api/password-reset', method: 'POST', data: email})
 }
-export const useAddPassword = () => {
-    return useMutation(fetchAddPassword);
+export const useAddPassword = (onSuccess, onError) => {
+    return useMutation(fetchAddPassword, {
+        onSuccess: () => {
+            onSuccess("Ссылка для сброса пароля отправлена на вашу электронную почту")
+        },
+        onError: () => {
+            onError("Не удалось отправить ссылку для сброса пароля")
+        }
+    });
 }
 
 const fetchResetPassword = (params) => {
@@ -17,9 +24,9 @@ export const useResetPasswordData = (params) => {
 }
 
 const fetchReset = (data) => {
-    const updatedData = {...data};
-    delete data.id
-    delete data.token
+    const updatedData = data.param;
+    delete data.param
+    delete data.confirmPassword
     return request({url: `/api/password-reset/${updatedData.id}/${updatedData.token}`, method: 'POST', data:data});
 }
 export const useResetData = () => {

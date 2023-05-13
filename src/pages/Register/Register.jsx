@@ -3,6 +3,7 @@ import {Link, Navigate} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useAddUsersData} from "../../CustomHooks/useUsersData";
 import {useSelector} from "react-redux";
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -15,7 +16,7 @@ const Register = () => {
     const [formErrors, setFormErrors] = useState({});
     const {} = useSelector(state => state)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
-    const {mutate:addUser, data:addedUserData, isLoading} = useAddUsersData();
+    const {mutate:addUser, data:addedUserData, isLoading, isError, error} = useAddUsersData(showSuccessNotification, showErrorNotification);
 
     const handleInputChange = (event) => {
         const {name, value} = event.target;
@@ -151,8 +152,8 @@ const Register = () => {
                             </div>
                         }
                         {
-                            addedUserData?.response?.data && <div className="login__message login__error">
-                                <p className="login__message-title">{addedUserData?.response?.data}</p>
+                            isError && <div className="login__message login__error">
+                                <p className="login__message-title">{error?.message}</p>
                             </div>
                         }
                         <div className="checkbox__items">
