@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import RoomCard from "../RoomCard/RoomCard";
 import {useRoomData} from "../../CustomHooks/useRoomData";
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const Room = () => {
     const [options, setOptions] = useState([])
@@ -51,7 +52,7 @@ const Room = () => {
                         </div>
                         <div className="table__body">
                             {roomDataLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredRoom.length > 0 && <table className="table__main">
                                     <thead className="table__head">

@@ -6,6 +6,7 @@ import {useCategoriesData} from "../../CustomHooks/useCategoriesData";
 import CategoryCard from "../CatgeoryCard/CategoryCard";
 import "./categories.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -53,7 +54,7 @@ const Categories = () => {
                         </div>
                         <div className="table__body">
                             {categoriesDataLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">

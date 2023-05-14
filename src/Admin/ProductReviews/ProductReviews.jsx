@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import "./product-reviews.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const ProductReviews = () => {
     const [projectInfo, setProjectInfo] = useState([])
@@ -92,7 +93,7 @@ const ProductReviews = () => {
                             isLoading &&  <Loader />
                         }
                         {
-                            isError && <div>{error?.message}</div>
+                            isError && <Error status={error?.status} page={error?.message}/>
                         }
                         {
                             projectData?.data && <div className="comments__intro">
@@ -139,7 +140,9 @@ const ProductReviews = () => {
                                         </div>
                                     }
                                     {
-                                        reviewIsError && <div>{reviewError?.message}</div>
+                                        reviewIsError && <div className="comments__result">
+                                            <Error status={reviewError?.status} page={reviewError?.message}/>
+                                        </div>
                                     }
                                     <div className="comments__comment">
                                         <div className="comments__comment-items">

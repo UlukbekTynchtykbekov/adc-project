@@ -5,6 +5,7 @@ import {useUsersData} from "../../CustomHooks/useUsersData";
 import AdminsCard from "../AdminsCard/AdminsCard";
 import Loader from "../../components/Loader/Loader";
 import {useSelector} from "react-redux";
+import Error from "../../components/ErrorComponent/Error";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
@@ -48,7 +49,7 @@ const Admins = () => {
                         </div>
                         <div className="table__body">
                             {adminsLoading && <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {filteredUsers.length > 0 && <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">

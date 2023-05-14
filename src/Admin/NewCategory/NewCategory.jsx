@@ -5,6 +5,7 @@ import {useAddCategory, useCategoryData, useUpdateCategory} from "../../CustomHo
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
 import "./new-category.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const NewCategory = () => {
     const [formData, setFormData] = useState({
@@ -68,7 +69,7 @@ const NewCategory = () => {
                 }
 
                 {
-                    categoryIsError && <div style={{color: "white"}}>{categoryError?.message}</div>
+                    categoryIsError && <Error status={categoryError?.status} page={categoryError?.message}/>
                 }
                 {
                     !categoryLoading && !categoryIsError && <div className="new">

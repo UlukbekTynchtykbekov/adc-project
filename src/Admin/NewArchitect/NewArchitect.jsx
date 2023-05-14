@@ -5,8 +5,9 @@ import {useAddArchitect, useSingleArchitectData, useUpdateArchitect} from "../..
 import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
-import './new-architect.scss'
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import './new-architect.scss'
 
 const NewArchitect = () => {
     const [formData, setFormData] = useState({
@@ -144,7 +145,7 @@ const NewArchitect = () => {
                 }
 
                 {
-                    architectIsError &&  <div style={{color: "white"}}>{architectError?.message}</div>
+                    architectIsError &&  <Error status={architectError?.status} page={architectError?.message}/>
                 }
                 {
                     !architectLoading && !architectIsError &&  <div className="new">

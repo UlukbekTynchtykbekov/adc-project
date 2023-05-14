@@ -10,6 +10,7 @@ import 'react-clock/dist/Clock.css';
 import { showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./new-company.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const NewCompany = () => {
         const [formData, setFormData] = useState({
@@ -202,7 +203,7 @@ const NewCompany = () => {
                     }
 
                     {
-                        singleCompanyIsError && <div style={{color: "white"}}>{singleCompanyError?.message}</div>
+                        singleCompanyIsError && <Error status={singleCompanyError?.status} page={singleCompanyError?.message}/>
                     }
                     <div className="new">
                         <div className="new__wrapper">

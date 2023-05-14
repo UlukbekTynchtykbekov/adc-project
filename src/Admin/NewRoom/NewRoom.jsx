@@ -4,6 +4,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddRoom, useSingleRoomData, useUpdateRoom} from "../../CustomHooks/useRoomData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const NewRoom = () => {
     const [formData, setFormData] = useState({
@@ -67,7 +68,7 @@ const NewRoom = () => {
                 }
 
                 {
-                    isError && <div style={{color: "white"}}>{error?.message}</div>
+                    isError && <Error status={error?.status} page={error?.message}/>
                 }
                 {
                     !roomLoading && !isError && <div className="new">

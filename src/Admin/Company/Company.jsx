@@ -4,8 +4,9 @@ import {useCompanyData} from "../../CustomHooks/useCompanyData";
 import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useUsersData} from "../../CustomHooks/useUsersData";
-import './company.scss'
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import './company.scss'
 
 const Company = () => {
     const {data: companyData, isLoading: companyLoading, isError} = useCompanyData();
@@ -49,7 +50,7 @@ const Company = () => {
                         </div>
                         <>
                             {productDataLoading || userLoading || productDataLoading ?  <Loader /> : null}
-                            {isError || productIsError || usersIsError ? <div>ERROR 404</div> : null}
+                            {isError || productIsError || usersIsError ? <Error page="Not Found"/> : null}
                             {
                                 companyData?.data && productData?.data && users?.data && <>
                                     <div className="company__header">

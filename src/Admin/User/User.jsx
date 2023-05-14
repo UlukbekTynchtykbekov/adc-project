@@ -4,6 +4,7 @@ import Search from "../../components/Search/Search";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import UserCard from "../UserCard/UserCard";
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const User = () => {
     const [searchUser, setSearchUser] = useState("");
@@ -35,7 +36,7 @@ const User = () => {
                         </div>
                         <div className="table__body">
                             {userLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {filteredUsers.length > 0 &&  <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">

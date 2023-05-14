@@ -7,6 +7,7 @@ import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import ProductCard from "../ProjectListCard/ProductCard";
 import './project-list.scss'
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const ProjectList = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -54,7 +55,7 @@ const ProjectList = () => {
                         </div>
                         <div className="table__body">
                             {productDataLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">

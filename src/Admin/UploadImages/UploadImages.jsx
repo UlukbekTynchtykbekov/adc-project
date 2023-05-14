@@ -23,7 +23,9 @@ const UploadImages = ({namePhoto, text, photos, deletePhoto, uploadPhoto, photos
                     ))
                 }
                 {
-                    loader &&  <Loader />
+                    loader && <div className="formik__photo">
+                        <Loader />
+                    </div>
                 }
                 <div className="formik__photo">
                     <label className="formik__label formik__label-photo">

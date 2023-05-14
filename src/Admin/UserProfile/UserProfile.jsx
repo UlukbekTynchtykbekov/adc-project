@@ -5,6 +5,7 @@ import Helmet from "../../layout/Helmet";
 import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const UserProfile = () => {
 
@@ -39,7 +40,7 @@ const UserProfile = () => {
             <section className="account">
                 <div className="container">
                     {userLoading &&  <Loader />}
-                    {isError && <div>{error?.message}</div>}
+                    {isError && <Error status={error?.status} page={error?.message}/>}
                     {userData?.data &&
                         <div className="account__profile">
                             <div className="account__status">

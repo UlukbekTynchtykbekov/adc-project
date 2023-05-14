@@ -4,8 +4,9 @@ import Search from "../../components/Search/Search";
 import {Link} from "react-router-dom";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
-import "./project-info.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import "./project-info.scss"
 
 const ProjectInfo = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -44,7 +45,7 @@ const ProjectInfo = () => {
                         </div>
                         <div className="table__body">
                             {projectInfoDataLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProjectInfo.length > 0 && <table className="table__main">
                                     <thead className="table__head">

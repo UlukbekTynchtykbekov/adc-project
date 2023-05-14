@@ -4,8 +4,9 @@ import {Link} from "react-router-dom";
 import {useSquareData} from "../../CustomHooks/useSquareData";
 import SquareCard from "../SquareCard/SquareCard";
 import Dropdown from "../../components/Dropdown";
-import "./square.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import "./square.scss"
 
 const Square = () => {
     const [options, setOptions] = useState([])
@@ -51,7 +52,7 @@ const Square = () => {
                         </div>
                         <div className="table__body">
                             {squareDataLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredSquare.length > 0 && <table className="table__main">
                                     <thead className="table__head">

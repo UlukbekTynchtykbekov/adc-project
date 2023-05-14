@@ -4,8 +4,9 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
 import CommentsCard from "../CommentsCard/CommentsCard";
-import "./comments.scss"
 import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import "./comments.scss"
 
 const Comments = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -50,7 +51,7 @@ const Comments = () => {
                         </div>
                         <div className="table__body">
                             {isLoading &&  <Loader />}
-                            {isError && <div>{error?.message}</div>}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
