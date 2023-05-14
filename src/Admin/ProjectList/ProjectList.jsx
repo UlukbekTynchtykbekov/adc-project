@@ -5,9 +5,10 @@ import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import ProductCard from "../ProjectListCard/ProductCard";
-import './project-list.scss'
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import './project-list.scss'
 
 const ProjectList = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -76,7 +77,7 @@ const ProjectList = () => {
                                 </table>
                             }
                             {
-                                !productDataLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !productDataLoading && !isError && sortedAndFilteredProducts.length === 0 && <EmptyItems />
                             }
                         </div>
                     </div>

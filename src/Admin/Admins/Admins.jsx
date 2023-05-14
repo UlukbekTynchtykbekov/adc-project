@@ -6,6 +6,7 @@ import AdminsCard from "../AdminsCard/AdminsCard";
 import Loader from "../../components/Loader/Loader";
 import {useSelector} from "react-redux";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
@@ -34,7 +35,7 @@ const Admins = () => {
             );
         }
         return searchAdmin;
-    }, [admins?.data, searchAdmins])
+    }, [admins?.data, searchAdmins, authMe.firstName])
     return (
         <section className="dashboard">
             <div className="row">
@@ -66,8 +67,9 @@ const Admins = () => {
                                     )
                                 )}
                                 </tbody>
-                            </table>}
-                            {!adminsLoading && !isError && filteredUsers.length === 0 && <div>нет  данных</div>}
+                            </table>
+                            }
+                            {!adminsLoading && !isError && filteredUsers.length === 0 && <EmptyItems />}
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import '../../styles/consultation.scss'
 import Helmet from "../../layout/Helmet";
 import Application from "../../components/Application";
-import Footer from "../../layout/Footer";
 
 const Consultation = () => {
 
@@ -16,7 +15,6 @@ const Consultation = () => {
                   <Application />
               </div>
            </section>
-           <Footer />
        </Helmet>
     );
 };

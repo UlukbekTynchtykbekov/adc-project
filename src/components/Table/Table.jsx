@@ -4,6 +4,9 @@ import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import Dropdown from "../Dropdown/Dropdown";
 import Search from "../Search/Search";
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
+import Loader from "../Loader/Loader";
+import Error from "../ErrorComponent/Error";
+import EmptyItems from "../EmtyItems/EmptyItems";
 import './table.scss'
 
 const Table = () => {
@@ -45,8 +48,8 @@ const Table = () => {
                 </div>
             </div>
             <div className="table__body">
-                {isLoading && <div>Loading....</div>}
-                {isError && <div>{error?.message}</div>}
+                {isLoading && <Loader />}
+                {isError && <Error status={error?.status} page={error?.message} />}
                 <table className="table__main">
                     <thead className="table__head">
                     <tr className="table__category-list">
@@ -68,7 +71,7 @@ const Table = () => {
                     }
                 </table>
                 {
-                    !isLoading && !favoriteProjectsData?.message && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                    !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <EmptyItems />
                 }
             </div>
         </div>

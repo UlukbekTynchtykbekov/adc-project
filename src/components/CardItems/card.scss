@@ -11,6 +11,7 @@
     overflow: hidden;
     margin: 10px auto;
     cursor: pointer;
+
     &:after{
       content:"";
       position: absolute;
@@ -22,6 +23,7 @@
       transition: .0s;
       visibility: hidden;
     }
+
     &:hover .card__info{
       bottom: 90px;
       &:after{
@@ -43,6 +45,11 @@
       visibility: visible;
     }
   }
+
+  &__result{
+    margin: 100px 0;
+  }
+
   &__image{
     position: absolute; /* Position the image element absolutely within the card element */
     top: 0;

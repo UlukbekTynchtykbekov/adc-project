@@ -8,6 +8,10 @@
   align-items: center;
   color: white;
 
+  &.color{
+    color: black;
+  }
+
   &__container {
     text-align: center;
   }
@@ -22,6 +26,10 @@
     font-size: 8em;
     transition: font-size 200ms ease-in-out;
     border-bottom: 1px dashed white;
+
+    &.color{
+      border-bottom: 1px dashed black;
+    }
   }
 
   &__number {
@@ -56,6 +64,16 @@
       background-color: white;
       color: #555;
       cursor: pointer;
+    }
+
+    &.color{
+      border: 1px solid black;
+      color: black;
+
+      &:hover {
+        background-color: black;
+        color: #FFF;
+      }
     }
   }
 

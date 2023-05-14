@@ -7,6 +7,7 @@ import CategoryCard from "../CatgeoryCard/CategoryCard";
 import "./categories.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -75,7 +76,7 @@ const Categories = () => {
                                 </table>
                             }
                             {
-                                !categoriesDataLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !categoriesDataLoading && !isError && sortedAndFilteredProducts.length === 0 && <EmptyItems />
                             }
                         </div>
                         {

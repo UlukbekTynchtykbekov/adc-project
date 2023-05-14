@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import correct from "../../static/img/icon-correct-24.png"
-import "./email-verify.scss"
 import {Link, useParams} from "react-router-dom";
 import {useTokenData} from "../../CustomHooks/useUsersData";
+import Error from "../../components/ErrorComponent/Error";
+import Loader from "../../components/Loader/Loader";
+import "../../styles/email-verify.scss"
 
 const EmailVerify = () => {
     const [validUrl, setValidUrl] = useState(false)
@@ -19,12 +21,9 @@ const EmailVerify = () => {
     }, [data])
 
     if (isLoading){
-        return <div>Loading....</div>
+        return <Loader/>
     }
 
-    if (isError){
-        setValidUrl(false)
-    }
     return (
         <section className="verification">
             <div className="container">
@@ -43,7 +42,7 @@ const EmailVerify = () => {
                             </Link>
                         </div> : <div className="verification__intro">
                             <div className="verification__info">
-                                <h1 className="verification__title">404 Not Found</h1>
+                                <Error page="Invalid Link" changeColor={true} />
                             </div>
                         </div>
                     }

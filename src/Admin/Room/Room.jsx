@@ -6,6 +6,7 @@ import RoomCard from "../RoomCard/RoomCard";
 import {useRoomData} from "../../CustomHooks/useRoomData";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Room = () => {
     const [options, setOptions] = useState([])
@@ -73,7 +74,7 @@ const Room = () => {
                                 </table>
                             }
                             {
-                                !roomDataLoading && !isError && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
+                                !roomDataLoading && !isError && sortedAndFilteredRoom.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

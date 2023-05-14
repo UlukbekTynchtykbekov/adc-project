@@ -2,6 +2,7 @@
   width: 100%;
   padding-bottom: 20px;
   background: var(--title-color);
+
   &__title{
     font-family: 'Ubuntu', sans-serif;
     font-style: normal;
@@ -10,12 +11,24 @@
     line-height: 20px;
     color: var(--body-bg);
   }
+
+  &__list{
+    position: relative;
+  }
+
   &__items{
     margin-top: 40px;
   }
+
+  &__result{
+    position: relative;
+    min-height: 300px;
+  }
+
   &__item{
     margin-top: 20px;
   }
+
   &__user{
     font-family: 'Rubik', sans-serif;
     color: var(--primary-color);

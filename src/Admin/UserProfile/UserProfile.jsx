@@ -6,6 +6,7 @@ import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const UserProfile = () => {
 
@@ -33,7 +34,7 @@ const UserProfile = () => {
         if (updateRoleData?.data){
             refetch()
         }
-    }, [updateRoleData?.data])
+    }, [updateRoleData?.data, refetch, userData?.data])
 
     return (
         <Helmet title="My Profile">
@@ -72,7 +73,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                     }
-                    {!userLoading && !userData?.message && !userData?.data && <div>нет данных</div>}
+                    {!userLoading && !userData?.message && !userData?.data && <EmptyItems />}
                 </div>
             </section>
         </Helmet>

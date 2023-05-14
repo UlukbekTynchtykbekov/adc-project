@@ -3,8 +3,8 @@ import Helmet from "../../layout/Helmet";
 import {useUpdateUser} from "../../CustomHooks/useAuth";
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import "./update-profile.scss"
 import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast";
+import "../../styles/update-profile.scss"
 
 const UpdateProfile = () => {
     const {data: authMe} = useSelector(state => state.auth);

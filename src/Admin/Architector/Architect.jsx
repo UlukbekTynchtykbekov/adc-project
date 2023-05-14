@@ -8,6 +8,7 @@ import {useArchitectData} from "../../CustomHooks/useArchitectData";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import './architect.scss'
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Architect = () => {
     const options = ["все", "сначала старше", "сначала моложе"]
@@ -80,7 +81,7 @@ const Architect = () => {
                                 </table>
                             }
                             {
-                                !architectDataLoading && !isError && sortedAndFilteredPeople.length === 0 &&  <div>Нет данных</div>
+                                !architectDataLoading && !isError && sortedAndFilteredPeople.length === 0 && <EmptyItems />
                             }
                         </div>
                     </div>

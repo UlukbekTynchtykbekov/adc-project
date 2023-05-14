@@ -8,9 +8,10 @@ import {useAllReviewData} from "../../CustomHooks/useReviewData";
 import {reviewActions} from "../../features/reviewSlice";
 import {useDispatch} from "react-redux";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
-import "./product-reviews.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import "./product-reviews.scss"
 
 const ProductReviews = () => {
     const [projectInfo, setProjectInfo] = useState([])
@@ -212,19 +213,23 @@ const ProductReviews = () => {
                                                         </div>
                                                     ))
                                             }
-                                            {
-                                                accepted ? !reviewLoading && !reviewIsError && acceptedReviews.length === 0 &&
-                                                    <div>Net Dannyh</div> :
-                                                    !reviewLoading && !reviewIsError &&  unAcceptedReviews.length === 0 &&
-                                                    <div>Net Dannyh</div>
-                                            }
                                         </div>
                                     </div>
+                                    {
+                                        accepted ? !reviewLoading && !reviewIsError && acceptedReviews.length === 0 &&
+                                            <div className="comments__result">
+                                                <EmptyItems />
+                                            </div> :
+                                            !reviewLoading && !reviewIsError &&  unAcceptedReviews.length === 0 &&
+                                            <div className="comments__result">
+                                                <EmptyItems />
+                                            </div>
+                                    }
                                 </div>
                             </div>
                         }
                         {
-                            !isLoading && !isError && !projectData?.data && <div>NO DATA</div>
+                            !isLoading && !isError && !projectData?.data && <EmptyItems />
                         }
                     </div>
                 </div>

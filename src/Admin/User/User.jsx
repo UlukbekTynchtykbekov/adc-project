@@ -5,6 +5,7 @@ import {useUsersData} from "../../CustomHooks/useUsersData";
 import UserCard from "../UserCard/UserCard";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const User = () => {
     const [searchUser, setSearchUser] = useState("");
@@ -54,7 +55,7 @@ const User = () => {
                                 )}
                                 </tbody>
                             </table>}
-                            {!userLoading && !isError && filteredUsers.length === 0 && <div>нет данных</div>}
+                            {!userLoading && !isError && filteredUsers.length === 0 && <EmptyItems />}
                         </div>
                     </div>
                 </div>

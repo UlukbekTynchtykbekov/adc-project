@@ -7,6 +7,7 @@ import Dropdown from "../../components/Dropdown";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import "./square.scss"
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Square = () => {
     const [options, setOptions] = useState([])
@@ -73,7 +74,7 @@ const Square = () => {
                                 </table>
                             }
                             {
-                                !squareDataLoading && !isError && sortedAndFilteredSquare.length === 0 &&  <div>Нет данных</div>
+                                !squareDataLoading && !isError && sortedAndFilteredSquare.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

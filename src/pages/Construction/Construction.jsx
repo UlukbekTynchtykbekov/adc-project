@@ -1,8 +1,11 @@
 import React from 'react';
 import Helmet from "../../layout/Helmet";
-import '../../styles/construction.scss';
 import ConstructionCard from "../../components/ConstructionCard/ConstructionCard";
 import {useConstructionData} from "../../CustomHooks/useConstruction";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import '../../styles/construction.scss';
 
 const Construction = () => {
 
@@ -12,8 +15,12 @@ const Construction = () => {
         <Helmet title="Construction">
             <section className="construction">
                 <div className="container">
-                    {isLoading && <div>Loading...</div>}
-                    {isError && <div>{error?.message}</div>}
+                    {
+                        isLoading &&  <Loader changeColor={true}/>
+                    }
+                    {
+                        isError && <Error status={error?.status} page={error?.message} changeColor={true}/>
+                    }
                     {
                         data?.data &&
                         <div className="construction__wrapper">
@@ -26,7 +33,7 @@ const Construction = () => {
                         </div>
                     }
                     {
-                        !isLoading && !isError && data?.data.length === 0 && <div>No DATA</div>
+                        !isLoading && !isError && data?.data.length === 0 && <EmptyItems />
                     }
                 </div>
             </section>

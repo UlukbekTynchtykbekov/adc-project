@@ -11,9 +11,13 @@
     margin: 20px auto;
     position: relative;
     background: currentColor;
-    color: #FFF;
+    color: var(--title-color);
     box-sizing: border-box;
     animation: animloader 0.3s 0.3s linear infinite alternate;
+
+    &.color{
+      color: var(--body-bg);
+    }
 
     &::after, &::before {
       content: '';

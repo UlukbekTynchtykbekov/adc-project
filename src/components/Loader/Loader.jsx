@@ -1,9 +1,10 @@
 import React from 'react';
 import  "./loader.scss"
-const Loader = () => {
+const Loader = ({changeColor}) => {
+
     return (
         <div className="loader">
-            <span className="loader__spinner"></span>
+            <span className={changeColor ? "loader__spinner color" : "loader__spinner"}></span>
         </div>
     );
 };

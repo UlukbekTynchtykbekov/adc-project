@@ -10,7 +10,8 @@ import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
-import "./Header.scss"
+import "./header.scss"
+import {nav__links} from "../../routesData/routes.config";
 
 
 const Header = ({isOpen, setIsOpen}) => {
@@ -44,21 +45,13 @@ const Header = ({isOpen, setIsOpen}) => {
                     </div>
                     <nav onClick={() => setIsOpen(false)} className={`menu ${isOpen && "open"}`}>
                         <ul className="menu__item">
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/projects">ПРОЕКТЫ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/services">УСЛУГИ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/consultation">КОНСУЛЬТАЦИЯ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/about">О НАС</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/contacts">КОНТАКТЫ</NavLink>
-                            </li>
+                            {
+                                nav__links.map((el,idx )=> (
+                                    <li key={idx} className="menu__link">
+                                        <NavLink className={(navClass) => navClass.isActive ? "menu__title active" : "menu__title"} to={el.path}>{el.display}</NavLink>
+                                    </li>
+                                ))
+                            }
                         </ul>
                     </nav>
                     <div className="panel">

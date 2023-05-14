@@ -1,12 +1,13 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import Rate from "../Rate";
 import {useReviewData} from "../../CustomHooks/useReviewData";
 import {useAddReviewData} from "../../CustomHooks/useProjectsData";
-import {toast} from "react-toastify";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./reviews.scss"
+import Loader from "../Loader/Loader";
+import Error from "../ErrorComponent/Error";
 
 const Reviews = ({el}) => {
 
@@ -14,8 +15,11 @@ const Reviews = ({el}) => {
     const [comment, setComment] = useState("");
     const [sentMessage, setSentMessage] = useState(false);
     const {isAuthenticated} = useSelector(state => state.auth);
-    const {data: reviewData, isLoading} = useReviewData(el._id)
-    const {mutate: reviewMutation, isLoading: mutationLoading} = useAddReviewData(showSuccessNotification, showErrorNotification, setSentMessage);
+    const {data: reviewData, isLoading, isError: reviewIsError, error: reviewError} = useReviewData(el._id)
+    const {
+        mutate: reviewMutation,
+        isLoading: mutationLoading
+    } = useAddReviewData(showSuccessNotification, showErrorNotification, setSentMessage);
 
     const handleClick = (e, id) => {
         e.preventDefault()
@@ -34,25 +38,32 @@ const Reviews = ({el}) => {
                 <div className="review__items">
                     <div className="review__wrapper">
                         {
-                            isLoading && <div>Loading...</div>
+                            isLoading &&  <div className="review__result">
+                                <Loader changeColor={true}/>
+                            </div>
                         }
                         {
-                            reviewData?.message && <div>{reviewData?.message}</div>
+                            reviewIsError && <div className="review__result">
+                                <Error status={reviewError?.status} page={reviewError?.message} changeColor={true}/>
+                            </div>
                         }
                         {
                             reviewData?.data &&
                             <ul className="review__list">
                                 {
-                                    reviewData?.data.map(review => (<li key={review._id} className="review__item">
-                                    <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
-                                    <span className="review__statistic">{review.star} (rating)</span>
-                                    <p className="review__text">{review.comments[0].comment}
-                                    </p>
-                                </li>
-                                ))}
+                                    reviewData?.data.map(review => (
+                                        <li key={review._id} className="review__item">
+                                            <h2 className="review__user">{review.postedBy.firstName} {review.postedBy.lastName}</h2>
+                                            <span className="review__statistic">{review.star} (rating)</span>
+                                            <p className="review__text">{review.comments[0].comment}
+                                            </p>
+                                        </li>
+                                    ))
+                                }
                             </ul>
                         }
-                        {isAuthenticated ? sentMessage ? <div className="review__check">
+                        {
+                            isAuthenticated ? sentMessage ? <div className="review__check">
                             <h3 className="review__check-title">Спасибо, что оставили отзыв!</h3>
                             <p className="review__check-message">
                                 Ваш отзыв появится после того, как его проверит администратор!
@@ -71,7 +82,9 @@ const Reviews = ({el}) => {
                                                                   placeholder="Сообщение отзыва ..."
                                                                   required
                                                         />
-                                    <button className="button review__btn" type="submit" disabled={mutationLoading}>Отправить</button>
+                                    <button className="button review__btn" type="submit"
+                                            disabled={mutationLoading}>Отправить
+                                    </button>
                                 </div>
                             </form>
                         </div> : <div className="review__check">

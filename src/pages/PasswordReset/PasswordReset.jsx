@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import Helmet from "../../layout/Helmet";
 import {Navigate, useParams} from "react-router-dom";
 import {useResetData, useResetPasswordData} from "../../CustomHooks/useForgotPassword";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const PasswordReset = () => {
     const [formData, setFormData] = useState({
@@ -58,7 +60,7 @@ const PasswordReset = () => {
     }
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <Loader/>
     }
 
     return (
@@ -118,7 +120,7 @@ const PasswordReset = () => {
                                 </span> : null
                                     }
                             </div>
-                        </form> : <h1>404 Not Found</h1>
+                        </form> : <Error page="Invalid Link" changeColor={true} />
                     }
                 </div>
             </section>

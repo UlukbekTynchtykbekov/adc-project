@@ -6,6 +6,7 @@ import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import './company.scss'
 
 const Company = () => {
@@ -214,7 +215,8 @@ const Company = () => {
                                         </div>
                                     }
                                     {!companyLoading && !isError && companyData?.data.length === 0 &&
-                                        <div>нет данных</div>}
+                                        <EmptyItems />
+                                    }
                                 </>
                             }
                         </>

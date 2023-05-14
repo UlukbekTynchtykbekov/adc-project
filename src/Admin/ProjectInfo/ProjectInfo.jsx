@@ -6,6 +6,7 @@ import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import "./project-info.scss"
 
 const ProjectInfo = () => {
@@ -66,7 +67,7 @@ const ProjectInfo = () => {
                                 </table>
                             }
                             {
-                                !projectInfoDataLoading && !isError && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
+                                !projectInfoDataLoading && !isError && sortedAndFilteredProjectInfo.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

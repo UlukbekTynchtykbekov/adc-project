@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import "./application.scss"
 import {useSendMessage} from "../../CustomHooks/useTelegrammBot";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import PhoneInput from 'react-phone-number-input'
+import "./application.scss"
+import 'react-phone-number-input/style.css'
 
 const Application = () => {
 
     const [name, setName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState();
     const [email, setEmail] = useState("");
     const [categories, setCategories] = useState({});
     const [request, setRequest] = useState("");
@@ -19,9 +21,11 @@ const Application = () => {
         }))
     }
 
+    const keys = Object.keys(categories);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const data = "Name: " + name +  "\nPhone number: " + phoneNumber +  "\nEmail: " + email +  "\nCategories: " + JSON.stringify(categories) +  "\nRequest: " + request;
+        const data = "Name: " + name +  "\nPhone number: " + phoneNumber +  "\nEmail: " + email +  "\nCategories: " + JSON.stringify(keys) +  "\nRequest: " + request;
         senMessage(data);
     };
 
@@ -43,16 +47,15 @@ const Application = () => {
            <div className="input__row">
               <div className="field__first">
                   <div className="field">
-                      <input
-                          type="text"
-                          id="phone"
-                          autoComplete="off"
-                          required
+                      <PhoneInput
+                          international
+                          countryCallingCodeEditable={false}
+                          defaultCountry="KG"
                           value={phoneNumber}
-                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          onChange={setPhoneNumber}
                       />
                       <label htmlFor="email" className="label-wrapper">
-                          <span className="label-text">ваш телефон</span>
+                          <span className="label-text"></span>
                       </label>
                   </div>
               </div>
@@ -159,7 +162,6 @@ const Application = () => {
                     type="text"
                     id="request"
                     autoComplete="off"
-                    required
                     value={request}
                     onChange={(e) => setRequest(e.target.value)}
                 />

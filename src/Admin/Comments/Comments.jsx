@@ -7,6 +7,7 @@ import CommentsCard from "../CommentsCard/CommentsCard";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import "./comments.scss"
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Comments = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -73,7 +74,7 @@ const Comments = () => {
                                 </table>
                             }
                             {
-                                !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>
