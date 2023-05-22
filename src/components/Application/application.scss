@@ -95,7 +95,7 @@
   line-height: 102.9%;
   color: #A8A4A4;
 }
-//Начало стилизации checkbox
+
 .checkbox{
    display: flex;
   justify-content: space-between;
@@ -159,9 +159,15 @@
   margin: 0 20%;
 }
 
-.PhoneInput {
+.phoneInput{
   display: flex;
-  align-items: self-start!important;
+  justify-content: center;
+  align-items: center;
+}
+
+.PhoneInputInput {
+  height: 40px !important;
+  border-radius: 20px;
 }
 
 @media (max-width: 770px){

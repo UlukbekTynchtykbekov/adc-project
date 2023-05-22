@@ -1,7 +1,7 @@
 import React from 'react';
-import '../../styles/consultation.scss'
 import Helmet from "../../layout/Helmet";
 import Application from "../../components/Application";
+import '../../styles/consultation.scss'
 
 const Consultation = () => {
 

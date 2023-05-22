@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import {useSendMessage} from "../../CustomHooks/useTelegrammBot";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
-import PhoneInput from 'react-phone-number-input'
-import "./application.scss"
 import 'react-phone-number-input/style.css'
+import "./application.scss"
 
 const Application = () => {
 
@@ -47,15 +46,15 @@ const Application = () => {
            <div className="input__row">
               <div className="field__first">
                   <div className="field">
-                      <PhoneInput
-                          international
-                          countryCallingCodeEditable={false}
-                          defaultCountry="KG"
+                      <input
+                          type="tel"
+                          id="phone"
+                          required
                           value={phoneNumber}
-                          onChange={setPhoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
                       />
-                      <label htmlFor="email" className="label-wrapper">
-                          <span className="label-text"></span>
+                      <label htmlFor="phoneNumber" className="label-wrapper">
+                          <span className="label-text">Номер телефона</span>
                       </label>
                   </div>
               </div>

@@ -1,17 +1,17 @@
 import React, {useState} from 'react';
-import Logo from "../../static/img/logo.png"
+import Logo from "../../static/img/logo.png";
 import {Outlet, Link, useNavigate, NavLink} from "react-router-dom";
 import useParallax from "../../CustomHooks/useParallaxHook";
-import Search from "../../static/img/search-line (1).svg"
-import Like from "../../static/img/heart-line.svg"
-import User from "../../static/img/user-fill.svg"
+import Search from "../../static/img/search-line (1).svg";
+import Like from "../../static/img/heart-line.svg";
+import User from "../../static/img/user-fill.svg";
 import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
 import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
-import "./header.scss"
 import {nav__links} from "../../routesData/routes.config";
+import "./header.scss";
 
 
 const Header = ({isOpen, setIsOpen}) => {
