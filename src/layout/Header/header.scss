@@ -75,6 +75,7 @@
   height: 2px;
   background: #FFFFFF;
 }
+
 .bar::before, .bar::after {
   content: "";
   position: absolute;
@@ -89,22 +90,27 @@
   transform: translateY(-8px);
   right: 0;
 }
+
 .bar::after {
   width: 100%;
   transform: translateY(8px);
 }
+
 .open .bar {
   background: transparent;
   transform: translateX(-40px);
 }
+
 .open .bar::before {
   width: 100%;
   transform: rotate(45deg) translate(26px, -26px);
 }
+
 .open .bar::after {
   width: 100%;
   transform: rotate(-45deg) translate(26px, 26px);
 }
+
 .panel{
   &__items {
     display: flex;
@@ -127,6 +133,7 @@
       display: none;
     }
   }
+
   &__user{
     width: 17px;
     padding-top: 5px;
@@ -152,11 +159,13 @@
     color: var(--body-bg);
     font-size: 12px;
   }
+
 }
 
 .user{
   cursor: pointer;
   position: relative !important;
+
   &__name{
     display: flex;
     justify-content: center;
@@ -173,9 +182,11 @@
     font-weight: 500;
     font-size: 16px;
   }
+
 }
 
 @media (max-width: 860px) {
+
   .menu {
     position: fixed;
     top: 0;
@@ -187,12 +198,23 @@
     transition: all .45s;
     background: #000000;
     overflow-y: scroll;
+    z-index: 1;
+
+    &__item {
+      margin: 0 auto;
+      flex-direction: column;
+    }
+
   }
-  .menu__item {
-    margin: 0 auto;
-    flex-direction: column;
-  }
+
   .nav-toggle {
     display: flex;
+    z-index: 2;
   }
+
+  .navigation {
+    display: grid;
+    grid-template-columns: 10fr 1fr 1fr;
+  }
+
 }
