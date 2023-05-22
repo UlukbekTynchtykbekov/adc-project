@@ -1,42 +1,44 @@
 import React, {useMemo, useState} from 'react';
 import TableCard from "./TableCard";
-import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import Dropdown from "../Dropdown/Dropdown";
 import Search from "../Search/Search";
-import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
 import Loader from "../Loader/Loader";
 import Error from "../ErrorComponent/Error";
 import EmptyItems from "../EmtyItems/EmptyItems";
+import {useSelector} from "react-redux";
+import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import './table.scss'
 
 const Table = () => {
     const options = ["дизайн", "архитектура"]
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
-    const {data: favoriteData} = useFavoriteData();
-    const favoriteId = favoriteData?.data._id;
-    const {data: favoriteProjectsData, isLoading, isError, error} = useFavoriteProjects(favoriteId);
+    const {data: authMe} = useSelector(state => state.auth);
+    const {data: projects, isLoading, isError, error} = useProjectsData();
 
     const sortedAndFilteredProducts = useMemo(() => {
+        let projectsInWishlist = [];
         let filteredProducts = [];
         let sortedProducts = [];
 
-        if (favoriteProjectsData?.data) {
-            filteredProducts = favoriteProjectsData?.data.filter((product) =>
-                product.project.name.toLowerCase().includes(searchItem.toLowerCase())
+        if (projects?.data) {
+            projectsInWishlist = projects?.data.filter(project => authMe.wishList.includes(project._id));
+
+            filteredProducts = projectsInWishlist.filter((product) =>
+                product.name.toLowerCase().includes(searchItem.toLowerCase())
             );
 
             if (selected === "архитектура"){
-                sortedProducts = filteredProducts.filter(product => product.project.category.name === "architecture");
+                sortedProducts = filteredProducts.filter(product => product.category.name === "architecture");
             }else if (selected === "дизайн"){
-                sortedProducts = filteredProducts.filter(product => product.project.category.name === "design")
+                sortedProducts = filteredProducts.filter(product => product.category.name === "design")
             }else {
                 sortedProducts = filteredProducts
             }
         }
 
         return sortedProducts;
-    }, [favoriteProjectsData?.data, searchItem, selected]);
+    }, [projects?.data, searchItem, selected, authMe]);
 
     return (
         <div className="table">
@@ -64,7 +66,7 @@ const Table = () => {
                         sortedAndFilteredProducts.length > 0 && <tbody className="table__field">
                         {
                             sortedAndFilteredProducts.map((el, idx) => (
-                                <TableCard key={el._id} el={el} idx={idx} favoriteId={favoriteId}/>
+                                <TableCard key={el._id} el={el} idx={idx}/>
                             ))
                         }
                         </tbody>

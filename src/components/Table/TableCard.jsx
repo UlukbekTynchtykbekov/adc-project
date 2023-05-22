@@ -1,30 +1,30 @@
 import React from 'react';
 import Delete from "../../static/img/delete.svg";
-import {useDeleteFavoriteProject} from "../../CustomHooks/useProjectFavorite";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import {useFavoriteProject} from "../../CustomHooks/useProjectsData";
 
-const TableCard = ({el, idx, favoriteId}) => {
+const TableCard = ({el, idx}) => {
 
-    const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject(showSuccessNotification, showErrorNotification)
+    const {mutate: fetchFavoriteProject, isLoading: removeLoading} = useFavoriteProject(showSuccessNotification, showErrorNotification)
 
     const deleteFavoriteProject = (id) => {
-        removeFavoriteProject({projectId: id, favoriteId: favoriteId})
+        fetchFavoriteProject({projectId: id})
     }
 
     return (
         <tr className="table__list">
             <td className="table__item">{idx + 1}</td>
             <td className="table__item">
-                <img className="table__img" src= {el?.project?.exterior[0].url} alt="tableImage"/>
+                <img className="table__img" src= {el?.exterior[0].url} alt="tableImage"/>
                 {
-                    el?.project?.name
+                    el?.name
                 }
             </td>
-            <td className="table__item">{el?.project?.room?.quantity} комната
+            <td className="table__item">{el?.room?.quantity} комната
             </td>
-            <td className="table__item">{el?.project?.square?.square}м<sup className="table__sup">2</sup></td>
+            <td className="table__item">{el?.square?.square}м<sup className="table__sup">2</sup></td>
             <td className="table__item">
-                <button className="table__button" onClick={() => deleteFavoriteProject(el.project._id)} disabled={removeLoading}>
+                <button className="table__button" onClick={() => deleteFavoriteProject(el._id)} disabled={removeLoading}>
                     <img className="table__delete-icon" src={Delete} alt="Delete"/>
                 </button>
             </td>

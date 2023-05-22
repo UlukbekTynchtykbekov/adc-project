@@ -5,11 +5,9 @@ import useParallax from "../../CustomHooks/useParallaxHook";
 import Search from "../../static/img/search-line (1).svg";
 import Like from "../../static/img/heart-line.svg";
 import User from "../../static/img/user-fill.svg";
-import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
 import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
-import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
 import {nav__links} from "../../routesData/routes.config";
 import "./header.scss";
 
@@ -20,9 +18,6 @@ const Header = ({isOpen, setIsOpen}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const {bgParallaxStyle} = useParallax();
-    const {data: favoriteData} = useFavoriteData();
-    const favoriteId = favoriteData?.data._id;
-    const {data: favoriteProjectsData} = useFavoriteProjects(favoriteId);
     const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
 
     const goLogin = () => {
@@ -62,8 +57,8 @@ const Header = ({isOpen, setIsOpen}) => {
                             <li className="panel__item panel__like-item">
                                 <Link className="panel__navigation" to={isAuthenticated ? "/favorite" : "/login"}>
                                     {
-                                        favoriteProjectsData?.data && isAuthenticated ? <span
-                                            className="panel__quantity">{favoriteProjectsData?.data.length}</span> : ""
+                                        authMe && isAuthenticated ? <span
+                                            className="panel__quantity">{authMe?.wishList.length}</span> : ""
                                     }
                                     <img className="panel__like" src={Like} alt=""/>
                                 </Link>

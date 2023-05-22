@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
-import {
-    useAddFavoriteProject,
-    useDeleteFavoriteProject, useFavoriteProjects,
-} from "../../CustomHooks/useProjectFavorite";
+import {useFavoriteProject,} from "../../CustomHooks/useProjectsData";
 import Dropdown from "../Dropdown";
 import ProjectRating from "../ProjectRating";
 import SharePage from "../ShareComponent";
@@ -18,33 +14,24 @@ import "./project-detail-card.scss"
 
 const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
 
-    const [favoriteProject, setFavoriteProject] = useState([])
+    const [favoriteProject, setFavoriteProject] = useState(false)
     const [activeButton, setActiveButton] = useState(false);
     const options = ["экстерьер", "интерьер"]
     const navigate = useNavigate();
+
     const {
         _id, name, room,
         exterior, interior, category, totalRating
     } = el
 
-    const {isAuthenticated} = useSelector(state => state.auth);
-    const {data: favoriteData} = useFavoriteData();
-    const {mutate: removeFavoriteProject, isLoading: removeLoading} = useDeleteFavoriteProject(showSuccessNotification, showErrorNotification )
-    const {mutate: addFavoriteProject, isLoading: saveFavoriteProjectLoading} = useAddFavoriteProject(showSuccessNotification, showErrorNotification );
-
-    const favoriteId = favoriteData?.data._id
-    const {data: favoriteProjectsData} = useFavoriteProjects(favoriteId);
+    const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
+    const {mutate: fetchFavoriteProject, isLoading: fetchFavoriteLoading} = useFavoriteProject(showSuccessNotification, showErrorNotification);
 
     const saveFavoriteProject = (id) => {
         const favoriteProject = {
             projectId: id,
-            favoriteId: favoriteData?.data?._id
         }
-        addFavoriteProject(favoriteProject)
-    }
-
-    const deleteFavoriteProject = (id) => {
-        removeFavoriteProject({projectId: id, favoriteId: favoriteData?.data._id})
+        fetchFavoriteProject(favoriteProject)
     }
 
     const goLoginPage = () => {
@@ -52,13 +39,17 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
     }
 
     useEffect(() => {
-        if (favoriteProjectsData?.data){
-            const checkedProject = favoriteProjectsData?.data.filter(el => {
-                return el.project._id === _id
+        if (authMe){
+            const checkedProject = authMe?.wishList.filter(el => {
+                return el === _id
             });
-            setFavoriteProject(checkedProject)
+            if (checkedProject.length > 0){
+                setFavoriteProject(true)
+            }else{
+                setFavoriteProject(false)
+            }
         }
-    }, [favoriteProjectsData?.data])
+    }, [authMe])
 
     return (
         <div className="detail__info">
@@ -100,10 +91,10 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
                         <SharePage activeButton={activeButton} setActiveButton={setActiveButton}/>
                     </div>
                     <button className="save"
-                            onClick={isAuthenticated ? favoriteProject.length > 0 ? () => deleteFavoriteProject(_id) : () => saveFavoriteProject(_id) : () => goLoginPage()}
-                            disabled={removeLoading || saveFavoriteProjectLoading}>
+                            onClick={isAuthenticated ? () => saveFavoriteProject(_id) : () => goLoginPage()}
+                            disabled={fetchFavoriteLoading}>
                         {
-                            favoriteProject.length > 0 ?
+                            favoriteProject === true ?
                                 <svg className="save__img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                      width="24" height="24">
                                     <path fill="none" d="M0 0H24V24H0z"/>

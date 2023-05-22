@@ -5,9 +5,9 @@ import {useAddReviewData} from "../../CustomHooks/useProjectsData";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
-import "./reviews.scss"
 import Loader from "../Loader/Loader";
 import Error from "../ErrorComponent/Error";
+import "./reviews.scss"
 
 const Reviews = ({el}) => {
 

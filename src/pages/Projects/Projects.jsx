@@ -64,26 +64,26 @@ const Projects = () => {
                                 <div className="architecture__filter">
                                     <ul className="architecture__list">
                                         <li className="architecture__sort architecture__sort--all">
-                                            <p className="architecture__sort-item sort-item"
+                                            <p className={room === "ВСЕ" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                                onClick={() => setRoom("ВСЕ")}>ВСЕ</p>
                                         </li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "1" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("1")}>1-ком</p></li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "2" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("2")}>2-ком</p></li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "3" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("3")}>3-ком</p></li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "4" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("4")}>4-ком</p></li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "5" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("5")}>5-ком</p></li>
                                         <li className="architecture__sort"><p
-                                            className="architecture__sort-item sort-item"
+                                            className={room === "6" ? "architecture__sort-item sort-item active" : "architecture__sort-item sort-item"}
                                             onClick={() => setRoom("6")}>6-ком</p></li>
                                     </ul>
                                 </div>

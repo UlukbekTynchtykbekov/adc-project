@@ -129,3 +129,21 @@ export const useDeleteReviewData = (deleteSuccess, deleteError) => {
         }
     );
 }
+
+const fetchFavoriteProject = (data) => {
+    return request({url: `/api/projects/wishlist`, method: 'POST', data: data})
+}
+export const useFavoriteProject = (onSuccess, onError) => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchFavoriteProject, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('auth');
+            queryClient.invalidateQueries('projects');
+            queryClient.invalidateQueries('project');
+            onSuccess("Проект успешно активирован")
+        },
+        onError: () => {
+            onError("Ошибка активирования проекта")
+        }
+    });
+}
