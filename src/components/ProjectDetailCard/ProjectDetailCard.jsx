@@ -39,7 +39,7 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
     }
 
     useEffect(() => {
-        if (authMe){
+        if (authMe?.wishList){
             const checkedProject = authMe?.wishList.filter(el => {
                 return el === _id
             });
@@ -48,6 +48,8 @@ const ProjectDetailCard = ({el, setShowAllPhotos, setSelected, selected}) => {
             }else{
                 setFavoriteProject(false)
             }
+        }else{
+            setFavoriteProject(false)
         }
     }, [authMe])
 
