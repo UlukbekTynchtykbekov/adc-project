@@ -17,6 +17,8 @@ import "../../styles/about.scss"
 
 const About = () => {
     const {isVisible} = useParallax()
+    const [swiper, setSwiper] = React.useState(null);
+
     const house = {
         title: "РЕАЛИЗАТОРЫ  ВАШИХ \n" +
             "ЖЕЛАНИЙ  ОТ  НАЧАЛО  \n" +
@@ -24,6 +26,24 @@ const About = () => {
         subtitle: "ARCHITECTURE + DESIGN + CONSTRUCTION",
         shortDesc: "Можно сколько угодно рассказывать про дизайн, но лучше посмотреть на что мы способны. Каждая работа выполняется индивидуально, поэтому посмотрев наши работы. Вы можете созвониться с нами, для того чтобы обсудить свой уникальный заказ\n"
     };
+
+    React.useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (swiper) {
+                if (event.key === 'ArrowLeft') {
+                    swiper.slidePrev(2);
+                } else if (event.key === 'ArrowRight') {
+                    swiper.slideNext(2);
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [swiper]);
     return (
         <Helmet title="About">
             <section className="about">
@@ -55,6 +75,8 @@ const About = () => {
                     <Swiper
                         slidesPerView={2}
                         spaceBetween={0}
+                        slidesPerGroup={2}
+                        onSwiper={setSwiper}
                         keyboard={{
                             enabled: true,
                         }}
