@@ -17,7 +17,6 @@ const Header = ({isOpen, setIsOpen}) => {
     const [headerDropdown, setHeaderDropdown] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const {bgParallaxStyle} = useParallax();
     const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
 
     const goLogin = () => {
@@ -30,7 +29,7 @@ const Header = ({isOpen, setIsOpen}) => {
     }
 
     return (
-        <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle}>
+        <header className="header">
             <div className="container">
                 <div className="navigation">
                     <div className="logo">
