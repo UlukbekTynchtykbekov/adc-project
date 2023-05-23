@@ -1,17 +1,16 @@
 import React, {useState} from 'react';
 import "./Footer.scss"
 import {Link} from "react-router-dom";
-import useParallax from "../../CustomHooks/useParallaxHook";
+
 
 const Footer = () => {
     const [message, setMessage] = useState('');
-    const {bgParallaxStyle} = useParallax();
     const handleSubmit = (e) => {
         e.preventDefault();
         setMessage('');
     };
     return (
-        <footer className="footer" style={bgParallaxStyle}>
+        <footer className="footer">
             <div className="container">
                 <div className="footer__inner">
                     <div className="footer__info">

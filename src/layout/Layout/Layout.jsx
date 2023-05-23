@@ -8,6 +8,7 @@ import {authActions} from "../../features/authenticatedSlice";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from "react-toastify";
 import "../../styles/project-detail.scss"
+import Footer from "../Footer";
 
 const Layout = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +41,7 @@ const Layout = () => {
                     theme="colored"
                 />
             </main>
+            <Footer/>
         </>
     );
 };

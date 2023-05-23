@@ -50,9 +50,6 @@ const Header = ({isOpen, setIsOpen}) => {
                     </nav>
                     <div className="panel">
                         <ul className="panel__items">
-                            <li className="panel__item">
-                                <img className="panel__search" src={Search} alt=""/>
-                            </li>
                             <li className="panel__item panel__like-item">
                                 <Link className="panel__navigation" to={isAuthenticated ? "/favorite" : "/login"}>
                                     {
