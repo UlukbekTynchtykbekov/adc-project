@@ -4,6 +4,8 @@ import {Navigate, useParams} from "react-router-dom";
 import {useAddCategory, useCategoryData, useUpdateCategory} from "../../CustomHooks/useCategoriesData";
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
 import "./new-category.scss"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const NewCategory = () => {
     const [formData, setFormData] = useState({
@@ -63,48 +65,50 @@ const NewCategory = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    categoryLoading && <div style={{color: "white"}}>Loading...</div>
+                    categoryLoading &&  <Loader />
                 }
 
                 {
-                    categoryIsError && <div style={{color: "white"}}>{categoryError?.message}</div>
+                    categoryIsError && <Error status={categoryError?.status} page={categoryError?.message}/>
                 }
-                <div className="new">
-                    <div className="new__wrapper">
-                        <h2 className="new__text">Добавить категорию</h2>
-                    </div>
-                    <form className="formik" onSubmit={onSubmitProduct}>
-                        <div className="formik__group">
-                            <h2 className="formik__text">Категория</h2>
-                            <input
-                                className="formik__input"
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                placeholder="Категория проекта"
-                                onChange={handleInputChange}
-                            />
-                            {
-                                formErrors.name && <p className="formik__error">*{formErrors.name}</p>
-                            }
-                            {
-                                addIsError && <p className="formik__error">*Эта категория уже существует</p>
-                            }
-                            {
-                                updateIsError && <p className="formik__error">*Эта категория уже существует</p>
-                            }
+                {
+                    !categoryLoading && !categoryIsError && <div className="new">
+                        <div className="new__wrapper">
+                            <h2 className="new__text">Добавить категорию</h2>
                         </div>
-                        <button
-                            className={addCategoryLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
-                            type="submit" disabled={addCategoryLoading || updateLoading}>добавить
-                        </button>
-                        {
-                            addCategoryLoading || updateLoading ? <span className="hour-glass">
+                        <form className="formik" onSubmit={onSubmitProduct}>
+                            <div className="formik__group">
+                                <h2 className="formik__text">Категория</h2>
+                                <input
+                                    className="formik__input"
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    placeholder="Категория проекта"
+                                    onChange={handleInputChange}
+                                />
+                                {
+                                    formErrors.name && <p className="formik__error">*{formErrors.name}</p>
+                                }
+                                {
+                                    addIsError && <p className="formik__error">*Эта категория уже существует</p>
+                                }
+                                {
+                                    updateIsError && <p className="formik__error">*Эта категория уже существует</p>
+                                }
+                            </div>
+                            <button
+                                className={addCategoryLoading || updateLoading ? "button formik__button-disabled" : "button formik__button"}
+                                type="submit" disabled={addCategoryLoading || updateLoading}>добавить
+                            </button>
+                            {
+                                addCategoryLoading || updateLoading ? <span className="hour-glass">
                             <ion-icon name="hourglass-outline"></ion-icon>
                         </span> : null
-                        }
-                    </form>
-                </div>
+                            }
+                        </form>
+                    </div>
+                }
             </div>
         </section>
     );

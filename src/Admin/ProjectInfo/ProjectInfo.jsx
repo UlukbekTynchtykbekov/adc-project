@@ -4,6 +4,9 @@ import Search from "../../components/Search/Search";
 import {Link} from "react-router-dom";
 import {useProjectInfo} from "../../CustomHooks/useProjectInfo";
 import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import "./project-info.scss"
 
 const ProjectInfo = () => {
@@ -42,8 +45,8 @@ const ProjectInfo = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {projectInfoDataLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {projectInfoDataLoading &&  <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProjectInfo.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -64,7 +67,7 @@ const ProjectInfo = () => {
                                 </table>
                             }
                             {
-                                !projectInfoDataLoading && !isError && sortedAndFilteredProjectInfo.length === 0 &&  <div>Нет данных</div>
+                                !projectInfoDataLoading && !isError && sortedAndFilteredProjectInfo.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

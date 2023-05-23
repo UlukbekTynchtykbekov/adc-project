@@ -24,6 +24,7 @@
     color: var(--hover-line-color);
     cursor: pointer;
     z-index: 4;
+
     &:after{
       content: "";
       position: absolute;
@@ -34,8 +35,16 @@
       background: var(--hover-line-color);
       transition: 0.3s;
     }
+
     &:hover:after{
       width: 100%;
+    }
+
+    &.active{
+
+      &:after{
+        width: 100%;
+      }
     }
   }
 }

@@ -1,0 +1,33 @@
+.empty{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+
+  &__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__circle{
+    font-size: 100px;
+    color: var(--title-color);
+
+    &.color{
+      color: var(--body-bg);
+    }
+  }
+
+  &__text{
+    color: var(--title-color);
+    font-size: 25px;
+    line-height: 25px;
+    font-family: "Gothic A1", sans-serif;
+
+    &.color{
+      color: var(--body-bg);
+    }
+  }
+}

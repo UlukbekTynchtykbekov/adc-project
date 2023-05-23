@@ -10,6 +10,8 @@ import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
 import FormGroup from "../FormGroup/FormGroup";
 import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 import "./new-project.scss"
 
 const NewProject = () => {
@@ -49,6 +51,7 @@ const NewProject = () => {
         data: singleProject,
         isLoading: singleProjectLoading,
         isError: singleProjectIsError,
+        error: singleProjectError
     } = useProjectData(projectId);
     const {
         mutate: updateProject,
@@ -289,10 +292,10 @@ const NewProject = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    singleProjectLoading && <div style={{color: "white"}}>Loading...</div>
+                    singleProjectLoading && <Loader />
                 }
                 {
-                    singleProjectIsError && <div style={{color: "white"}}>ERROR 404</div>
+                    singleProjectIsError && <Error status={singleProjectError?.status} page={singleProjectError?.message}/>
                 }
                 {
                     !singleProjectLoading && !singleProjectIsError && <div className="new">

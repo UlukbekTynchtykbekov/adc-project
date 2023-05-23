@@ -4,6 +4,9 @@ import {useCompanyData} from "../../CustomHooks/useCompanyData";
 import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {useUsersData} from "../../CustomHooks/useUsersData";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import './company.scss'
 
 const Company = () => {
@@ -47,8 +50,8 @@ const Company = () => {
                             <h1 className="table__title">О компании</h1>
                         </div>
                         <>
-                            {productDataLoading || userLoading || productDataLoading ? <div>Loading...</div> : null}
-                            {isError || productIsError || usersIsError ? <div>ERROR 404</div> : null}
+                            {productDataLoading || userLoading || productDataLoading ?  <Loader /> : null}
+                            {isError || productIsError || usersIsError ? <Error page="Not Found"/> : null}
                             {
                                 companyData?.data && productData?.data && users?.data && <>
                                     <div className="company__header">
@@ -212,7 +215,8 @@ const Company = () => {
                                         </div>
                                     }
                                     {!companyLoading && !isError && companyData?.data.length === 0 &&
-                                        <div>нет данных</div>}
+                                        <EmptyItems />
+                                    }
                                 </>
                             }
                         </>

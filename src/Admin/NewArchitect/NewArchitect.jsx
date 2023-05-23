@@ -5,6 +5,8 @@ import {useAddArchitect, useSingleArchitectData, useUpdateArchitect} from "../..
 import {Navigate, useParams} from "react-router-dom";
 import UploadImages from "../UploadImages/UploadImages";
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 import './new-architect.scss'
 
 const NewArchitect = () => {
@@ -139,11 +141,11 @@ const NewArchitect = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    architectLoading &&  <div style={{color: "white"}}>Loading...</div>
+                    architectLoading &&  <Loader />
                 }
 
                 {
-                    architectIsError &&  <div style={{color: "white"}}>{architectError?.message}</div>
+                    architectIsError &&  <Error status={architectError?.status} page={architectError?.message}/>
                 }
                 {
                     !architectLoading && !architectIsError &&  <div className="new">

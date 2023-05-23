@@ -1,26 +1,29 @@
 import React from 'react';
-import "./contact.scss"
 import mail from "../../static/img/mail.svg"
 import phones from "../../static/img/phone.svg"
 import location from "../../static/img/location.svg"
 import time from "../../static/img/time.svg"
 import Maps from "../Maps";
 import {useCompanyData} from "../../CustomHooks/useCompanyData";
+import Loader from "../Loader/Loader";
+import Error from "../ErrorComponent/Error";
+import EmptyItems from "../EmtyItems/EmptyItems";
+import "./contact.scss"
 
 const Contact = () => {
 
     const {data: companyData, isLoading: companyLoading, isError, error} = useCompanyData();
 
     if (companyLoading){
-        return <div>Loading...</div>
+        return <Loader changeColor={true}/>
     }
 
     if (isError){
-        return <div>{error?.message}</div>
+        return <Error status={error?.status} page={error?.message} changeColor={true}/>
     }
 
     if (!companyData?.data){
-        return <div>NO DATA</div>
+        return <EmptyItems changeColor={true}/>
     }
 
     return (

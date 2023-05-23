@@ -5,7 +5,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
 import {useArchitectData} from "../../CustomHooks/useArchitectData";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 import './architect.scss'
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Architect = () => {
     const options = ["все", "сначала старше", "сначала моложе"]
@@ -56,8 +59,8 @@ const Architect = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {architectDataLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {architectDataLoading && <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredPeople.length > 0  && <table className="table__main">
                                     <thead className="table__head">
@@ -78,7 +81,7 @@ const Architect = () => {
                                 </table>
                             }
                             {
-                                !architectDataLoading && !isError && sortedAndFilteredPeople.length === 0 &&  <div>Нет данных</div>
+                                !architectDataLoading && !isError && sortedAndFilteredPeople.length === 0 && <EmptyItems />
                             }
                         </div>
                     </div>

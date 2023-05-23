@@ -5,6 +5,9 @@ import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import ProductCard from "../ProjectListCard/ProductCard";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import './project-list.scss'
 
 const ProjectList = () => {
@@ -52,8 +55,8 @@ const ProjectList = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {productDataLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {productDataLoading &&  <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -74,7 +77,7 @@ const ProjectList = () => {
                                 </table>
                             }
                             {
-                                !productDataLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !productDataLoading && !isError && sortedAndFilteredProducts.length === 0 && <EmptyItems />
                             }
                         </div>
                     </div>

@@ -4,6 +4,9 @@ import { useParams} from "react-router-dom";
 import Helmet from "../../layout/Helmet";
 import {useUpdateUserRole, useUserData} from "../../CustomHooks/useUsersData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const UserProfile = () => {
 
@@ -31,14 +34,14 @@ const UserProfile = () => {
         if (updateRoleData?.data){
             refetch()
         }
-    }, [updateRoleData?.data])
+    }, [updateRoleData?.data, refetch, userData?.data])
 
     return (
         <Helmet title="My Profile">
             <section className="account">
                 <div className="container">
-                    {userLoading && <div>Loading...</div>}
-                    {isError && <div>{error?.message}</div>}
+                    {userLoading &&  <Loader />}
+                    {isError && <Error status={error?.status} page={error?.message}/>}
                     {userData?.data &&
                         <div className="account__profile">
                             <div className="account__status">
@@ -70,7 +73,7 @@ const UserProfile = () => {
                             </div>
                         </div>
                     }
-                    {!userLoading && !userData?.message && !userData?.data && <div>нет данных</div>}
+                    {!userLoading && !userData?.message && !userData?.data && <EmptyItems />}
                 </div>
             </section>
         </Helmet>

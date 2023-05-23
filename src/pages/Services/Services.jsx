@@ -5,6 +5,9 @@ import {useServicesData} from "../../CustomHooks/useServicesData";
 import {useSuggestionsData} from "../../CustomHooks/useSuggestionsData";
 import SuggestionCardItems from "../../components/SuggestionCard/SuggestionCardItems";
 import '../../styles/services.scss'
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Services = () => {
     const {
@@ -23,11 +26,11 @@ const Services = () => {
             <section className="services">
                 <div className="container">
                     {
-                        servicesIsLoading || suggestionsIsLoading ? <div>Loading...</div> : null
+                        servicesIsLoading || suggestionsIsLoading ? <Loader changeColor={true}/> : null
                     }
 
                     {
-                        isError || suggestionsIsError ? <div>Error 404</div> : null
+                        isError || suggestionsIsError ? <Error page="Not found and some error" changeColor={true} /> : null
                     }
                     {
                         servicesData?.data && suggestionsData?.data && <>
@@ -44,9 +47,6 @@ const Services = () => {
                                             <Accordion key={el._id} el={el} index={index}/>
                                         ))
                                     }
-                                    {
-                                        !servicesIsLoading && !servicesData && servicesData?.message && <div>NO DATA</div>
-                                    }
                                 </div>
                             </div>
                             <div className="bottom">
@@ -61,6 +61,11 @@ const Services = () => {
                                 </div>
                             </div>
                         </>
+                    }
+
+                    {
+                       !servicesIsLoading && !servicesData?.data && !isError &&
+                        !suggestionsIsLoading &&!suggestionsData?.data && suggestionsIsError && <EmptyItems changeColor={true} />
                     }
                 </div>
             </section>

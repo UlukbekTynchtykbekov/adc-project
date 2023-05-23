@@ -1,11 +1,21 @@
 .header{
+
   &__dropdown{
     position: absolute !important;
     width: 140px !important;
     top: 0;
     right: 5px;
   }
+
   &__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
     color: var(--body-bg);
+  }
+
+  &__icon{
+    font-size: 22px;
   }
 }

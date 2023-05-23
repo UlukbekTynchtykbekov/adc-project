@@ -3,10 +3,15 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {useUsersData} from "../../CustomHooks/useUsersData";
 import AdminsCard from "../AdminsCard/AdminsCard";
+import Loader from "../../components/Loader/Loader";
+import {useSelector} from "react-redux";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
     const {data: admins, isLoading: adminsLoading, isError, error} = useUsersData();
+    const {data: authMe} = useSelector(state => state.auth);
 
     const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
@@ -17,9 +22,9 @@ const Admins = () => {
                 return user.role === "ADMIN"
             })
             sortedAdmin = onlyAdmins.sort((a, b) => {
-                if (a.role === 'ADMIN') {
+                if (a.firstName === authMe.firstName) {
                     return -1;
-                } else if (b.role === 'ADMIN') {
+                } else if (b.firstName === authMe.firstName) {
                     return 1;
                 } else {
                     return 0;
@@ -30,7 +35,7 @@ const Admins = () => {
             );
         }
         return searchAdmin;
-    }, [admins?.data, searchAdmins])
+    }, [admins?.data, searchAdmins, authMe.firstName])
     return (
         <section className="dashboard">
             <div className="row">
@@ -44,8 +49,8 @@ const Admins = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {adminsLoading && <div>loading...</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {adminsLoading && <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {filteredUsers.length > 0 && <table className="table__main">
                                 <thead className="table__head">
                                 <tr className="table__category-list">
@@ -62,8 +67,9 @@ const Admins = () => {
                                     )
                                 )}
                                 </tbody>
-                            </table>}
-                            {!adminsLoading && !isError && filteredUsers.length === 0 && <div>нет  данных</div>}
+                            </table>
+                            }
+                            {!adminsLoading && !isError && filteredUsers.length === 0 && <EmptyItems />}
                         </div>
                     </div>
                 </div>

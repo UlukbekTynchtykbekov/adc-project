@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import Logo from "../../static/img/logo.png"
+import Logo from "../../static/img/logo.png";
 import {Outlet, Link, useNavigate, NavLink} from "react-router-dom";
 import useParallax from "../../CustomHooks/useParallaxHook";
-import Search from "../../static/img/search-line (1).svg"
-import Like from "../../static/img/heart-line.svg"
-import User from "../../static/img/user-fill.svg"
-import {useFavoriteProjects} from "../../CustomHooks/useProjectFavorite";
+import Search from "../../static/img/search-line (1).svg";
+import Like from "../../static/img/heart-line.svg";
+import User from "../../static/img/user-fill.svg";
 import HeaderDropDown from "../../components/HeaderDropdown/HeaderDropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
-import "./Header.scss"
-import {useFavoriteData} from "../../CustomHooks/useFavoriteData";
+import {nav__links} from "../../routesData/routes.config";
+import "./header.scss";
 
 
 const Header = ({isOpen, setIsOpen}) => {
@@ -18,10 +17,6 @@ const Header = ({isOpen, setIsOpen}) => {
     const [headerDropdown, setHeaderDropdown] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const {bgParallaxStyle} = useParallax();
-    const {data: favoriteData} = useFavoriteData();
-    const favoriteId = favoriteData?.data._id;
-    const {data: favoriteProjectsData} = useFavoriteProjects(favoriteId);
     const {data: authMe, isAuthenticated} = useSelector(state => state.auth);
 
     const goLogin = () => {
@@ -34,7 +29,7 @@ const Header = ({isOpen, setIsOpen}) => {
     }
 
     return (
-        <header className="header" style={isOpen ? {transform: "none"} : bgParallaxStyle}>
+        <header className="header">
             <div className="container">
                 <div className="navigation">
                     <div className="logo">
@@ -44,21 +39,13 @@ const Header = ({isOpen, setIsOpen}) => {
                     </div>
                     <nav onClick={() => setIsOpen(false)} className={`menu ${isOpen && "open"}`}>
                         <ul className="menu__item">
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/projects">ПРОЕКТЫ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/services">УСЛУГИ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/consultation">КОНСУЛЬТАЦИЯ</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/about">О НАС</NavLink>
-                            </li>
-                            <li className="menu__link">
-                                <NavLink className="menu__title" to="/contacts">КОНТАКТЫ</NavLink>
-                            </li>
+                            {
+                                nav__links.map((el,idx )=> (
+                                    <li key={idx} className="menu__link">
+                                        <NavLink className={(navClass) => navClass.isActive ? "menu__title active" : "menu__title"} to={el.path}>{el.display}</NavLink>
+                                    </li>
+                                ))
+                            }
                         </ul>
                     </nav>
                     <div className="panel">
@@ -69,8 +56,8 @@ const Header = ({isOpen, setIsOpen}) => {
                             <li className="panel__item panel__like-item">
                                 <Link className="panel__navigation" to={isAuthenticated ? "/favorite" : "/login"}>
                                     {
-                                        favoriteProjectsData?.data && isAuthenticated ? <span
-                                            className="panel__quantity">{favoriteProjectsData?.data.length}</span> : ""
+                                        authMe && isAuthenticated ? <span
+                                            className="panel__quantity">{authMe?.wishList.length}</span> : ""
                                     }
                                     <img className="panel__like" src={Like} alt=""/>
                                 </Link>

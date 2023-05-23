@@ -6,8 +6,8 @@ import {useDispatch} from "react-redux";
 import {useLoginMe} from "../../CustomHooks/useAuth";
 import {authActions} from "../../features/authenticatedSlice";
 import 'react-toastify/dist/ReactToastify.css';
-import "../../styles/project-detail.scss"
 import {ToastContainer} from "react-toastify";
+import "../../styles/project-detail.scss"
 
 const Layout = () => {
     const [isOpen, setIsOpen] = useState(false)

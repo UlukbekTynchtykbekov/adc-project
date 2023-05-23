@@ -1,4 +1,4 @@
-import {useMutation, useQuery, useQueryClient} from "react-query";
+import { useQuery } from "react-query";
 import {request} from '../utils/axios-utils';
 
 const fetchReview = ({queryKey}) => {
@@ -6,7 +6,9 @@ const fetchReview = ({queryKey}) => {
     return request({url: `/api/projects/${projectId}/reviews`, method: 'GET'});
 }
 export const useReviewData = (projectId) => {
-    return useQuery(["reviews", projectId], fetchReview);
+    return useQuery(["reviews", projectId], fetchReview, {
+        enabled: !!projectId
+    });
 }
 
 const fetchAllReview = ({queryKey}) => {
@@ -14,6 +16,8 @@ const fetchAllReview = ({queryKey}) => {
     return request({url: `/api/projects/${projectId}/all-reviews`, method: 'GET'});
 }
 export const useAllReviewData = (projectId) => {
-    return useQuery(["all-reviews", projectId], fetchAllReview);
+    return useQuery(["all-reviews", projectId], fetchAllReview, {
+        enabled: !!projectId
+    });
 }
 

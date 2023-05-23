@@ -5,8 +5,8 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation"
-import "./showAllPhotos.scss"
 import {EffectCoverflow, Pagination, Navigation} from "swiper";
+import "./showAllPhotos.scss"
 
 const ShowAllPhotos = ({el, setShowAllPhotos, selected}) => {
 

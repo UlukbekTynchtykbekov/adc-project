@@ -14,7 +14,6 @@ const Register = () => {
         confirmPassword: ""
     });
     const [formErrors, setFormErrors] = useState({});
-    const {} = useSelector(state => state)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const {mutate:addUser, data:addedUserData, isLoading, isError, error} = useAddUsersData(showSuccessNotification, showErrorNotification);
 

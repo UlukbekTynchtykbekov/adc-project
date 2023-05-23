@@ -4,6 +4,9 @@ import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
 import RoomCard from "../RoomCard/RoomCard";
 import {useRoomData} from "../../CustomHooks/useRoomData";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Room = () => {
     const [options, setOptions] = useState([])
@@ -49,8 +52,8 @@ const Room = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {roomDataLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {roomDataLoading &&  <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredRoom.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -71,7 +74,7 @@ const Room = () => {
                                 </table>
                             }
                             {
-                                !roomDataLoading && !isError && sortedAndFilteredRoom.length === 0 &&  <div>Нет данных</div>
+                                !roomDataLoading && !isError && sortedAndFilteredRoom.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

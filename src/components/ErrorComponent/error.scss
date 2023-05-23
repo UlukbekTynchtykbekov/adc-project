@@ -1,0 +1,92 @@
+.fail {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  &.color{
+    color: black;
+  }
+
+  &__container {
+    text-align: center;
+  }
+
+  &__status,
+  &__text {
+    margin: 10px;
+    cursor: default;
+  }
+
+  &__status{
+    font-size: 8em;
+    transition: font-size 200ms ease-in-out;
+    border-bottom: 1px dashed white;
+
+    &.color{
+      border-bottom: 1px dashed black;
+    }
+  }
+
+  &__number {
+    animation: fadeIn 2s ease infinite;
+
+    &:first-child{
+      animation-delay: 200ms;
+    }
+
+    &:nth-child(2){
+      animation-delay: 300ms;
+    }
+
+    &:nth-child(3){
+      animation-delay: 400ms;
+    }
+  }
+
+  &__button{
+    border: 1px solid white;
+    background: transparent;
+    outline: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    transition: background-color 200ms ease-in;
+    margin: 20px 0;
+
+    &:hover {
+      background-color: white;
+      color: #555;
+      cursor: pointer;
+    }
+
+    &.color{
+      border: 1px solid black;
+      color: black;
+
+      &:hover {
+        background-color: black;
+        color: #FFF;
+      }
+    }
+  }
+
+  &__text {
+    animation: fadeIn 2s ease infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

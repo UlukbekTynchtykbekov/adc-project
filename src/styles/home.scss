@@ -57,17 +57,6 @@
   }
 }
 
-@media (max-width: 1200px){
-  .hero{
-    background: var(--hero-bg-linear1),
-    url("../static/img/туман.png") no-repeat 68%/contain,
-    url("../static/img/уй сурот.png")  no-repeat right/35% 100%,
-    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
-    &__items{
-      gap: 18rem;
-    }
-  }
-}
 .main-title{
   position: relative;
   width: 100%;
@@ -94,12 +83,16 @@
   }
 }
 
+@media (max-width: 1200px){
+  .hero{
+    &__items{
+      gap: 18rem;
+    }
+  }
+}
+
 @media (max-width: 1024px){
   .hero{
-    background: var(--hero-bg-linear1),
-    url("../static/img/туман.png") no-repeat 67%/contain,
-    url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
-    url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
     &__items{
       gap: 15rem;
     }
@@ -118,7 +111,7 @@
   }
 }
 
-@media (max-width: 824px){
+@media (max-width: 880px){
   .hero{
     background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 66%/contain,
@@ -130,7 +123,7 @@
   }
 }
 
-@media (max-width: 770px){
+@media (max-width: 820px){
   .hero{
     background: var(--hero-bg-linear1),
     url("../static/img/туман.png") no-repeat 70%/contain,
@@ -142,24 +135,45 @@
   }
 }
 
-@media (max-width: 700px){
+@media (max-width: 720px){
   .hero{
-    height: 1200px;
+    min-height: 100vh;
     background: var(--hero-bg-linear1),
-  url("../static/img/image 77.png")  no-repeat bottom/100% 35%,
-  url("../static/img/image 75.png")  no-repeat  center/100% 35%,
-  url("../static/img/image 76.png")  no-repeat top/100% 35%;
+    url("../static/img/уй сурот.png")  no-repeat center/cover;
     &__items{
+      align-items: center;
       flex-direction: column;
-      margin-bottom: 60px;
-      gap: 23rem;
+      margin-top: 0;
+      padding-top: 130px;
+      gap: 3rem;
     }
+
+    &__item{
+      width: 200px;
+    }
+
+    &__over-play {
+      display: none;
+    }
+
+    &__video{
+      display: none;
+    }
+
+    .hero__description {
+      position: relative;
+      margin-top: 0;
+    }
+  }
+
+  .main-title {
+    padding-top: 200px;
   }
 }
 
 @media (max-width: 480px){
   .hero {
-    height: 1000px;
+    min-height: 100vh;
     background: var(--hero-bg-linear1),
     url("../static/img/image 77.png") no-repeat bottom/100% 35%,
     url("../static/img/image 75.png") no-repeat center/100% 35%,

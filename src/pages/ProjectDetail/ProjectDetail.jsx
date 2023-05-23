@@ -6,6 +6,9 @@ import ShowAllPhotos from "../../components/ShowAllPhotos";
 import ProjectDetailCard from "../../components/ProjectDetailCard";
 import ProjectDetailBottom from "../../components/ProjectDetailBottom";
 import Reviews from "../../components/Reviews";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const ProjectDetail = () => {
     const {projectId} = useParams();
@@ -14,15 +17,15 @@ const ProjectDetail = () => {
     const {data, isLoading, isError, error} = useProjectData(projectId);
 
     if (isLoading) {
-        return <div style={{color: "white"}}>Loading...</div>;
+        return <Loader />;
     }
 
     if (isError) {
-        return <div style={{color: "white"}}>{error?.message}</div>;
+        return <Error status={error?.status} page={error?.message} />;
     }
 
     if (!data?.data) {
-        return <div style={{color: "white"}}>No Information</div>;
+        return <EmptyItems />;
     }
 
     if (showAllPhotos === true) {

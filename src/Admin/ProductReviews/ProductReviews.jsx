@@ -8,6 +8,9 @@ import {useAllReviewData} from "../../CustomHooks/useReviewData";
 import {reviewActions} from "../../features/reviewSlice";
 import {useDispatch} from "react-redux";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import "./product-reviews.scss"
 
 const ProductReviews = () => {
@@ -88,10 +91,10 @@ const ProductReviews = () => {
                 <div className="container">
                     <div className="comments__wrapper">
                         {
-                            isLoading && <div>Loading...</div>
+                            isLoading &&  <Loader />
                         }
                         {
-                            isError && <div>{error?.message}</div>
+                            isError && <Error status={error?.status} page={error?.message}/>
                         }
                         {
                             projectData?.data && <div className="comments__intro">
@@ -133,10 +136,14 @@ const ProductReviews = () => {
                                         </ul>
                                     </div>
                                     {
-                                        reviewLoading && <div>Loading...</div>
+                                        reviewLoading && <div className="comments__result">
+                                            <Loader />
+                                        </div>
                                     }
                                     {
-                                        reviewIsError && <div>{reviewError?.message}</div>
+                                        reviewIsError && <div className="comments__result">
+                                            <Error status={reviewError?.status} page={reviewError?.message}/>
+                                        </div>
                                     }
                                     <div className="comments__comment">
                                         <div className="comments__comment-items">
@@ -206,19 +213,23 @@ const ProductReviews = () => {
                                                         </div>
                                                     ))
                                             }
-                                            {
-                                                accepted ? !reviewLoading && !reviewIsError && acceptedReviews.length === 0 &&
-                                                    <div>Net Dannyh</div> :
-                                                    !reviewLoading && !reviewIsError &&  unAcceptedReviews.length === 0 &&
-                                                    <div>Net Dannyh</div>
-                                            }
                                         </div>
                                     </div>
+                                    {
+                                        accepted ? !reviewLoading && !reviewIsError && acceptedReviews.length === 0 &&
+                                            <div className="comments__result">
+                                                <EmptyItems />
+                                            </div> :
+                                            !reviewLoading && !reviewIsError &&  unAcceptedReviews.length === 0 &&
+                                            <div className="comments__result">
+                                                <EmptyItems />
+                                            </div>
+                                    }
                                 </div>
                             </div>
                         }
                         {
-                            !isLoading && !isError && !projectData?.data && <div>NO DATA</div>
+                            !isLoading && !isError && !projectData?.data && <EmptyItems />
                         }
                     </div>
                 </div>

@@ -3,6 +3,8 @@ import {Navigate, useParams} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddRoom, useSingleRoomData, useUpdateRoom} from "../../CustomHooks/useRoomData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 
 const NewRoom = () => {
     const [formData, setFormData] = useState({
@@ -62,11 +64,11 @@ const NewRoom = () => {
             <div className="row">
                 <Sidebar/>
                 {
-                    roomLoading && <div style={{color: "white"}}>Loading...</div>
+                    roomLoading &&  <Loader />
                 }
 
                 {
-                    isError && <div style={{color: "white"}}>{error?.message}</div>
+                    isError && <Error status={error?.status} page={error?.message}/>
                 }
                 {
                     !roomLoading && !isError && <div className="new">

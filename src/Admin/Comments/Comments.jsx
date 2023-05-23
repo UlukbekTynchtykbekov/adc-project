@@ -4,7 +4,10 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import Dropdown from "../../components/Dropdown";
 import CommentsCard from "../CommentsCard/CommentsCard";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
 import "./comments.scss"
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Comments = () => {
     const options = ["все", "дизайн", "архитектура"]
@@ -48,8 +51,8 @@ const Comments = () => {
                             </div>
                         </div>
                         <div className="table__body">
-                            {isLoading && <div>Loading....</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {isLoading &&  <Loader />}
+                            {isError && <Error status={error?.status} page={error?.message}/>}
                             {
                                 sortedAndFilteredProducts.length > 0 && <table className="table__main">
                                     <thead className="table__head">
@@ -71,7 +74,7 @@ const Comments = () => {
                                 </table>
                             }
                             {
-                                !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <div>Нет данных</div>
+                                !isLoading && !isError && sortedAndFilteredProducts.length === 0 &&  <EmptyItems />
                             }
                         </div>
                     </div>

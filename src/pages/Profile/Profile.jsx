@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from "../../static/img/avatar.jpeg"
 import Helmet from "../../layout/Helmet";
 import {useDispatch, useSelector} from "react-redux";
-import "./profile.scss"
+import "../../styles/profile.scss"
 import {Link} from "react-router-dom";
 import {authActions} from "../../features/authenticatedSlice";
 

@@ -6,6 +6,9 @@ import bgImage from "../../static/img/exteriorbg.png";
 import ShortDesc from "../../components/ShortDesc";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import CardItems from "../../components/CardItems";
+import Loader from "../../components/Loader/Loader";
+import Error from "../../components/ErrorComponent/Error";
+import EmptyItems from "../../components/EmtyItems/EmptyItems";
 
 const Exterior = () => {
     const {isVisible, bgParallaxStyle} = useParallax()
@@ -41,15 +44,25 @@ const Exterior = () => {
                     <ShortDesc house={house}/>
                     <div className="card">
                         <div className="row">
-                            {isLoading && <div>Loading...</div>}
-                            {isError && <div>{error?.message}</div>}
+                            {
+                                isLoading && <div className="card__result">
+                                    <Loader />
+                                </div>
+                            }
+                            {
+                                isError && <div className="card__result">
+                                    <Error status={error?.status} page={error?.message}/>
+                                </div>
+                            }
                             {
                                 filteredProducts.length > 0 && filteredProducts.map(product => (
                                     <CardItems key={product._id} project={product} imageType={house.imageType}/>
                                 ))
                             }
                             {
-                                !isLoading && !isError && filteredProducts.length === 0 && <div>NO DATA</div>
+                                !isLoading && !isError && filteredProducts.length === 0 && <div className="card__result">
+                                    <EmptyItems />
+                                </div>
                             }
                         </div>
                     </div>
