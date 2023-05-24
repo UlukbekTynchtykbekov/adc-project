@@ -18,7 +18,6 @@ const Rate = ({ count, rating, color, onRating }) => {
             .map((_, i) => i + 1)
             .map(idx => (
                 <span className="star" key={idx}>
-                    {idx}
                     <ion-icon
                         name="star"
                         className="star__item"

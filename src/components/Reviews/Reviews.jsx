@@ -8,6 +8,7 @@ import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/
 import Loader from "../Loader/Loader";
 import Error from "../ErrorComponent/Error";
 import "./reviews.scss"
+import EmptyItems from "../EmtyItems/EmptyItems";
 
 const Reviews = ({el}) => {
 
@@ -33,7 +34,7 @@ const Reviews = ({el}) => {
         <section className="review">
             <div className="container">
                 <div className="review__title">
-                    <h6 className="reviews__tab">Review({reviewData?.data.length})</h6>
+                    <h6 className="review__tab">Review({reviewData?.data.length})</h6>
                 </div>
                 <div className="review__items">
                     <div className="review__wrapper">
@@ -61,6 +62,11 @@ const Reviews = ({el}) => {
                                     ))
                                 }
                             </ul>
+                        }
+                        {
+                            !isLoading && ! reviewData?.data &&<div className="review__result">
+                                <EmptyItems changeColor={true}/>
+                            </div>
                         }
                         {
                             isAuthenticated ? sentMessage ? <div className="review__check">

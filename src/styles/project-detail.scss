@@ -3,17 +3,19 @@
   margin-top: 80px;
   background: var(--title-color);
   padding-top: 40px;
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
   }
-&__information{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
+
+  &__information {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
 
   &__name {
     font-family: 'Gothic A1', sans-serif;
@@ -24,7 +26,7 @@
     color: var(--body-bg);
   }
 
-  &__sort{
+  &__sort {
     margin: 10px 0;
     display: flex;
     justify-content: space-between;
@@ -47,22 +49,56 @@
   }
 
   &__column2 {
-  display: grid;
+    display: grid;
   }
 
-  &__bottom{
+  &__bottom {
     padding: 30px 0;
     display: grid;
     grid-template-columns: 2fr 1fr;
   }
 
-  &__rating{
+  &__rating {
     display: flex;
     align-items: center;
     gap: 1.5rem;
   }
-  &__stars{
+
+  &__stars {
     display: flex;
     align-items: center;
+  }
+}
+
+@media (max-width: 900px) {
+  .detail {
+    &__bottom {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .architect {
+    &__image {
+      width: 90%;
+      height: 90%;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .detail {
+    &__bottom {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .architect {
+    &__image {
+      width: 90%;
+      height: 90%;
+    }
+    &__main {
+      margin: 24px 0;
+    }
   }
 }
