@@ -86,7 +86,7 @@
 @media (max-width: 1200px){
   .hero{
     &__items{
-      gap: 18rem;
+      gap: 16rem;
     }
   }
 }
@@ -94,7 +94,7 @@
 @media (max-width: 1024px){
   .hero{
     &__items{
-      gap: 15rem;
+      gap: 13rem;
     }
   }
 }
@@ -106,7 +106,7 @@
     url("../static/img/уй сурот.png")  no-repeat right/37% 100%,
     url("../static/img/архитектур и дизайн сурот.png") no-repeat center/cover;
     &__items{
-      gap: 13rem;
+      gap: 12rem;
     }
   }
 }
@@ -139,7 +139,7 @@
   .hero{
     min-height: 100vh;
     background: var(--hero-bg-linear1),
-    url("../static/img/уй сурот.png")  no-repeat center/cover;
+    url("../static/img/main-bg.webp")  no-repeat center/cover;
     &__items{
       align-items: center;
       flex-direction: column;
@@ -168,6 +168,11 @@
 
   .main-title {
     padding-top: 200px;
+    padding-left: 10px;
+    &__desc-hero {
+      width: auto;
+      font-size: 28px;
+    }
   }
 }
 
@@ -175,12 +180,6 @@
   .hero {
     min-height: 100vh;
     background: var(--hero-bg-linear1),
-    url("../static/img/image 77.png") no-repeat bottom/100% 35%,
-    url("../static/img/image 75.png") no-repeat center/100% 35%,
-    url("../static/img/image 76.png") no-repeat top/100% 35%;
-    &__items{
-      margin-bottom: 60px;
-      gap: 19rem;
-    }
+    url("../static/img/main-bg.webp")  no-repeat center/cover;
   }
 }

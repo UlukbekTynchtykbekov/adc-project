@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import "./Footer.scss"
 import {Link} from "react-router-dom";
 
-
 const Footer = () => {
     const [message, setMessage] = useState('');
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setMessage('');
     };
+
     return (
         <footer className="footer">
             <div className="container">

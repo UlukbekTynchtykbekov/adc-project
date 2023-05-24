@@ -41,7 +41,6 @@ const Layout = () => {
                     theme="colored"
                 />
             </main>
-            <Footer/>
         </>
     );
 };
