@@ -13,9 +13,17 @@
   }
 
   &__logo{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     text-align: center;
     background: #77619e;
   }
+}
+
+.burger{
+  font-size: 30px;
+  color: var(--title-color);
 }
 
 .nav {

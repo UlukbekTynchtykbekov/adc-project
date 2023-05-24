@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Link} from "react-router-dom";
 import Logo from "../../static/img/logo.png";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,11 +6,14 @@ import {authActions} from "../../features/authenticatedSlice";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {reviewActions} from "../../features/reviewSlice";
 import './sidebar.scss'
+import {sidebarActions} from "../../features/sidebarSlice";
 
 const Sidebar = () => {
 
     const {data} = useSelector(state => state.auth);
+    const {openSidebar} = useSelector(state => state.sidebar);
     const {data: productData} = useProjectsData();
+    const additionalClassRef = useRef(null);
     const {unreadComments} = useSelector(state => state.review);
     const dispatch = useDispatch();
 
@@ -19,6 +22,9 @@ const Sidebar = () => {
         dispatch(authActions.logout())
     }
 
+    const handleActive = () => {
+        dispatch(sidebarActions.changeSidebar(!openSidebar))
+    }
 
     useEffect(() => {
         if (productData?.data){
@@ -30,16 +36,22 @@ const Sidebar = () => {
                 });
             });
         }
-    }, [productData?.data])
+        if (additionalClassRef.current) {
+            additionalClassRef.current.classList.toggle('additional-class', openSidebar);
+        }
+    }, [productData?.data, openSidebar])
 
     return (
-        <div className="sidebar">
+        <div ref={additionalClassRef} className="sidebar">
             <div className="navigation sidebar__navigation">
                 <div className="sidebar__bar">
                     <div className="logo sidebar__logo">
                         <Link to="/">
                             <img className="logo__img sidebar__logo-img" src={Logo} alt=""/>
                         </Link>
+                        <div onClick={handleActive} className="burger">
+                            <ion-icon name="menu-outline"></ion-icon>
+                        </div>
                     </div>
                     <ul className="nav">
                         <li className="nav__list">
