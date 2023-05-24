@@ -1,10 +1,10 @@
 .design{
-  position: relative;
   width: 100%;
   min-height: 100vh;
   background: var(--projects--bg-linear),
   url("../static/img/projectbg2.png")  no-repeat right/50% 100%,
   url("../static/img/projectbg1.png") no-repeat left/50% 100%;
+  padding-bottom: 20px;
   &__row{
     position: absolute;
     left: 0;
@@ -51,9 +51,10 @@
     url("../static/img/projectbg2.png")  no-repeat bottom/100% 50%,
     url("../static/img/projectbg1.png") no-repeat top/100% 50%;
     &__row{
-      top: 500px;
+      position: initial;
+      padding-top: 300px;
       flex-direction: column;
-      gap: 24rem;
+      gap: 22rem;
     }
   }
 }

@@ -195,14 +195,11 @@
   }
 }
 
-.hour-glass {
-  margin-top: 20px;
-  font-size: 20px;
-  color: #77619e;
-  animation: hourglass 2s infinite;
+.rotate-icon {
+  color: var(--title-color);
 }
 
-@keyframes hourglass {
+@keyframes rotate {
   0% {
     transform: rotate(0);
   }

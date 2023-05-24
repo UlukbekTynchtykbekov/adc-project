@@ -113,12 +113,18 @@ const Login = () => {
                             </div>
                         }
                         <div className="checkbox__items">
-                            <button className="checkbox__btn" type="submit" disabled={isLoading}>Отправить</button>
-                            {
-                                isLoading ? <span className="hour-glass checkbox__hour-glass">
-                            <ion-icon name="hourglass-outline"></ion-icon>
-                        </span> : null
+                            <button className="checkbox__btn" type="submit" disabled={isLoading}>
+                                {
+                                isLoading ? (
+                                    <span className="hour-glass">
+                            <ion-icon style={{ animation: 'rotate 2s infinite linear' }} name="hourglass-outline"></ion-icon>
+                        </span>
+                                ) : (
+                                    "Отправить"
+                                )
                             }
+                            </button>
+
                         </div>
                         <div className="form__under-text">
                             У вас еще нет аккаунта?<Link className="form__link" to='/register'>Зарегистрироваться

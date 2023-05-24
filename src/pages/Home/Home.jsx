@@ -9,7 +9,6 @@ const Home = () => {
         <Helmet title="Home">
             <section className="hero">
                 <video className="hero__video" src={BgVideo} autoPlay loop muted></video>
-                <div className="hero__over-play"></div>
                 <div className="container">
                     <div className="hero__description">
                         <div className="main-title">

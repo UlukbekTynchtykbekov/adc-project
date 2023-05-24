@@ -1,33 +1,26 @@
 .hero{
-  width: 100%;
-  height: 100vh;
   position: relative;
+  width: 100%;
+  padding-bottom: 200px;
+  background: var(--hero-bg-linear1);
+  min-height: 100vh;
   &__video{
     position: absolute;
     top: 0;
     z-index: -1;
     object-fit: cover;
     width: 100%;
-    height: 100%;
-  }
-  &__over-play{
-    background: var(--hero-bg-linear1);
-    height: 100%;
-    width: 100%;
-    top:0;
-    left: 0;
+    min-height: 100%;
   }
   &__items{
     display: flex;
     justify-content: space-between;
-    margin-top: -200px;
     gap: 22rem
   }
   &__description{
-    position: absolute;
     object-fit: cover;
     pointer-events: none;
-    margin-top: -350px;
+    padding: 250px 0;
   }
   &__item{
     position: relative;
@@ -137,14 +130,13 @@
 
 @media (max-width: 720px){
   .hero{
-    min-height: 100vh;
     background: var(--hero-bg-linear1),
     url("../static/img/main-bg.webp")  no-repeat center/cover;
     &__items{
       align-items: center;
       flex-direction: column;
       margin-top: 0;
-      padding-top: 130px;
+      padding-top: 0;
       gap: 3rem;
     }
 
@@ -152,23 +144,19 @@
       width: 200px;
     }
 
-    &__over-play {
-      display: none;
-    }
-
     &__video{
       display: none;
     }
 
     .hero__description {
-      position: relative;
+      position: initial;
+      padding-top: 150px;
+      padding-left: 10px;
       margin-top: 0;
     }
   }
 
   .main-title {
-    padding-top: 200px;
-    padding-left: 10px;
     &__desc-hero {
       width: auto;
       font-size: 28px;
