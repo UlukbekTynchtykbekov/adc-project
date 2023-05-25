@@ -58,7 +58,7 @@
   &__photos{
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, 13rem);
     gap: 10px;
   }
 
