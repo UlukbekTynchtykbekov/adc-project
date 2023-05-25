@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {Navigate, useParams} from "react-router-dom";
 import {useAddCategory, useCategoryData, useUpdateCategory} from "../../CustomHooks/useCategoriesData";
@@ -6,6 +6,7 @@ import { showSuccessNotification, showErrorNotification } from  "../../CustomHoo
 import "./new-category.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 
 const NewCategory = () => {
     const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ const NewCategory = () => {
     });
     const [formErrors, setFormErrors] = useState({});
     const {id: categoryId} = useParams();
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {mutate: addCategory, data: addedCategoryData, isLoading: addCategoryLoading, isError: addIsError} = useAddCategory(showSuccessNotification, showErrorNotification);
     const {data: categoryData, isLoading: categoryLoading, isError: categoryIsError, error: categoryError} = useCategoryData(categoryId);
@@ -54,7 +57,10 @@ const NewCategory = () => {
                 name: categoryData?.data.name
             }))
         }
-    }, [categoryData?.data])
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [categoryData?.data, openSidebar])
 
     if (addedCategoryData?.data || updatedCategoryData?.data) {
         return <Navigate to="/admin/categories"/>
@@ -72,7 +78,7 @@ const NewCategory = () => {
                     categoryIsError && <Error status={categoryError?.status} page={categoryError?.message}/>
                 }
                 {
-                    !categoryLoading && !categoryIsError && <div className="new">
+                    !categoryLoading && !categoryIsError && <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить категорию</h2>
                         </div>

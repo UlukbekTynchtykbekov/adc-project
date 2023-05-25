@@ -25,6 +25,8 @@
   }
 
   &__add-btn {
+    display: flex;
+    justify-content: center;
     border: none;
     background: var(--title-color);
     color: var(--body-bg);
@@ -93,6 +95,10 @@
     margin-top: 10px;
     color: red;
   }
+}
+
+@media (max-width: 1024px) {
+
 }
 
 @media (max-width: 880px) {

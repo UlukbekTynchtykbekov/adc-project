@@ -1,16 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddRoom, useSingleRoomData, useUpdateRoom} from "../../CustomHooks/useRoomData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 
 const NewRoom = () => {
     const [formData, setFormData] = useState({
         quantity: 0,
     });
     const [formErrors, setFormErrors] = useState({});
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
     const {id: roomId} = useParams();
 
     const {mutate: addRoom, data: addedRoomData, isLoading: addRoomLoading, isError: addIsError} = useAddRoom(showSuccessNotification, showErrorNotification);
@@ -53,7 +56,10 @@ const NewRoom = () => {
                 quantity: roomData?.data.quantity
             }))
         }
-    }, [roomData?.data])
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [roomData?.data, openSidebar])
 
     if (addedRoomData?.data || updatedRoomData?.data) {
         return <Navigate to="/admin/rooms"/>
@@ -71,7 +77,7 @@ const NewRoom = () => {
                     isError && <Error status={error?.status} page={error?.message}/>
                 }
                 {
-                    !roomLoading && !isError && <div className="new">
+                    !roomLoading && !isError && <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить комнату</h2>
                         </div>

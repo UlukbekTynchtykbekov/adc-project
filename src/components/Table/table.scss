@@ -118,8 +118,16 @@
   background: red;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .table{
+    &__header {
+      display: block;
+    }
+
+    &__filter{
+      margin-top: 20px;
+    }
+
     &__item{
       &:not(:first-of-type){
         min-width: 12.1rem;
@@ -136,6 +144,14 @@
     }
     &__filter{
         margin: 20px 0;
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .table{
+    &__filter{
+      display: grid;
     }
   }
 }

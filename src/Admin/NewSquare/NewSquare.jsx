@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddSquare, useSingleSquareData, useUpdateSquare} from "../../CustomHooks/useSquareData";
 import { showSuccessNotification, showErrorNotification } from "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 
 
 const NewSquare = () => {
@@ -12,6 +13,8 @@ const NewSquare = () => {
         square: 0,
     });
     const [formErrors, setFormErrors] = useState({});
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
     const {id: squareId} = useParams();
 
     const {mutate: addSquare, data: addedSquareData, isLoading: addSquareLoading, isError: addIsError} = useAddSquare(showSuccessNotification, showErrorNotification);
@@ -55,7 +58,10 @@ const NewSquare = () => {
                 square: squaresData?.data.square
             }))
         }
-    }, [squaresData?.data])
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [squaresData?.data, openSidebar])
 
     if(addedSquareData?.data || updatedSquareData?.data){
         return <Navigate to="/admin/square"/>
@@ -73,7 +79,7 @@ const NewSquare = () => {
                     squaresIsError &&  <Error status={squaresError?.status} page={squaresError?.message}/>
                 }
                 {
-                    !squaresIsError && !squaresLoading && <div className="new">
+                    !squaresIsError && !squaresLoading && <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить квадрат</h2>
                         </div>

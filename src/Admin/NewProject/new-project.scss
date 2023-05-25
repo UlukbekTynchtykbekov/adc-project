@@ -12,6 +12,11 @@
     color: #77619e;
     font-size: 35px;
   }
+
+  &.close{
+    left: 78px;
+    width: calc(100% - 78px);
+  }
 }
 .formik{
   width: 100%;
@@ -205,6 +210,14 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 880px) {
+
+  .new{
+    left: 78px;
+    width: calc(100% - 78px);
   }
 }
 

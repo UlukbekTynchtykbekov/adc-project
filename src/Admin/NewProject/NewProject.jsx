@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {request} from "../../utils/axios-utils";
 import {useArchitectData} from "../../CustomHooks/useArchitectData";
@@ -13,6 +13,7 @@ import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import "./new-project.scss"
+import {useSelector} from "react-redux";
 
 const NewProject = () => {
     const [formData, setFormData] = useState({
@@ -30,6 +31,8 @@ const NewProject = () => {
     const [interiorImagesLoading, setInteriorImagesLoading] = useState(false);
     const [designImagesLoading, setDesignImagesLoading] = useState(false);
     const [formErrors, setFormErrors] = useState({});
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
     const {id: projectId} = useParams();
 
     const {
@@ -281,7 +284,10 @@ const NewProject = () => {
                 squareId: square._id
             }));
         }
-    }, [singleProject?.data])
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [singleProject?.data, openSidebar])
 
     if (addedProjectData?.data || updatedProjectData?.data) {
         return <Navigate to="/admin/projects"/>
@@ -298,7 +304,7 @@ const NewProject = () => {
                     singleProjectIsError && <Error status={singleProjectError?.status} page={singleProjectError?.message}/>
                 }
                 {
-                    !singleProjectLoading && !singleProjectIsError && <div className="new">
+                    !singleProjectLoading && !singleProjectIsError && <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить проект</h2>
                         </div>

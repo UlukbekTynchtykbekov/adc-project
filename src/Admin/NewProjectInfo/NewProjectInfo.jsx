@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Navigate, useParams} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useAddProjectInfo, useProjectInfoData, useUpdateProjectInfo} from "../../CustomHooks/useProjectInfo";
@@ -8,6 +8,7 @@ import { showSuccessNotification, showErrorNotification } from "../../CustomHook
 import "./new-project-info.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 
 const NewProjectInfo = () => {
 
@@ -18,6 +19,8 @@ const NewProjectInfo = () => {
     });
     const [formErrors, setFormErrors] = useState({});
     const [filteredProjects, setFilteredProjects] = useState([])
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
     const {id: projectInfoId} = useParams();
 
     const { data: projects, isLoading } = useProjectsData();
@@ -79,7 +82,10 @@ const NewProjectInfo = () => {
                 description: projectInfoData?.data.description
             }))
         }
-    }, [projectInfoData?.data, projects])
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [projectInfoData?.data, projects, openSidebar])
 
     if (addedProjectInfoData?.data || updatedProjectInfoData?.data){
         return <Navigate to="/admin/project-info"/>
@@ -97,7 +103,7 @@ const NewProjectInfo = () => {
                     isError &&   <Error status={error?.status} page={error?.message}/>
                 }
                 {
-                    !projectInfoLoading && !isError && !isLoading && <div className="new">
+                    !projectInfoLoading && !isError && !isLoading && <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить категорию</h2>
                         </div>

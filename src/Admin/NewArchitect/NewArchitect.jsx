@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {request} from "../../utils/axios-utils";
 import {useAddArchitect, useSingleArchitectData, useUpdateArchitect} from "../../CustomHooks/useArchitectData";
@@ -7,6 +7,7 @@ import UploadImages from "../UploadImages/UploadImages";
 import { showSuccessNotification, showErrorNotification } from  "../../CustomHooks/useToast"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 import './new-architect.scss'
 
 const NewArchitect = () => {
@@ -20,6 +21,9 @@ const NewArchitect = () => {
     const [imageLoading, setImageLoading] = useState(false)
     const [formErrors, setFormErrors] = useState({});
     const {id: architectId} = useParams();
+
+     const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {mutate: addArchitect, data: addedArchitectData, isLoading: addArchitectLoading, isError: addIsError, error: addError} = useAddArchitect(showSuccessNotification, showErrorNotification);
     const {data: architectData, isLoading: architectLoading, isError: architectIsError, error: architectError} = useSingleArchitectData(architectId);
@@ -130,7 +134,11 @@ const NewArchitect = () => {
                 images: architectData?.data.images
             }));
         }
-    }, [architectData?.data])
+
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [architectData?.data, openSidebar])
 
     if (addedArchitectData?.data || updatedArchitectData?.data){
         return <Navigate to="/admin/architect"/>
@@ -148,7 +156,7 @@ const NewArchitect = () => {
                     architectIsError &&  <Error status={architectError?.status} page={architectError?.message}/>
                 }
                 {
-                    !architectLoading && !architectIsError &&  <div className="new">
+                    !architectLoading && !architectIsError &&  <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
                             <h2 className="new__text">Добавить архитектор</h2>
                         </div>

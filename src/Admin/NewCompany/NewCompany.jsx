@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import TimePicker from 'react-time-picker';
 import {Navigate, useParams} from "react-router-dom";
 import {request} from "../../utils/axios-utils";
@@ -7,10 +7,11 @@ import UploadImages from "../UploadImages/UploadImages";
 import {useSingleCompanyData, useUpdateCompany} from "../../CustomHooks/useCompanyData";
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import { showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
+import {showSuccessNotification, showErrorNotification} from "../../CustomHooks/useToast"
 import "./new-company.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
+import {useSelector} from "react-redux";
 
 const NewCompany = () => {
         const [formData, setFormData] = useState({
@@ -31,6 +32,8 @@ const NewCompany = () => {
         });
 
         const [formErrors, setFormErrors] = useState({});
+        const {openSidebar} = useSelector(state => state.sidebar);
+        const elementRefs = useRef(null);
         const {id: companyId} = useParams();
 
         const {
@@ -40,7 +43,11 @@ const NewCompany = () => {
             error: singleCompanyError
         } = useSingleCompanyData(companyId);
 
-        const {mutate: updateCompany, data: updatedCompanyData, isLoading: updateLoading} = useUpdateCompany(showSuccessNotification, showErrorNotification)
+        const {
+            mutate: updateCompany,
+            data: updatedCompanyData,
+            isLoading: updateLoading
+        } = useUpdateCompany(showSuccessNotification, showErrorNotification)
 
         const handleInputChange = (event) => {
             const {name, value, files} = event.target;
@@ -57,16 +64,14 @@ const NewCompany = () => {
                             images: [...prevState.images, ...data?.data]
                         }));
                     })
-            } else if(name.startsWith("workSchedule"))
-            {
+            } else if (name.startsWith("workSchedule")) {
                 const [fieldName, index, subFieldName] = name.split(".");
                 setFormData((prevFormData) => {
                     const newWorkSchedule = [...prevFormData.workSchedule];
                     newWorkSchedule[index][subFieldName] = value;
                     return {...prevFormData, workSchedule: newWorkSchedule};
                 });
-            } else
-            {
+            } else {
                 setFormData((prevState) => ({
                     ...prevState,
                     [name]: value
@@ -188,7 +193,10 @@ const NewCompany = () => {
                     workSchedule,
                 }));
             }
-        }, [singleCompany?.data])
+            if (elementRefs.current) {
+                elementRefs.current.classList.toggle('close', openSidebar);
+            }
+        }, [singleCompany?.data, openSidebar])
 
         if (updatedCompanyData?.status === 200) {
             return <Navigate to="/admin/company"/>
@@ -199,15 +207,16 @@ const NewCompany = () => {
                 <div className="row">
                     <Sidebar/>
                     {
-                        singleCompanyLoading &&  <Loader />
+                        singleCompanyLoading && <Loader/>
                     }
 
                     {
-                        singleCompanyIsError && <Error status={singleCompanyError?.status} page={singleCompanyError?.message}/>
+                        singleCompanyIsError &&
+                        <Error status={singleCompanyError?.status} page={singleCompanyError?.message}/>
                     }
-                    <div className="new">
+                    <div ref={elementRefs} className="new">
                         <div className="new__wrapper">
-                            <h2 className="new__text">Добавить  компанию</h2>
+                            <h2 className="new__text">Добавить компанию</h2>
                         </div>
                         <form onSubmit={onSubmitProduct} className="formik">
                             <div className="formik__group">
