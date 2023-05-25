@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: var(--hero-bg-linear1), url("../static/img/wall.webp")  no-repeat center/cover;
+  background: var(--hero-bg-linear1);
 
   &__profile{
     padding-top: 100px;
@@ -70,5 +70,23 @@
   &__buttons{
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 680px) {
+
+  .account{
+    &__profile {
+      grid-template-columns: 1fr;
+    }
+
+    &__item {
+      text-align: center;
+    }
+
+    &__buttons {
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

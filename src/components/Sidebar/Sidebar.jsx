@@ -37,7 +37,7 @@ const Sidebar = () => {
             });
         }
         if (additionalClassRef.current) {
-            additionalClassRef.current.classList.toggle('additional-class', openSidebar);
+            additionalClassRef.current.classList.toggle('close', openSidebar);
         }
     }, [productData?.data, openSidebar])
 

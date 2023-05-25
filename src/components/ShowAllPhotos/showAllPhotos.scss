@@ -190,5 +190,15 @@
     & .swiper-slide img {
      width: 100%;
     }
+
+    &__title {
+      font-size: 14px;
+    }
+  }
+
+  .close{
+    &__title {
+      font-size: 15px;
+    }
   }
 }

@@ -131,7 +131,7 @@
 @media (max-width: 720px){
   .hero{
     background: var(--hero-bg-linear1),
-    url("../static/img/main-bg.webp")  no-repeat center/cover;
+    url("../static/img/bg-main-house.jpeg")  no-repeat center/cover;
     &__items{
       align-items: center;
       flex-direction: column;
@@ -167,7 +167,5 @@
 @media (max-width: 480px){
   .hero {
     min-height: 100vh;
-    background: var(--hero-bg-linear1),
-    url("../static/img/main-bg.webp")  no-repeat center/cover;
   }
 }
