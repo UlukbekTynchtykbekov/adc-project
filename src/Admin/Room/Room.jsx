@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Dropdown from "../../components/Dropdown";
 import {Link} from "react-router-dom";
@@ -7,10 +7,14 @@ import {useRoomData} from "../../CustomHooks/useRoomData";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import {useSelector} from "react-redux";
 
 const Room = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
+
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {data: roomData, isLoading: roomDataLoading, isError, error} = useRoomData();
 
@@ -34,11 +38,17 @@ const Room = () => {
         return sortedRooms;
     }, [roomData?.data, selected]);
 
+    useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Квадраты</h1>

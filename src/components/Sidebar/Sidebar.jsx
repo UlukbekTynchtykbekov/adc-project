@@ -5,15 +5,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../features/authenticatedSlice";
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import {reviewActions} from "../../features/reviewSlice";
-import './sidebar.scss'
 import {sidebarActions} from "../../features/sidebarSlice";
+import './sidebar.scss'
 
 const Sidebar = () => {
 
     const {data} = useSelector(state => state.auth);
     const {openSidebar} = useSelector(state => state.sidebar);
     const {data: productData} = useProjectsData();
-    const additionalClassRef = useRef(null);
+    const elementRefs = useRef([]);
     const {unreadComments} = useSelector(state => state.review);
     const dispatch = useDispatch();
 
@@ -36,24 +36,36 @@ const Sidebar = () => {
                 });
             });
         }
-        if (additionalClassRef.current) {
-            additionalClassRef.current.classList.toggle('close', openSidebar);
-        }
+        elementRefs.current.forEach((ref) => {
+            if (ref) {
+                if (openSidebar) {
+                    ref.classList.add('close');
+                } else {
+                    ref.classList.remove('close');
+                }
+            }
+        });
     }, [productData?.data, openSidebar])
 
+    const registerRef = (ref) => {
+        if (ref && !elementRefs.current.includes(ref)) {
+            elementRefs.current.push(ref);
+        }
+    };
+
     return (
-        <div ref={additionalClassRef} className="sidebar">
+        <div ref={(ref) => registerRef(ref)} className="sidebar">
             <div className="navigation sidebar__navigation">
                 <div className="sidebar__bar">
-                    <div className="logo sidebar__logo">
+                    <div ref={(ref) => registerRef(ref)} className="logo sidebar__logo">
                         <Link to="/">
-                            <img className="logo__img sidebar__logo-img" src={Logo} alt=""/>
+                            <img ref={(ref) => registerRef(ref)} className="logo__img sidebar__logo-img" src={Logo} alt=""/>
                         </Link>
                         <div onClick={handleActive} className="burger">
                             <ion-icon name="menu-outline"></ion-icon>
                         </div>
                     </div>
-                    <ul className="nav">
+                    <ul ref={(ref) => registerRef(ref)} className="nav">
                         <li className="nav__list">
                             <Link to="/admin/company" className="nav__link">
                             <span className="nav__icon">
@@ -159,14 +171,19 @@ const Sidebar = () => {
                             </Link>
                         </li>
                         <li>
-                            <div className="profile">
-                                <div className="profile__content">
-                                    <div className="profile__name">{data.firstName} {data.lastName}</div>
-                                    <div className="profile__job">{data.role}</div>
-                                </div>
-                                <span onClick={() => onClickLogout()} className="profile__icon">
+                            <div ref={(ref) => registerRef(ref)} className="profile">
+                                <div ref={(ref) => registerRef(ref)} className="profile__wrapper">
+                                    <div className="profile__content">
+                                        <div className="profile__name">{data.firstName} {data.lastName}</div>
+                                        <div className="profile__job">{data.role}</div>
+                                    </div>
+                                    <span onClick={() => onClickLogout()} className="profile__icon">
                                     <ion-icon name="log-out-outline"></ion-icon>
                                 </span>
+                                </div>
+                                <div ref={(ref) => registerRef(ref)} className="profile__person">
+                                    <p className="profile__firstname">{data?.firstName.charAt(0)}</p>
+                                </div>
                             </div>
                         </li>
                     </ul>

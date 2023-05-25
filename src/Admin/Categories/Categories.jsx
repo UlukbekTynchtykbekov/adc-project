@@ -1,17 +1,21 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {useCategoriesData} from "../../CustomHooks/useCategoriesData";
 import CategoryCard from "../CatgeoryCard/CategoryCard";
-import "./categories.scss"
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import "./categories.scss"
+import {useSelector} from "react-redux";
 
 const Categories = () => {
     const [searchItem, setSearchItem] = useState("");
-    const [alreadyHave, setAlreadyHave] = useState(false)
+    const [alreadyHave, setAlreadyHave] = useState(false);
+
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {data: categoriesData, isLoading: categoriesDataLoading, isError, error} = useCategoriesData();
 
@@ -36,11 +40,17 @@ const Categories = () => {
         return filteredProducts;
     }, [categoriesData?.data, searchItem]);
 
+      useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Категории</h1>

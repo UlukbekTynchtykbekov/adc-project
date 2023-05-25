@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {Link} from "react-router-dom";
 import {useSquareData} from "../../CustomHooks/useSquareData";
@@ -6,13 +6,17 @@ import SquareCard from "../SquareCard/SquareCard";
 import Dropdown from "../../components/Dropdown";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
-import "./square.scss"
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import "./square.scss"
+import {useSelector} from "react-redux";
 
 const Square = () => {
     const [options, setOptions] = useState([])
     const [selected, setSelected] = useState("");
     const {data: squareData, isLoading: squareDataLoading, isError, error} = useSquareData();
+
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const sortedAndFilteredSquare = useMemo(() => {
         let sortedProducts = [];
@@ -34,11 +38,17 @@ const Square = () => {
         return sortedProducts;
     }, [squareData?.data, selected]);
 
+    useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Квадраты</h1>

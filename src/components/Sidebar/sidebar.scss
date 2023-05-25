@@ -7,17 +7,32 @@
   background: #ffff;
   z-index: 100;
   transition: all 0.5s ease;
+  &__bar{
+    width: 100%;
+  }
+  &.close{
+    width: 78px;
+  }
 
   &__navigation {
     flex-direction: column;
   }
 
   &__logo{
+    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     text-align: center;
     background: #77619e;
+    &.close{
+      justify-content: center;
+    }
+  }
+  &__logo-img{
+    &.close{
+      display: none;
+    }
   }
 }
 
@@ -30,6 +45,10 @@
   height: 100%;
   padding: 30px 0 150px 0;
   overflow: auto;
+
+  &.close{
+    width: 78px;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -94,6 +113,39 @@
   background: #f3f1f6;
   padding: 12px 0;
   transition: all 0.5s ease;
+  &.close{
+    width: 78px;
+  }
+  &__wrapper{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 2rem;
+    &.close{
+      display: none;
+    }
+  }
+  &__person{
+    display: none;
+    &.close{
+      display: block;
+    }
+  }
+  &__firstname{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--title-color);
+    background: #4646e0;
+    border-radius: 50%;
+    padding: 3px 5px;
+    text-transform: capitalize;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+  }
   &__name,
   &__icon,
   &__job {
@@ -113,5 +165,37 @@
   }
   &__job{
     font-size: 12px;
+  }
+}
+
+@media (max-width: 880px) {
+
+  .sidebar {
+    width: 78px;
+
+    &__logo-img {
+      width: 75px;
+
+      &.close{
+        display: block;
+      }
+    }
+  }
+  .burger {
+    display: none;
+  }
+
+  .profile{
+    width: 78px;
+    &__wrapper{
+      display: none;
+    }
+    &__person{
+      display: block;
+    }
+  }
+
+  .nav{
+    width: 78px;
   }
 }

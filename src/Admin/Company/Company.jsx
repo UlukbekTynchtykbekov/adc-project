@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import {useCompanyData} from "../../CustomHooks/useCompanyData";
 import {Link} from "react-router-dom";
@@ -8,8 +8,11 @@ import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
 import './company.scss'
+import {useSelector} from "react-redux";
 
 const Company = () => {
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
     const {data: companyData, isLoading: companyLoading, isError} = useCompanyData();
     const {
         data: productData,
@@ -38,13 +41,19 @@ const Company = () => {
         }
 
         return onlyAdmins;
-    }, [users?.data])
+    }, [users?.data]);
+
+      useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
 
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="company">
+                <div ref={elementRefs} className="company">
                     <div className="table company__table">
                         <div className="table__header">
                             <h1 className="table__title">О компании</h1>
@@ -107,7 +116,7 @@ const Company = () => {
                                             {
                                                 companyData?.data.map(el => (
                                                         <div key={el._id} className="contact__bar company__bar">
-                                                            <div key={el._id} className="contact__menu">
+                                                            <div key={el._id} className="contact__menu company__menu">
                                                                 <div className="menu__description">
                                                                     <div className="contact__nav">
                                                                         <h5 className="nav__title">КОМПАНИЯ {el.name}</h5>
@@ -199,14 +208,14 @@ const Company = () => {
                                                                         консультации
                                                                         <p>+{el.suggestionPhoneNumber}</p>
                                                                     </div>
+                                                                    <div className="company__filter">
+                                                                        <Link to={`/admin/company/${el._id}`}>
+                                                                            <button className="button company__add-btn">
+                                                                                Редактировать
+                                                                            </button>
+                                                                        </Link>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="company__filter">
-                                                                <Link to={`/admin/company/${el._id}`}>
-                                                                    <button className="button company__add-btn">
-                                                                        Редактировать
-                                                                    </button>
-                                                                </Link>
                                                             </div>
                                                         </div>
                                                     )

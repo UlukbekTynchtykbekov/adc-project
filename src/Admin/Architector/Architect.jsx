@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import ArchitectCard from "../ArchitectCard/ArchitectCard";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -7,13 +7,16 @@ import Dropdown from "../../components/Dropdown";
 import {useArchitectData} from "../../CustomHooks/useArchitectData";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
-import './architect.scss'
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import {useSelector} from "react-redux";
+import './architect.scss'
 
 const Architect = () => {
     const options = ["все", "сначала старше", "сначала моложе"]
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("все");
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const { data: architectData, isLoading: architectDataLoading, isError, error} = useArchitectData();
 
@@ -40,11 +43,17 @@ const Architect = () => {
         return sortedPeople;
     }, [architectData?.data, searchItem, selected]);
 
+      useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Архитекторы и дизайнеры</h1>

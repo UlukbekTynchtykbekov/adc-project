@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {useUsersData} from "../../CustomHooks/useUsersData";
@@ -12,6 +12,10 @@ const Admins = () => {
     const [searchAdmins, setSearchAdmins] = useState("");
     const {data: admins, isLoading: adminsLoading, isError, error} = useUsersData();
     const {data: authMe} = useSelector(state => state.auth);
+
+
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const filteredUsers = useMemo(() => {
         let onlyAdmins = [];
@@ -36,11 +40,17 @@ const Admins = () => {
         }
         return searchAdmin;
     }, [admins?.data, searchAdmins, authMe.firstName])
+
+      useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Администраторы</h1>

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
 import {Link} from "react-router-dom";
@@ -7,10 +7,13 @@ import ProjectInfoCard from "../ProjectInfoCard/ProjectInfoCard";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import {useSelector} from "react-redux";
 import "./project-info.scss"
 
 const ProjectInfo = () => {
     const [searchItem, setSearchItem] = useState("");
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {data: projectInfoData, isLoading: projectInfoDataLoading, isError, error} = useProjectInfo();
 
@@ -27,11 +30,17 @@ const ProjectInfo = () => {
         return filteredProjectInfo;
     }, [projectInfoData?.data, searchItem]);
 
+    useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Информация о продукте</h1>

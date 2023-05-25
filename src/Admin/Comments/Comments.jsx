@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useProjectsData} from "../../CustomHooks/useProjectsData";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Search from "../../components/Search/Search";
@@ -6,13 +6,17 @@ import Dropdown from "../../components/Dropdown";
 import CommentsCard from "../CommentsCard/CommentsCard";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/ErrorComponent/Error";
-import "./comments.scss"
 import EmptyItems from "../../components/EmtyItems/EmptyItems";
+import "./comments.scss"
+import {useSelector} from "react-redux";
 
 const Comments = () => {
     const options = ["все", "дизайн", "архитектура"]
     const [searchItem, setSearchItem] = useState("");
     const [selected, setSelected] = useState("");
+
+    const {openSidebar} = useSelector(state => state.sidebar);
+    const elementRefs = useRef(null);
 
     const {data, isLoading, isError, error} = useProjectsData();
 
@@ -37,11 +41,17 @@ const Comments = () => {
         return sortedProducts;
     }, [data?.data, searchItem, selected]);
 
+      useEffect(() => {
+        if (elementRefs.current) {
+            elementRefs.current.classList.toggle('close', openSidebar);
+        }
+    }, [openSidebar])
+
     return (
         <section className="dashboard">
             <div className="row">
                 <Sidebar/>
-                <div className="product">
+                <div ref={elementRefs} className="product">
                     <div className="table product__table">
                         <div className="table__header">
                             <h1 className="table__title">Комментарии</h1>

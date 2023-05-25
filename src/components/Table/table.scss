@@ -77,6 +77,10 @@
     text-overflow: ellipsis;
   }
 
+  &__item{
+    position: relative;
+  }
+
   &__category-name{
     position: sticky;
     top: 0;
