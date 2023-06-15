@@ -118,7 +118,7 @@ const NewProjectInfo = () => {
                                 type={"projectId"}
                             />
                             <div className="formik__group">
-                                <h2 className="formik__text">Категория</h2>
+                                <h2 className="formik__text">Заголовок</h2>
                                 <input
                                     className="formik__input"
                                     type="text"
