@@ -124,7 +124,7 @@ const NewProjectInfo = () => {
                                     type="text"
                                     name="title"
                                     value={formData.title}
-                                    placeholder="Категория проекта"
+                                    placeholder="Заголовок проекта"
                                     onChange={handleInputChange}
                                 />
                                 {
